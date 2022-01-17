@@ -1,0 +1,27 @@
+{
+  "name": "rankedwarassistant",
+  "version": "1.0.0",
+  "description": "Torn Discord bot that assists in randed wars",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibramsterdam/RankedWarAssistant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ibramsterdam/RankedWarAssistant/issues"
+  },
+  "homepage": "https://github.com/ibramsterdam/RankedWarAssistant#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^14.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0"
+  }
+}
