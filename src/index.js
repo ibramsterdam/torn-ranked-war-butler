@@ -35,6 +35,6 @@ for (const file of eventFiles) {
 client.on('interactionCreate', commandHandler);
 
 
-client.login(BOT_TOKEN);
+client.login(BOT_TOKEN)
 
 module.exports = client;
