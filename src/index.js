@@ -1,4 +1,4 @@
-const {Client, Intents} = require('discord.js');
+const {Client, Intents, Collection} = require('discord.js');
 const {BOT_TOKEN} = require('../config.json');
 const client = new Client({intents: [Intents.FLAGS.GUILDS]});
 const commandHandler = require('./handlers/commandHandler')
@@ -7,12 +7,18 @@ const fs = require("fs");
 /**
  * commandHandler
  */
-client.on('interactionCreate', commandHandler);
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.data.name, command);
+}
 
 /**
  * EventHandler
  */
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
     const event = require(`./events/${file}`);
@@ -22,6 +28,11 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
+
+/**
+ * Listeners
+ */
+client.on('interactionCreate', commandHandler);
 
 
 client.login(BOT_TOKEN);
