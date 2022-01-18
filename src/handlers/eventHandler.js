@@ -23,7 +23,7 @@ module.exports = async (client) => {
       return; //prevent bot crash
     }
 
-    //If event is valid execure
+    //If event is valid execute
     if (event.once) {
       client.once(event.name, (...args) => event.execute(...args, client));
     } else {

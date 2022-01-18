@@ -20,12 +20,20 @@ module.exports = async (client) => {
 
     //If command name is missing
     if (!command.name) {
-      return table.addRow(file.split('/')[7], '⛔ Failed', 'Missing a name.');
+      return table.addRow(
+        commandFile.split('/')[6],
+        '⛔ Failed',
+        'Missing a name.'
+      );
     }
 
     //If command description is missing
     if (!command.description) {
-      return table.addRow(command.name, '⛔ Failed', 'Missing a description.');
+      return table.addRow(
+        commandFile.split('/')[6],
+        '⛔ Failed',
+        'Missing a description.'
+      );
     }
 
     //If command has permission then...
@@ -33,7 +41,11 @@ module.exports = async (client) => {
       if (Perms.includes(command.permission)) {
         command.defaultPermission = false;
       } else {
-        return table.addRow(command.name, '⛔ Failed', 'Permission is invalid');
+        return table.addRow(
+          commandFile.split('/')[6],
+          '⛔ Failed',
+          'Permission is invalid'
+        );
       }
     }
 
