@@ -4,7 +4,7 @@ const { isObject, objProps } = require('../util/objectUtil');
 require('dotenv').config();
 
 module.exports = {
-  name: 'war',
+  name: 'warCountdown',
   description: 'Responds with if faction is at war with details',
   permission: 'ADMINISTRATOR',
   /**
