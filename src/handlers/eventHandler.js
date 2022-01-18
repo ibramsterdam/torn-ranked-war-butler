@@ -5,7 +5,7 @@ const PG = promisify(glob);
 const Ascii = require('ascii-table');
 
 module.exports = async (client) => {
-  const Table = new Ascii('Events loaded');
+  const table = new Ascii('Events loaded');
 
   //Make map out of all files in events folder and loop over them.
   (await PG(`${process.cwd()}/src/events/*/*.js`)).map(async (eventFile) => {
@@ -16,7 +16,7 @@ module.exports = async (client) => {
       const arg = eventFile.split('/');
 
       //If event is invalid add Sucessfull Row
-      await Table.addRow(
+      await table.addRow(
         `${event.name || 'MISSING'}`,
         `⛔ Event name is invalid or missing: ${arg[6] + `/` + arg[7]}`
       );
@@ -31,8 +31,8 @@ module.exports = async (client) => {
     }
 
     //If event is valid add Sucessfull Row
-    await Table.addRow(event.name, '✅ Succesfull');
+    await table.addRow(event.name, '✅ Succesfull');
   });
 
-  console.log(Table.toString());
+  console.log(table.toString());
 };
