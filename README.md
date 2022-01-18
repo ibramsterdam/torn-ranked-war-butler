@@ -1,6 +1,4 @@
-# RankedWarAssistant
-
-![A Torn Discord bot that assists in ranked wars.](/Admiral.jpg)
+# RankedWarAssistant ![A Torn Discord bot that assists in ranked wars.](/AdmiralProfile.png)
 
 ## Installation
 
