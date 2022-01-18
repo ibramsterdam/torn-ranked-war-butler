@@ -1,4 +1,7 @@
-# RankedWarAssistant ![A Torn Discord bot that assists in ranked wars.](/AdmiralProfile.png)
+# RankedWarAssistant
+
+Torn Discord bot that assists in ranked wars.
+![A Torn Discord bot that assists in ranked wars.](/AdmiralProfile.png)
 
 ## Installation
 
@@ -27,7 +30,7 @@ To run this project, you will need to add the following environment variables to
 
 **War Countdown**
 \
-Command: `/warCountdown`
+Command: `/warcountdown`
 \
 Description: command calls the torn rankedwars api and gives
 information about the upcomming war.
@@ -36,15 +39,15 @@ information about the upcomming war.
 
 **Set Opponent** _Essential!_
 \
-Command: `/setOpponent [ENEMY_FACTION_ID]`
+Command: `/setopponent [ENEMY_FACTION_ID]`
 \
 Description: Defines enemy faction ID.
 
 **Spy enemy faction**
 \
-Command: `/spyEnemyFaction on`
+Command: `/spyenemyfaction on`
 \
-Command: `/spyEnemyFaction off`
+Command: `/spyenemyfaction off`
 \
 Description: Turn on or turn off listener that retrieves new information
 about faction every 6 seconds.
@@ -54,47 +57,47 @@ change state (Traveling, Hospital, Torn, Okay).
 
 **Incomming from flight**
 \
-Command: `/incommingFlight`
+Command: `/incommingflight`
 \
 Description: List of enemy faction members that are flying
 to Torn.
 
 **Hospital timers**
 \
-Command: `/timerHospital`
+Command: `/timerhospital`
 \
 Description: List of enemy faction members that are in
 hospital with timers.
 
 **Hospital timers**
 \
-Command: `/timerJail`
+Command: `/timerjail`
 \
 Description: List of enemy faction members that are in
 jail with timers.
 
 **Players below 30% Health**
 \
-Command: `/enemyHealth`
+Command: `/enemyhealth`
 \
 Description: List of enemy faction members that have health
 below 30% of their max health.
 
 **Track enemy chain**
 \
-Command: `/chainEnemy`
+Command: `/chainenemy`
 \
 Description: Status updates about enemy chain.
 
 **Track faction chain**
 \
-Command: `/chainFaction`
+Command: `/chainfaction`
 \
 Description: Status updates about own chain.
 
 **Track faction chain**
 \
-Command: `/giveMeTarget`
+Command: `/givemetarget`
 \
 Description: List of targets that can be attacked sorted from easiest -> harders to kill.
 This is based on age, xanax, refills, level.

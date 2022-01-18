@@ -4,6 +4,7 @@ const { promisify } = require('util');
 const { glob } = require('glob');
 const PG = promisify(glob);
 const Ascii = require('ascii-table');
+const { containsUpperCase } = require('../util/containsUpperCaseUtil');
 require('dotenv').config();
 
 /**
@@ -24,6 +25,14 @@ module.exports = async (client) => {
         commandFile.split('/')[6],
         '⛔ Failed',
         'Missing a name.'
+      );
+    }
+    //If command name is with uppercase
+    if (containsUpperCase(command.name)) {
+      return table.addRow(
+        commandFile.split('/')[6],
+        '⛔ Failed',
+        'Command name contains uppercase.'
       );
     }
 
