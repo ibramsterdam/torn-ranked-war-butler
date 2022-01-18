@@ -28,6 +28,15 @@ To run this project, you will need to add the following environment variables to
 
 ### Available
 
+**Set Opponent** _Essential!_
+\
+Command: `/setopponent [ENEMY_FACTION_ID]`
+\
+Description: Defines enemy faction ID.
+Note: Using jsonStorage, at later date will be connected to a server
+
+### In Development
+
 **War Countdown**
 \
 Command: `/warcountdown`
@@ -36,12 +45,6 @@ Description: command calls the torn rankedwars api and gives
 information about the upcomming war.
 
 ### Unavailable
-
-**Set Opponent** _Essential!_
-\
-Command: `/setopponent [ENEMY_FACTION_ID]`
-\
-Description: Defines enemy faction ID.
 
 **Spy enemy faction**
 \
