@@ -1,16 +1,8 @@
 const { Perms } = require('../validation/commandPermissions');
-const { Client } = require('discord.js');
-const { promisify } = require('util');
-const { glob } = require('glob');
-const PG = promisify(glob);
-const Ascii = require('ascii-table');
 const { containsUpperCase } = require('../util/containsUpperCaseUtil');
 require('dotenv').config();
 
-/**
- * @param {Client} client
- */
-module.exports = async (client) => {
+module.exports = async (client, PG, Ascii) => {
   const table = new Ascii('Commands loaded');
 
   CommandsArray = [];
