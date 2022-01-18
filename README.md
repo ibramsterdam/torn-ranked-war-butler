@@ -24,7 +24,7 @@ To run this project, you will need to add the following environment variables to
 `TORN_API_KEY`
 `TORN_API_URL`
 
-## Commands
+## Commands for war
 
 ### Available
 
@@ -104,3 +104,17 @@ Command: `/givemetarget`
 \
 Description: List of targets that can be attacked sorted from easiest -> harders to kill.
 This is based on age, xanax, refills, level.
+
+## Other Commands
+
+### Available
+
+**Clear Messages**
+\
+Command: `/clear [target]`
+\
+Description: Ability to clear chatbox.
+
+### In Development
+
+### Unavailable

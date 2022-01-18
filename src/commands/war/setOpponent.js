@@ -1,6 +1,6 @@
 const { CommandInteraction, MessageEmbed } = require('discord.js');
-const { getFaction } = require('../util/tornApiUtil');
-const { saveEnemyFaction } = require('../util/jsonStorageUtil');
+const { getFaction } = require('../../util/tornApiUtil');
+const { saveEnemyFaction } = require('../../util/jsonStorageUtil');
 
 module.exports = {
   name: 'setopponent',

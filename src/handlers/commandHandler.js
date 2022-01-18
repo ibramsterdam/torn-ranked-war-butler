@@ -16,55 +16,57 @@ module.exports = async (client) => {
   CommandsArray = [];
 
   //Make map out of all files in commands folder and loop over them.
-  (await PG(`${process.cwd()}/src/commands/*.js`)).map(async (commandFile) => {
-    const command = require(commandFile);
+  (await PG(`${process.cwd()}/src/commands/*/*.js`)).map(
+    async (commandFile) => {
+      const command = require(commandFile);
 
-    //If command name is missing
-    if (!command.name) {
-      return table.addRow(
-        commandFile.split('/')[6],
-        '⛔ Failed',
-        'Missing a name.'
-      );
-    }
-    //If command name is with uppercase
-    if (containsUpperCase(command.name)) {
-      return table.addRow(
-        commandFile.split('/')[6],
-        '⛔ Failed',
-        'Command name contains uppercase.'
-      );
-    }
-
-    //If command description is missing
-    if (!command.description) {
-      return table.addRow(
-        commandFile.split('/')[6],
-        '⛔ Failed',
-        'Missing a description.'
-      );
-    }
-
-    //If command has permission then...
-    if (command.permission) {
-      if (Perms.includes(command.permission)) {
-        command.defaultPermission = false;
-      } else {
+      //If command name is missing
+      if (!command.name) {
         return table.addRow(
           commandFile.split('/')[6],
           '⛔ Failed',
-          'Permission is invalid'
+          'Missing a name.'
         );
       }
+      //If command name is with uppercase
+      if (containsUpperCase(command.name)) {
+        return table.addRow(
+          commandFile.split('/')[6],
+          '⛔ Failed',
+          'Command name contains uppercase.'
+        );
+      }
+
+      //If command description is missing
+      if (!command.description) {
+        return table.addRow(
+          commandFile.split('/')[6],
+          '⛔ Failed',
+          'Missing a description.'
+        );
+      }
+
+      //If command has permission then...
+      if (command.permission) {
+        if (Perms.includes(command.permission)) {
+          command.defaultPermission = false;
+        } else {
+          return table.addRow(
+            commandFile.split('/')[6],
+            '⛔ Failed',
+            'Permission is invalid'
+          );
+        }
+      }
+
+      //Set and push new commands
+      client.commands.set(command.name, command);
+      CommandsArray.push(command);
+
+      //If everything is valid, add Sucessfull Row
+      await table.addRow(command.name, '✅ Succesfull');
     }
-
-    //Set and push new commands
-    client.commands.set(command.name, command);
-    CommandsArray.push(command);
-
-    //If everything is valid, add Sucessfull Row
-    await table.addRow(command.name, '✅ Succesfull');
-  });
+  );
 
   console.log(table.toString());
 

@@ -1,6 +1,6 @@
 const { CommandInteraction } = require('discord.js');
-const { getTornRankedWarInfo } = require('../util/tornApiUtil');
-const { isObject, objProps } = require('../util/objectUtil');
+const { getTornRankedWarInfo } = require('../../util/tornApiUtil');
+const { isObject, objProps } = require('../../util/objectUtil');
 require('dotenv').config();
 
 module.exports = {
