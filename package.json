@@ -1,7 +1,7 @@
 {
   "name": "rankedwarassistant",
   "version": "1.0.0",
-  "description": "Torn Discord bot that assists in randed wars",
+  "description": "Torn Discord bot that assists in ranked wars",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,14 +20,8 @@
   },
   "homepage": "https://github.com/ibramsterdam/RankedWarAssistant#readme",
   "dependencies": {
-    "@discordjs/builders": "^0.11.0",
-    "@discordjs/rest": "^0.2.0-canary.0",
     "axios": "^0.24.0",
-    "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
     "nodemon": "^2.0.15"
-  },
-  "devDependencies": {
-    "eslint": "^8.7.0"
   }
 }
