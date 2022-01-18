@@ -20,8 +20,13 @@
   },
   "homepage": "https://github.com/ibramsterdam/RankedWarAssistant#readme",
   "dependencies": {
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "ascii-table": "^0.0.9",
     "axios": "^0.24.0",
+    "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
+    "dotenv": "^14.2.0",
+    "glob": "^7.2.0",
     "nodemon": "^2.0.15"
   }
 }
