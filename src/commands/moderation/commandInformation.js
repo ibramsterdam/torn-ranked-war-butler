@@ -2,7 +2,7 @@ const { CommandInteraction, Client, MessageEmbed } = require('discord.js');
 require('dotenv').config();
 
 module.exports = {
-  name: 'information',
+  name: 'commandinformation',
   description: 'Responds with a list of all command information available',
   cooldown: 10,
   permission: 'ADMINISTRATOR',

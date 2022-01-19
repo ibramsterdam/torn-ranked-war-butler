@@ -10,8 +10,8 @@ module.exports = {
   options: [
     {
       name: 'factionid',
-      description: 'Provide the enemy faction ID',
-      type: 'STRING',
+      description: 'Provide the enemy factionId',
+      type: 'NUMBER',
       required: true,
     },
   ],
@@ -21,7 +21,7 @@ module.exports = {
    */
   async execute(interaction) {
     const { options } = interaction;
-    const factionId = options.getString('factionid');
+    const factionId = options.getNumber('factionid');
 
     //Make call to torn API
     Promise.all([getFaction(factionId)]).then(function (results) {

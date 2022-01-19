@@ -10,7 +10,7 @@ module.exports = {
   options: [
     {
       name: 'factionid',
-      description: 'Search rankedwars based on faction ID',
+      description: 'Search rankedwars based on factionId',
       type: 'NUMBER',
       required: false,
     },
