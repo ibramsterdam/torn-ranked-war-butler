@@ -9,7 +9,6 @@ const getTornRankedWarInfo = async () => {
 
 const getFaction = async (factionID) => {
   const pattern = new RegExp('^([0-9]*$)');
-  console.log(pattern.test(factionID));
   return pattern.test(factionID)
     ? axios.get(
         `https://api.torn.com/faction/${factionID}?selections=&key=${process.env.TORN_API_KEY}`

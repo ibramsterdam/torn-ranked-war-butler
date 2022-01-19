@@ -5,6 +5,7 @@ const { saveEnemyFaction } = require('../../util/jsonStorageUtil');
 module.exports = {
   name: 'setopponent',
   description: 'Save enemy faction id to json storage',
+  cooldown: 10,
   permission: 'ADMINISTRATOR',
   options: [
     {
@@ -25,7 +26,7 @@ module.exports = {
     //Make call to torn API
     Promise.all([getFaction(factionId)]).then(function (results) {
       //No faction found
-      if (results[0] == undefined) {
+      if (results[0] == undefined || results[0].data.hasOwnProperty('error')) {
         interaction.reply({
           content: 'Invalid input',
         });
