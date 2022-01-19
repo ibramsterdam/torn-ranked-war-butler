@@ -1,4 +1,10 @@
-const { Client, CommandInteraction, MessageEmbed } = require('discord.js');
+const {
+  Client,
+  CommandInteraction,
+  MessageEmbed,
+  Collection,
+} = require('discord.js');
+const { checkCooldown } = require('../../util/cooldownUtil');
 
 module.exports = {
   name: 'interactionCreate',
@@ -25,6 +31,12 @@ module.exports = {
         );
       }
 
+      //Check if member has cooldown on command.
+      if (checkCooldown(command, interaction)) {
+        return;
+      }
+
+      //Execure command
       command.execute(interaction, client);
     }
   },

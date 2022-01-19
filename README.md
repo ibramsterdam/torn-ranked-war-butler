@@ -115,6 +115,13 @@ Command: `/clear [target]`
 \
 Description: Ability to clear chatbox.
 
+**Command List**
+\
+Command: `/information`
+\
+Description: List of commands available.
+Note: Can only be called every 10 seconds.
+
 ### In Development
 
 ### Unavailable

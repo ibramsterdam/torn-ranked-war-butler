@@ -4,6 +4,7 @@ require('dotenv').config();
 module.exports = {
   name: 'information',
   description: 'Responds with a list of all command information available',
+  cooldown: 10,
   permission: 'ADMINISTRATOR',
   /**
    *
@@ -26,7 +27,7 @@ module.exports = {
     });
 
     //Reply to the discord client
-    interaction.channel.send({
+    interaction.reply({
       embeds: [response],
       fetchReply: true,
     });
