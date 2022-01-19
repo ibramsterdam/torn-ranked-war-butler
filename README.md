@@ -37,12 +37,13 @@ Note: Using jsonStorage, at later date will be connected to a server
 
 ### In Development
 
-**War Countdown**
+**War Status**
 \
-Command: `/warcountdown`
+Command: `/warstatus`
 \
 Description: command calls the torn rankedwars api and gives
-information about the upcomming war.
+information about the (upcomming) war.
+Note: Can only be called every 10 seconds
 
 ### Unavailable
 
