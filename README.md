@@ -120,6 +120,7 @@ Description: Ability to clear chatbox.
 Command: `/information`
 \
 Description: List of commands available.
+\
 Note: Can only be called every 10 seconds.
 
 ### In Development
