@@ -47,7 +47,7 @@ Note: Can only be called every 10 seconds
 
 **Hospital timers**
 \
-Command: `/timerhospital`
+Command: `/hospitalstatus`
 \
 Description: List of enemy faction members that are in
 hospital with timers.
