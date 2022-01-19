@@ -35,15 +35,22 @@ Command: `/setopponent [ENEMY_FACTION_ID]`
 Description: Defines enemy faction ID.
 Note: Using jsonStorage, at later date will be connected to a server
 
-### In Development
-
 **War Status**
 \
-Command: `/warstatus`
+Command: `/warstatus [FACTION_ID]`
 \
-Description: command calls the torn rankedwars api and gives
-information about the (upcomming) war.
+Description: Command calls the torn rankedwars api and gives
+information about the (upcomming) war. if no faction ID is given then it searches on own faction.
 Note: Can only be called every 10 seconds
+
+### In Development
+
+**Hospital timers**
+\
+Command: `/timerhospital`
+\
+Description: List of enemy faction members that are in
+hospital with timers.
 
 ### Unavailable
 
@@ -66,14 +73,7 @@ Command: `/incommingflight`
 Description: List of enemy faction members that are flying
 to Torn.
 
-**Hospital timers**
-\
-Command: `/timerhospital`
-\
-Description: List of enemy faction members that are in
-hospital with timers.
-
-**Hospital timers**
+**Jail timers**
 \
 Command: `/timerjail`
 \

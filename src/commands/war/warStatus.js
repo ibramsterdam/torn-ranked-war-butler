@@ -5,7 +5,7 @@ const { getMyFactionWarInfo } = require('../../util/rankedWarUtil');
 module.exports = {
   name: 'warstatus',
   cooldown: 10,
-  description: 'Responds with if faction is at war with details',
+  description: 'Responds with war details',
   permission: 'ADMINISTRATOR',
   options: [
     {
@@ -40,7 +40,6 @@ module.exports = {
 
       const warInfo = warObject[Object.keys(warObject)[1]];
       const factionArray = Object.entries(warObject[Object.keys(warObject)[0]]);
-
       const startDateTimestamp = new Date(warInfo.start * 1000);
       const date = new Date(startDateTimestamp);
       const dateInfo =
