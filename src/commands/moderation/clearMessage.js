@@ -32,7 +32,7 @@ module.exports = {
     const response = new MessageEmbed().setColor('AQUA');
 
     //no target = null
-    if (target) {
+    if (target && amount <= 100) {
       let i = 0;
       const filtered = [];
       (await messages).filter((message) => {
@@ -49,12 +49,18 @@ module.exports = {
         interaction.reply({ embeds: [response] });
       });
     } else {
-      await channel.bulkDelete(amount, true).then((messages) => {
-        response.setDescription(
-          `👌 Cleared ${messages.size} from this channel.`
-        );
-        interaction.reply({ embeds: [response] });
-      });
+      if (amount <= 100) {
+        await channel.bulkDelete(amount, true).then((messages) => {
+          response.setDescription(
+            `👌 Cleared ${messages.size} from this channel.`
+          );
+          interaction.reply({ embeds: [response] });
+        });
+      } else {
+        interaction.reply({
+          content: `I cannot clear ${amount} messages.., My max is **100**.`,
+        });
+      }
     }
   },
 };

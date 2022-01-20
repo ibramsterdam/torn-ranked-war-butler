@@ -43,14 +43,21 @@ Description: Command calls the torn rankedwars api and gives
 information about the (upcomming) war. if no faction ID is given then it searches on own faction.
 Note: Can only be called every 10 seconds
 
-### In Development
-
 **Hospital timers**
 \
-Command: `/hospitalstatus`
+Command: `/hospitalstatus [FACTION_ID]`
 \
 Description: List of enemy faction members that are in
-hospital with timers.
+hospital with timers sorted by remaining time in hospital.
+Note: Can only be called every 10 seconds
+
+### In Development
+
+**Track faction chain**
+\
+Command: `/chainfaction`
+\
+Description: Status updates about own chain.
 
 ### Unavailable
 
@@ -92,12 +99,6 @@ below 30% of their max health.
 Command: `/chainenemy`
 \
 Description: Status updates about enemy chain.
-
-**Track faction chain**
-\
-Command: `/chainfaction`
-\
-Description: Status updates about own chain.
 
 **Track faction chain**
 \

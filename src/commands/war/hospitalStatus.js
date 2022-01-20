@@ -6,6 +6,7 @@ module.exports = {
   description:
     'Deletes a specified number of messages from channel or a target.',
   permission: 'ADMINISTRATOR',
+  cooldown: 10,
   options: [
     {
       name: 'factionid',
@@ -35,7 +36,10 @@ module.exports = {
         } has asked for the the hospital list <t:${Math.round(
           Date.now() / 1000
         )}:R>.
-          Important: This list does not update on its own when someone takes medication. Also, switch channels if timestamps dont seem to update.`
+        \  
+        **Important:**
+        \
+        *This list does not update on its own when someone takes medication. Also, switch channels if timestamps dont seem to update.*`
       );
 
       //Make map based on if member is in hospital
