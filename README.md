@@ -10,7 +10,7 @@ click [here](https://discord.com/api/oauth2/authorize?client_id=9325509057132708
 \
 At this moment the bot needs to be an Administrator, but do
 not worry our [repository](https://github.com/ibramsterdam/RankedWarAssistant) is open
-sorce so you can see what we are up to :-).
+source so you can see what we are up to :-).
 
 ## Environment Variables
 
