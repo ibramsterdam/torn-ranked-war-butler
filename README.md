@@ -12,6 +12,10 @@ At this moment the bot needs to be an Administrator, but do
 not worry our [repository](https://github.com/ibramsterdam/RankedWarAssistant) is open
 source so you can see what we are up to :-).
 
+## Database
+
+We use mongoDB and connect to mongoDB with mongoose.
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
