@@ -27,7 +27,8 @@ module.exports = {
     Promise.all([getFaction(targetFactionId)]).then(function (results) {
       //Destructure Json to array of faction members
       const factionInfo = Object.values(Object.values(results[0].data)[14]);
-      // console.log(factionInfo);
+      const factionName = Object.values(results[0].data)[1];
+
       const response = new MessageEmbed().setColor('AQUA').setDescription(
         `${
           interaction.member
@@ -37,15 +38,26 @@ module.exports = {
           Important: This list does not update on its own when someone takes medication. Also, switch channels if timestamps dont seem to update.`
       );
 
+      //Make map based on if member is in hospital
       factionInfo.forEach((factionMember) => {
         if (factionMember.status.description.includes('In hospital')) {
           hospitalMap.set(factionMember.name, factionMember.status.until);
-          response.addField(
-            `${factionMember.name}`,
-            `Leaving hospital <t:${factionMember.status.until}:R>`
-          );
         }
       });
+
+      //If hospital list is empty
+      if (hospitalMap.size === 0) {
+        response.setTitle(`🏥 No one in hospital of ${factionName} 🏥`);
+      } else {
+        response.setTitle(`🏥 Hospital List of ${factionName} 🏥`);
+      }
+
+      //Order list so that earliest to leave hospital is above in message
+      for (const [key, value] of [...hospitalMap.entries()].sort(
+        (a, b) => a[1] - b[1]
+      )) {
+        response.addField(`${key}`, `Leaving hospital <t:${value}:R>`);
+      }
 
       //Reply to the discord client
       interaction.reply({

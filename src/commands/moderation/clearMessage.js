@@ -43,7 +43,9 @@ module.exports = {
       });
 
       await channel.bulkDelete(filtered, true).then((messages) => {
-        response.setDescription(`👌 Cleared ${messages.size} from ${target}.`);
+        response.setDescription(
+          `👌 Cleared ${messages.size} messages from ${target}.`
+        );
         interaction.reply({ embeds: [response] });
       });
     } else {
