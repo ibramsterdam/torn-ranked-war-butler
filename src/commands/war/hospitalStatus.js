@@ -27,8 +27,19 @@ module.exports = {
 
     Promise.all([getFaction(targetFactionId)]).then(function (results) {
       //Destructure Json to array of faction members
-      const factionInfo = Object.values(Object.values(results[0].data)[14]);
-      const factionName = Object.values(results[0].data)[1];
+      const factionInfo = Object.keys(results[0].data);
+      let factionMemberList = undefined;
+      let factionName = undefined;
+      //Iterate over list to find out where members list is located and define variable
+      for (let i = 0; i < factionInfo.length; i++) {
+        if (factionInfo[i] === 'members') {
+          factionMemberList = Object.values(Object.values(results[0].data)[i]);
+        }
+
+        if (factionInfo[i] === 'name') {
+          factionName = Object.values(results[0].data)[i];
+        }
+      }
 
       const response = new MessageEmbed().setColor('AQUA').setDescription(
         `${
@@ -43,7 +54,7 @@ module.exports = {
       );
 
       //Make map based on if member is in hospital
-      factionInfo.forEach((factionMember) => {
+      factionMemberList.forEach((factionMember) => {
         if (factionMember.status.description.includes('In hospital')) {
           hospitalMap.set(factionMember.name, factionMember.status.until);
         }
