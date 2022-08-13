@@ -1,3 +1,5 @@
+# No Longer in development
+
 # RankedWarAssistant
 
 Torn Discord bot that assists in ranked wars.
