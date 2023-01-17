@@ -20,7 +20,7 @@ source so you can see what we are up to :-).
 
 ## Database
 
-We use mongoDB and connect to mongoDB with mongoose.
+We use postgresql
 
 ## Environment Variables
 

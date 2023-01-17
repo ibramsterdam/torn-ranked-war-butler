@@ -12,4 +12,5 @@ const Ascii = require("ascii-table");
 
 client.commands = new Collection();
 
+console.log("OI", process.env.BOT_TOKEN);
 client.login(process.env.BOT_TOKEN);

@@ -1,4 +1,4 @@
-const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "clearmessage",
   description:
@@ -33,12 +33,10 @@ module.exports = {
 
     //no target = null
     if (target && amount <= 100) {
-      let i = 0;
       const filtered = [];
       (await messages).filter((message) => {
         if (message.author.id == target.id && amount > 0) {
           filtered.push(message);
-          i++;
         }
       });
 

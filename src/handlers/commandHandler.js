@@ -5,7 +5,7 @@ require("dotenv").config();
 module.exports = async (client, PG, Ascii) => {
   const table = new Ascii("Commands loaded");
 
-  CommandsArray = [];
+  const CommandsArray = [];
 
   //Make map out of all files in commands folder and loop over them.
   (await PG(`${process.cwd()}/src/commands/*/*.js`)).map(
@@ -65,6 +65,7 @@ module.exports = async (client, PG, Ascii) => {
   //Here we will check the permissions
   client.on("ready", async () => {
     //Find server properties
+    console.log("THISMA", process.env.GUILD_ID);
     const MainGuild = await client.guilds.cache.get(process.env.GUILD_ID);
 
     //for every command in CommandsArray set permissions who can execute command based on role

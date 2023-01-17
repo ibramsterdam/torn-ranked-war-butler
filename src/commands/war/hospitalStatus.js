@@ -1,4 +1,4 @@
-const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { getFaction } = require("../../util/tornApiUtil");
 
 module.exports = {
@@ -47,9 +47,9 @@ module.exports = {
         } has asked for the the hospital list <t:${Math.round(
           Date.now() / 1000
         )}:R>.
-        \  
+        
         **Important:**
-        \
+        
         *This list does not update on its own when someone takes medication. Also, switch channels if timestamps dont seem to update.*`
       );
 

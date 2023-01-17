@@ -1,4 +1,4 @@
-const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { getTornRankedWarInfo } = require("../../util/tornApiUtil");
 const { getMyFactionWarInfo } = require("../../util/rankedWarUtil");
 

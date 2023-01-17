@@ -1,9 +1,4 @@
-const {
-  Client,
-  CommandInteraction,
-  MessageEmbed,
-  Collection,
-} = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { checkCooldown } = require("../../util/cooldownUtil");
 
 module.exports = {

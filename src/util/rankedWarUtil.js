@@ -11,6 +11,7 @@ const getMyFactionWarInfo = (rankedWarList, targetFactionId) => {
     const warObject = Object.values(war);
     const factionInfo = warObject[Object.keys(warObject)[0]];
     if (
+      // eslint-disable-next-line no-prototype-builtins
       factionInfo.hasOwnProperty(
         targetFactionId !== null ? targetFactionId : process.env.TORN_FACTION_ID
       )

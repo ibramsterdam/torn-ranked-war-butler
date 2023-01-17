@@ -1,6 +1,4 @@
-const { Client } = require("discord.js");
 require("dotenv").config();
-const mongoose = require("mongoose");
 
 module.exports = {
   name: "ready",
@@ -18,16 +16,5 @@ module.exports = {
     }
 
     //Connect to the database
-    mongoose
-      .connect(process.env.DATABASE_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then(() => {
-        console.log("The client has connected to the database");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   },
 };

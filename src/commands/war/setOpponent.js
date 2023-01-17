@@ -1,4 +1,4 @@
-const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { getFaction } = require("../../util/tornApiUtil");
 const { saveEnemyFaction } = require("../../util/jsonStorageUtil");
 
@@ -26,6 +26,7 @@ module.exports = {
     //Make call to torn API
     Promise.all([getFaction(factionId)]).then(function (results) {
       //No faction found
+      // eslint-disable-next-line no-prototype-builtins
       if (results[0] == undefined || results[0].data.hasOwnProperty("error")) {
         interaction.reply({
           content: "Invalid input",
