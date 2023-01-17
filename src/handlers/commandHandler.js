@@ -65,7 +65,6 @@ module.exports = async (client, PG, Ascii) => {
   //Here we will check the permissions
   client.on("ready", async () => {
     //Find server properties
-    console.log("THISMA", process.env.GUILD_ID);
     const MainGuild = await client.guilds.cache.get(process.env.GUILD_ID);
 
     //for every command in CommandsArray set permissions who can execute command based on role

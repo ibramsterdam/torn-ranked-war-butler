@@ -1,5 +1,5 @@
-const { Client, Collection } = require("discord.js");
-const client = new Client({ intents: 32767 });
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 require("dotenv").config();
 const { promisify } = require("util");
 const { glob } = require("glob");
@@ -12,5 +12,4 @@ const Ascii = require("ascii-table");
 
 client.commands = new Collection();
 
-console.log("OI", process.env.BOT_TOKEN);
 client.login(process.env.BOT_TOKEN);
