@@ -1,5 +1,5 @@
-require('dotenv').config();
-const fs = require('fs');
+require("dotenv").config();
+const fs = require("fs");
 
 const saveEnemyFaction = (factionID) => {
   const obj = {
@@ -11,9 +11,9 @@ const saveEnemyFaction = (factionID) => {
     enemy_faction: factionID,
   });
 
-  fs.writeFile('match.json', JSON.stringify(obj), function (err) {
+  fs.writeFile("match.json", JSON.stringify(obj), function (err) {
     if (err) throw err;
-    console.log('complete');
+    console.log("complete");
   });
 };
 

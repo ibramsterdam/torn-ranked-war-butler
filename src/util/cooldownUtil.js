@@ -1,5 +1,5 @@
 const cooldowns = new Map();
-const { Collection } = require('discord.js');
+const { Collection } = require("discord.js");
 
 const checkCooldown = (command, interaction) => {
   //If command has a cooldown set and get timers

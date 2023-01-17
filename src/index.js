@@ -1,12 +1,12 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Collection } = require("discord.js");
 const client = new Client({ intents: 32767 });
-require('dotenv').config();
-const { promisify } = require('util');
-const { glob } = require('glob');
+require("dotenv").config();
+const { promisify } = require("util");
+const { glob } = require("glob");
 const PG = promisify(glob);
-const Ascii = require('ascii-table');
+const Ascii = require("ascii-table");
 
-['eventHandler', 'commandHandler'].forEach((handler) => {
+["eventHandler", "commandHandler"].forEach((handler) => {
   require(`./handlers/${handler}`)(client, PG, Ascii);
 });
 

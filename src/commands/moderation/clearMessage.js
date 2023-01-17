@@ -1,21 +1,21 @@
-const { CommandInteraction, MessageEmbed } = require('discord.js');
+const { CommandInteraction, MessageEmbed } = require("discord.js");
 module.exports = {
-  name: 'clearmessage',
+  name: "clearmessage",
   description:
-    'Deletes a specified number of messages from channel or a target.',
-  permission: 'ADMINISTRATOR',
+    "Deletes a specified number of messages from channel or a target.",
+  permission: "ADMINISTRATOR",
   options: [
     {
-      name: 'amount',
+      name: "amount",
       description:
-        'Select the amount of messages to delete from a channel or a target.',
-      type: 'NUMBER',
+        "Select the amount of messages to delete from a channel or a target.",
+      type: "NUMBER",
       required: true,
     },
     {
-      name: 'target',
-      description: 'Select a target to clear their messages.',
-      type: 'USER',
+      name: "target",
+      description: "Select a target to clear their messages.",
+      type: "USER",
       required: false,
     },
   ],
@@ -26,10 +26,10 @@ module.exports = {
   async execute(interaction) {
     const { channel, options } = interaction;
 
-    const amount = options.getNumber('amount');
-    const target = options.getMember('target');
+    const amount = options.getNumber("amount");
+    const target = options.getMember("target");
     const messages = await channel.messages.fetch();
-    const response = new MessageEmbed().setColor('AQUA');
+    const response = new MessageEmbed().setColor("AQUA");
 
     //no target = null
     if (target && amount <= 100) {

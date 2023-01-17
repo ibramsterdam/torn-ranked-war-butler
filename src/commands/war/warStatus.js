@@ -1,17 +1,17 @@
-const { CommandInteraction, MessageEmbed } = require('discord.js');
-const { getTornRankedWarInfo } = require('../../util/tornApiUtil');
-const { getMyFactionWarInfo } = require('../../util/rankedWarUtil');
+const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { getTornRankedWarInfo } = require("../../util/tornApiUtil");
+const { getMyFactionWarInfo } = require("../../util/rankedWarUtil");
 
 module.exports = {
-  name: 'warstatus',
+  name: "warstatus",
   cooldown: 10,
-  description: 'Responds with war details',
-  permission: 'ADMINISTRATOR',
+  description: "Responds with war details",
+  permission: "ADMINISTRATOR",
   options: [
     {
-      name: 'factionid',
-      description: 'Search rankedwars based on factionId',
-      type: 'NUMBER',
+      name: "factionid",
+      description: "Search rankedwars based on factionId",
+      type: "NUMBER",
       required: false,
     },
   ],
@@ -22,7 +22,7 @@ module.exports = {
   async execute(interaction) {
     Promise.all([getTornRankedWarInfo()]).then(function (results) {
       const { options } = interaction;
-      const targetFactionId = options.getNumber('factionid');
+      const targetFactionId = options.getNumber("factionid");
 
       //Use randedWarUtil to return information in an array with objects
       const warObject = getMyFactionWarInfo(
@@ -33,7 +33,7 @@ module.exports = {
       //If targetFactionId was invalid
       if (warObject === undefined) {
         interaction.reply({
-          content: 'Invalid input',
+          content: "Invalid input",
         });
         return;
       }
@@ -44,21 +44,21 @@ module.exports = {
       const date = new Date(startDateTimestamp);
       const dateInfo =
         date.getDate() +
-        '/' +
+        "/" +
         (date.getMonth() + 1) +
-        '/' +
+        "/" +
         date.getFullYear() +
-        ' ' +
+        " " +
         date.getHours() +
-        ':' +
+        ":" +
         date.getMinutes() +
-        ':' +
+        ":" +
         date.getSeconds() +
-        ' Torn Time';
+        " Torn Time";
 
       //Create message
       const response = new MessageEmbed()
-        .setColor('AQUA')
+        .setColor("AQUA")
         .setTitle(`${factionArray[0][1].name} vs ${factionArray[1][1].name}`)
         .setDescription(`The war starts at ${dateInfo}`)
         .addField(
@@ -103,7 +103,7 @@ module.exports = {
 
       if (warInfo.winner !== 0) {
         response.setDescription(`The war has ended!`).addField(
-          'Winner',
+          "Winner",
           warInfo.winner === factionArray[0][0]
             ? `${factionArray[1][1].name} won with a score of ${factionArray[1][1].score}
               vs

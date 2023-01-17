@@ -3,11 +3,11 @@ const {
   CommandInteraction,
   MessageEmbed,
   Collection,
-} = require('discord.js');
-const { checkCooldown } = require('../../util/cooldownUtil');
+} = require("discord.js");
+const { checkCooldown } = require("../../util/cooldownUtil");
 
 module.exports = {
-  name: 'interactionCreate',
+  name: "interactionCreate",
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
@@ -21,9 +21,9 @@ module.exports = {
           interaction.reply({
             embeds: [
               new MessageEmbed()
-                .setColor('RED')
+                .setColor("RED")
                 .setDescription(
-                  '⛔ An error occured while running this command'
+                  "⛔ An error occured while running this command"
                 ),
             ],
             //Delete command if it failed so bot does not crash

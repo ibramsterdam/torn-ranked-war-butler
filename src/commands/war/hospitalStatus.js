@@ -1,18 +1,18 @@
-const { CommandInteraction, MessageEmbed } = require('discord.js');
-const { getFaction } = require('../../util/tornApiUtil');
+const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { getFaction } = require("../../util/tornApiUtil");
 
 module.exports = {
-  name: 'hospitalstatus',
+  name: "hospitalstatus",
   description:
-    'Deletes a specified number of messages from channel or a target.',
-  permission: 'ADMINISTRATOR',
+    "Deletes a specified number of messages from channel or a target.",
+  permission: "ADMINISTRATOR",
   cooldown: 10,
   options: [
     {
-      name: 'factionid',
+      name: "factionid",
       description:
-        'Select the amount of messages to delete from a channel or a target.',
-      type: 'NUMBER',
+        "Select the amount of messages to delete from a channel or a target.",
+      type: "NUMBER",
       required: true,
     },
   ],
@@ -22,7 +22,7 @@ module.exports = {
    */
   async execute(interaction) {
     const { options } = interaction;
-    const targetFactionId = options.getNumber('factionid');
+    const targetFactionId = options.getNumber("factionid");
     const hospitalMap = new Map();
 
     Promise.all([getFaction(targetFactionId)]).then(function (results) {
@@ -32,16 +32,16 @@ module.exports = {
       let factionName = undefined;
       //Iterate over list to find out where members list is located and define variable
       for (let i = 0; i < factionInfo.length; i++) {
-        if (factionInfo[i] === 'members') {
+        if (factionInfo[i] === "members") {
           factionMemberList = Object.values(Object.values(results[0].data)[i]);
         }
 
-        if (factionInfo[i] === 'name') {
+        if (factionInfo[i] === "name") {
           factionName = Object.values(results[0].data)[i];
         }
       }
 
-      const response = new MessageEmbed().setColor('AQUA').setDescription(
+      const response = new MessageEmbed().setColor("AQUA").setDescription(
         `${
           interaction.member
         } has asked for the the hospital list <t:${Math.round(
@@ -55,7 +55,7 @@ module.exports = {
 
       //Make map based on if member is in hospital
       factionMemberList.forEach((factionMember) => {
-        if (factionMember.status.description.includes('In hospital')) {
+        if (factionMember.status.description.includes("In hospital")) {
           hospitalMap.set(factionMember.name, factionMember.status.until);
         }
       });

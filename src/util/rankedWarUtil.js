@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 /**
  * @description Checks the objectlist and returns warinformation your faction is in.

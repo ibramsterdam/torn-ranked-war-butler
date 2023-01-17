@@ -1,5 +1,5 @@
 const containsUpperCase = (string) => {
-  const pattern = new RegExp('^(?=.*[A-Z])');
+  const pattern = new RegExp("^(?=.*[A-Z])");
   return pattern.test(string);
 };
 

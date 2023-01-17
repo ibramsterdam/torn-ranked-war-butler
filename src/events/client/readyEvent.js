@@ -1,19 +1,19 @@
-const { Client } = require('discord.js');
-require('dotenv').config();
-const mongoose = require('mongoose');
+const { Client } = require("discord.js");
+require("dotenv").config();
+const mongoose = require("mongoose");
 
 module.exports = {
-  name: 'ready',
+  name: "ready",
   once: true,
   /**
    * @param {Client} client
    */
   execute(client) {
-    console.log('The bot has booted up!');
-    client.user.setActivity('TORN');
+    console.log("The bot has booted up!");
+    client.user.setActivity("TORN");
 
     if (!process.env.DATABASE_URL) {
-      console.log('No server link found');
+      console.log("No server link found");
       return;
     }
 
@@ -24,7 +24,7 @@ module.exports = {
         useUnifiedTopology: true,
       })
       .then(() => {
-        console.log('The client has connected to the database');
+        console.log("The client has connected to the database");
       })
       .catch((err) => {
         console.log(err);

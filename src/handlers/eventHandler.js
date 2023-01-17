@@ -1,7 +1,7 @@
-const { Events } = require('../validation/eventNames');
+const { Events } = require("../validation/eventNames");
 
 module.exports = async (client, PG, Ascii) => {
-  const table = new Ascii('Events loaded');
+  const table = new Ascii("Events loaded");
 
   //Make map out of all files in events folder and loop over them.
   (await PG(`${process.cwd()}/src/events/*/*.js`)).map(async (eventFile) => {
@@ -9,11 +9,11 @@ module.exports = async (client, PG, Ascii) => {
 
     //If event is invalid or missing
     if (!Events.includes(event.name) || !event.name) {
-      const arg = eventFile.split('/');
+      const arg = eventFile.split("/");
 
       //If event is invalid add Sucessfull Row
       await table.addRow(
-        `${event.name || 'MISSING'}`,
+        `${event.name || "MISSING"}`,
         `⛔ Event name is invalid or missing: ${arg[6] + `/` + arg[7]}`
       );
       return; //prevent bot crash
@@ -27,7 +27,7 @@ module.exports = async (client, PG, Ascii) => {
     }
 
     //If event is valid add Sucessfull Row
-    await table.addRow(event.name, '✅ Succesfull');
+    await table.addRow(event.name, "✅ Succesfull");
   });
 
   console.log(table.toString());

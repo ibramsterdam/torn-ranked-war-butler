@@ -6,7 +6,7 @@ const isObject = (value) => {
   if (value == null) {
     return false;
   }
-  return typeof value === 'object';
+  return typeof value === "object";
 };
 
 /**
@@ -16,7 +16,7 @@ const isObject = (value) => {
 const objProps = (object) => {
   for (let value in object) {
     if (isObject(object[value])) {
-      console.log('Key = ' + value);
+      console.log("Key = " + value);
       objProps(object[value]);
     } else {
       console.log(value, object[value]);

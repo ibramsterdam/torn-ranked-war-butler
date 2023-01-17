@@ -10,24 +10,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ibramsterdam/RankedWarAssistant.git"
+    "url": "git+https://github.com/ibramsterdam/torn-ranked-war-assistant.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ibramsterdam/RankedWarAssistant/issues"
+    "url": "https://github.com/ibramsterdam/torn-ranked-war-assistant/issues"
   },
-  "homepage": "https://github.com/ibramsterdam/RankedWarAssistant#readme",
+  "homepage": "https://github.com/ibramsterdam/torn-ranked-war-assistant#readme",
   "dependencies": {
     "@discordjs/rest": "^0.2.0-canary.0",
     "ascii-table": "^0.0.9",
     "axios": "^0.24.0",
     "discord-api-types": "^0.26.1",
-    "discord.js": "^13.6.0",
+    "discord.js": "^14.7.1",
     "dotenv": "^14.2.0",
     "glob": "^7.2.0",
-    "mongoose": "^6.1.7",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.20"
   }
 }

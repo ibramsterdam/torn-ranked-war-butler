@@ -1,9 +1,9 @@
-const { Perms } = require('../validation/commandPermissions');
-const { containsUpperCase } = require('../util/containsUpperCaseUtil');
-require('dotenv').config();
+const { Perms } = require("../validation/commandPermissions");
+const { containsUpperCase } = require("../util/containsUpperCaseUtil");
+require("dotenv").config();
 
 module.exports = async (client, PG, Ascii) => {
-  const table = new Ascii('Commands loaded');
+  const table = new Ascii("Commands loaded");
 
   CommandsArray = [];
 
@@ -15,26 +15,26 @@ module.exports = async (client, PG, Ascii) => {
       //If command name is missing
       if (!command.name) {
         return table.addRow(
-          commandFile.split('/')[6],
-          '⛔ Failed',
-          'Missing a name.'
+          commandFile.split("/")[6],
+          "⛔ Failed",
+          "Missing a name."
         );
       }
       //If command name is with uppercase
       if (containsUpperCase(command.name)) {
         return table.addRow(
-          commandFile.split('/')[6],
-          '⛔ Failed',
-          'Command name contains uppercase.'
+          commandFile.split("/")[6],
+          "⛔ Failed",
+          "Command name contains uppercase."
         );
       }
 
       //If command description is missing
       if (!command.description) {
         return table.addRow(
-          commandFile.split('/')[6],
-          '⛔ Failed',
-          'Missing a description.'
+          commandFile.split("/")[6],
+          "⛔ Failed",
+          "Missing a description."
         );
       }
 
@@ -44,9 +44,9 @@ module.exports = async (client, PG, Ascii) => {
           command.defaultPermission = false;
         } else {
           return table.addRow(
-            commandFile.split('/')[6],
-            '⛔ Failed',
-            'Permission is invalid'
+            commandFile.split("/")[6],
+            "⛔ Failed",
+            "Permission is invalid"
           );
         }
       }
@@ -56,14 +56,14 @@ module.exports = async (client, PG, Ascii) => {
       CommandsArray.push(command);
 
       //If everything is valid, add Sucessfull Row
-      await table.addRow(command.name, '✅ Succesfull');
+      await table.addRow(command.name, "✅ Succesfull");
     }
   );
 
   console.log(table.toString());
 
   //Here we will check the permissions
-  client.on('ready', async () => {
+  client.on("ready", async () => {
     //Find server properties
     const MainGuild = await client.guilds.cache.get(process.env.GUILD_ID);
 
@@ -98,7 +98,7 @@ module.exports = async (client, PG, Ascii) => {
           (collectionOfRolesForFullPermission, role) => {
             return [
               ...collectionOfRolesForFullPermission,
-              { id: role.id, type: 'ROLE', permission: true },
+              { id: role.id, type: "ROLE", permission: true },
             ];
           },
           []

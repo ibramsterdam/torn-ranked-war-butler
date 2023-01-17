@@ -1,5 +1,5 @@
-const axios = require('axios');
-require('dotenv').config();
+const axios = require("axios");
+require("dotenv").config();
 
 const getTornRankedWarInfo = async () => {
   return axios.get(
