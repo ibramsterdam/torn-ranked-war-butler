@@ -8,13 +8,10 @@ module.exports = {
    */
   execute(client) {
     console.log("The bot has booted up!");
-    client.user.setActivity("TORN");
+    client.user.setActivity("Torn");
 
     if (!process.env.DATABASE_URL) {
-      console.log("No server link found");
-      return;
+      console.log("No db url link found");
     }
-
-    //Connect to the database
   },
 };

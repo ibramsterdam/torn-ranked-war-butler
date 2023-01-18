@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { getFaction } = require("../../util/tornApiUtil");
 const { saveEnemyFaction } = require("../../util/jsonStorageUtil");
 
@@ -11,7 +11,7 @@ module.exports = {
     {
       name: "factionid",
       description: "Provide the enemy factionId",
-      type: "NUMBER",
+      type: 4,
       required: true,
     },
   ],
@@ -38,7 +38,7 @@ module.exports = {
       saveEnemyFaction(factionId);
 
       const factionInfo = results[0].data;
-      const response = new MessageEmbed()
+      const response = new EmbedBuilder()
         .setColor("AQUA")
         .setDescription(
           `${interaction.member} has set the enemy faction id that is going to be used in the war.`

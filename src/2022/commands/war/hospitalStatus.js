@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const { getFaction } = require("../../util/tornApiUtil");
 
 module.exports = {
@@ -12,10 +12,23 @@ module.exports = {
       name: "factionid",
       description:
         "Select the amount of messages to delete from a channel or a target.",
-      type: "NUMBER",
+      type: 4,
       required: true,
     },
   ],
+  // data: new SlashCommandBuilder()
+  //   .setName("hospitalstatus")
+  //   .setDescription(
+  //     "Deletes a specified number of messages from channel or a target."
+  //   )
+  //   .addIntegerOption((option) =>
+  //     option
+  //       .setName("factionid")
+  //       .setDescription(
+  //         "Select the amount of messages to delete from a channel or a target."
+  //       )
+  //       .setRequired(true)
+  //   ),
 
   /**
    * @param {CommandInteraction} interaction
@@ -41,15 +54,15 @@ module.exports = {
         }
       }
 
-      const response = new MessageEmbed().setColor("AQUA").setDescription(
+      const response = new EmbedBuilder().setColor("Aqua").setDescription(
         `${
           interaction.member
         } has asked for the the hospital list <t:${Math.round(
           Date.now() / 1000
         )}:R>.
-        
+
         **Important:**
-        
+
         *This list does not update on its own when someone takes medication. Also, switch channels if timestamps dont seem to update.*`
       );
 

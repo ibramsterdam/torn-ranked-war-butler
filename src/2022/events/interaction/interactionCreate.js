@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { checkCooldown } = require("../../util/cooldownUtil");
 
 module.exports = {
@@ -9,13 +9,14 @@ module.exports = {
    */
   async execute(interaction, client) {
     if (interaction.isCommand()) {
+      console.log("OI");
       const command = client.commands.get(interaction.commandName);
 
       if (!command) {
         return (
           interaction.reply({
             embeds: [
-              new MessageEmbed()
+              new EmbedBuilder()
                 .setColor("RED")
                 .setDescription(
                   "⛔ An error occured while running this command"

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { getTornRankedWarInfo } = require("../../util/tornApiUtil");
 const { getMyFactionWarInfo } = require("../../util/rankedWarUtil");
 
@@ -11,7 +11,7 @@ module.exports = {
     {
       name: "factionid",
       description: "Search rankedwars based on factionId",
-      type: "NUMBER",
+      type: 4,
       required: false,
     },
   ],
@@ -57,7 +57,7 @@ module.exports = {
         " Torn Time";
 
       //Create message
-      const response = new MessageEmbed()
+      const response = new EmbedBuilder()
         .setColor("AQUA")
         .setTitle(`${factionArray[0][1].name} vs ${factionArray[1][1].name}`)
         .setDescription(`The war starts at ${dateInfo}`)

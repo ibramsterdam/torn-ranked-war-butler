@@ -20,10 +20,8 @@
   },
   "homepage": "https://github.com/ibramsterdam/torn-ranked-war-assistant#readme",
   "dependencies": {
-    "@discordjs/rest": "^1.5.0",
     "ascii-table": "^0.0.9",
     "axios": "^1.2.3",
-    "discord-api-types": "^0.37.28",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "glob": "^8.1.0",

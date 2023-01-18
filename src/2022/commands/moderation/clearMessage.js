@@ -1,15 +1,17 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
   name: "clearmessage",
   description:
     "Deletes a specified number of messages from channel or a target.",
   permission: "ADMINISTRATOR",
+  type: "STRING",
   options: [
     {
       name: "amount",
       description:
         "Select the amount of messages to delete from a channel or a target.",
-      type: "NUMBER",
+      type: 4,
       required: true,
     },
     {
@@ -29,7 +31,7 @@ module.exports = {
     const amount = options.getNumber("amount");
     const target = options.getMember("target");
     const messages = await channel.messages.fetch();
-    const response = new MessageEmbed().setColor("AQUA");
+    const response = new EmbedBuilder().setColor("AQUA");
 
     //no target = null
     if (target && amount <= 100) {

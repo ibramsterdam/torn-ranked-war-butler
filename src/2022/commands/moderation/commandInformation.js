@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 require("dotenv").config();
 
 module.exports = {
@@ -13,13 +13,13 @@ module.exports = {
    */
   async execute(interaction, client) {
     //Make message
-    const response = new MessageEmbed()
+    const response = new EmbedBuilder()
       .setColor("AQUA")
       .setTitle("Command List");
 
     //Loop over all commands and add to the response
     client.commands.forEach((command) => {
-      response.addField(
+      response.addFields(
         `Command: /${command.name}`,
         `${command.description}`,
         false
