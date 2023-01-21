@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ibramsterdam/torn-ranked-war-assistant#readme",
   "dependencies": {
+    "@prisma/client": "^4.9.0",
     "ascii-table": "^0.0.9",
     "axios": "^1.2.3",
     "discord.js": "^14.7.1",
@@ -28,6 +29,7 @@
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
-    "eslint": "^8.32.0"
+    "eslint": "^8.32.0",
+    "prisma": "^4.9.0"
   }
 }
