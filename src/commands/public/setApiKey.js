@@ -2,7 +2,7 @@ const {
   SlashCommandBuilder,
   ModalBuilder,
   PermissionFlagsBits,
-
+  EmbedBuilder,
   ActionRowBuilder,
   TextInputBuilder,
   TextInputStyle,
@@ -18,11 +18,11 @@ module.exports = {
   async execute(interaction) {
     const modal = new ModalBuilder()
       .setCustomId("set-api-key-modal")
-      .setTitle("Input something!");
+      .setTitle("Paste your api key");
 
     const textInput = new TextInputBuilder()
       .setCustomId("set-api-key-text-input")
-      .setLabel("Gimmi some input")
+      .setLabel("Api key is used for 30 requests per minute")
       .setRequired(true)
       .setStyle(TextInputStyle.Short);
 

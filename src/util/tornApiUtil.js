@@ -16,8 +16,18 @@ const getFaction = async (factionID) => {
     return "error";
   }
 };
+const getUser = async (apiKey) => {
+  try {
+    return axios.get(
+      `https://api.torn.com/user/?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
+    );
+  } catch (error) {
+    return "error";
+  }
+};
 
 module.exports = {
   getTornRankedWarInfo,
   getFaction,
+  getUser,
 };

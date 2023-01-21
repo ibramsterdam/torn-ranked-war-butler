@@ -11,10 +11,8 @@ datasource db {
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  tornId        Int     @unique
-  discordId     BigInt  @unique
-  isWhitelisted Boolean
+  id     Int @id @default(autoincrement())
+  tornId Int @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -22,14 +20,24 @@ model User {
   apiKey ApiKey?
 }
 
+model DiscordServer {
+  id              Int    @id @default(autoincrement())
+  discordServerId BigInt @unique
+
+  isWhitelisted Boolean  @default(false)
+  apiKey        ApiKey[]
+}
+
 model ApiKey {
   id          Int    @id @default(autoincrement())
-  value       String
+  value       String @unique
   accessLevel String @default("No Access")
 
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
+  discordServerId Int
 }

@@ -25,11 +25,9 @@ client.buttons = new Collection();
 client.selectMenus = new Collection();
 client.modals = new Collection();
 
+const prisma = new PrismaClient();
 handleEvents(client);
 handleComponent(client);
 
-const prisma = new PrismaClient();
-
 client.login(client.config.token);
-
 module.exports = prisma;

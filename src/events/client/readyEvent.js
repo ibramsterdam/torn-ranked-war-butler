@@ -8,7 +8,7 @@ module.exports = {
   /**
    *  @param {Client} client
    */
-  execute(client) {
+  async execute(client) {
     client.user.setActivity(
       `Torn with ${client.guilds.cache.size + 1} torn guilds`,
       {
