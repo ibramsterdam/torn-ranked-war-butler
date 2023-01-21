@@ -13,7 +13,7 @@ datasource db {
 model User {
   id            Int     @id @default(autoincrement())
   tornId        Int     @unique
-  discordId     Int     @unique
+  discordId     BigInt  @unique
   isWhitelisted Boolean
 
   createdAt DateTime @default(now())
