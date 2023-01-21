@@ -1,5 +1,5 @@
 module.exports = {
-  data: { name: "Test" },
+  data: { name: "test" },
   async execute(interaction, client) {
     await interaction.reply("Test Click!");
   },

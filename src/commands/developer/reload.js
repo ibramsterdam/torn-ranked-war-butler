@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const { loadEvents } = require("../../functions/handlers/eventHandler");
-const { loadCommands } = require("../../functions/handlers/commandHandler");
+const { handleEvents } = require("../../functions/handlers/eventHandler");
+const { handleCommands } = require("../../functions/handlers/commandHandler");
 
 module.exports = {
   developer: true,
@@ -22,14 +22,14 @@ module.exports = {
         {
           for (const [key, value] of client.events) {
             client.removeListener(`${key}`, value, true);
-            loadEvents(client);
+            handleEvents(client);
             interaction.reply({ content: "Reloaded Events", ephemeral: true });
           }
         }
         break;
       case "commands":
         {
-          loadCommands(client);
+          handleCommands(client);
           interaction.reply({ content: "Reloaded Commands", ephemeral: true });
         }
         break;

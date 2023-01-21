@@ -24,7 +24,6 @@ module.exports = {
 
     client.commands //Loop over all commands and add to the response
       .forEach((command) => {
-        console.log("command", command);
         response.addFields({
           name: `Command: /${command.data.name}`,
           value: `${command.data.description}`,
