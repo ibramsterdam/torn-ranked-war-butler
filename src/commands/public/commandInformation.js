@@ -2,7 +2,7 @@ const {
   EmbedBuilder,
   SlashCommandBuilder,
   CommandInteraction,
-  ClientApplication,
+  Client,
 } = require("discord.js");
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
   /**
    *
    * @param {CommandInteraction} interaction
-   * @param {ClientApplication} client
+   * @param {Client} client
    */
   async execute(interaction, client) {
     //Make message

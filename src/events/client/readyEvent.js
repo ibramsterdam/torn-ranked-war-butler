@@ -1,4 +1,4 @@
-const { ActivityType, ClientApplication } = require("discord.js");
+const { ActivityType, Client } = require("discord.js");
 const { loadCommands } = require("../../handlers/commandHandler");
 require("dotenv").config();
 
@@ -6,7 +6,7 @@ module.exports = {
   name: "ready",
   once: true,
   /**
-   *  @param {ClientApplication} client
+   *  @param {Client} client
    */
   execute(client) {
     client.user.setActivity(
