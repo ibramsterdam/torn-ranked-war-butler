@@ -21,7 +21,6 @@ module.exports = {
     }
 
     const guildID = Number(interaction.guildId);
-    console.log("interaction", interaction.guildId);
     const prisma = require("../../index");
 
     try {
