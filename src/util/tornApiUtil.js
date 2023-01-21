@@ -8,9 +8,13 @@ const getTornRankedWarInfo = async () => {
 };
 
 const getFaction = async (factionID) => {
-  return axios.get(
-    `https://api.torn.com/faction/${factionID}?selections=&key=${process.env.TORN_API_KEY}`
-  );
+  try {
+    return axios.get(
+      `https://api.torn.com/faction/${factionID}?selections=&key=${process.env.TORN_API_KEY}`
+    );
+  } catch (error) {
+    return "error";
+  }
 };
 
 module.exports = {

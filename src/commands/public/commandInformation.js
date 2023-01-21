@@ -1,11 +1,12 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 require("dotenv").config();
 
 module.exports = {
-  name: "commandinformation",
-  description: "Responds with a list of all command information available",
-  cooldown: 10,
-  permission: "ADMINISTRATOR",
+  data: new SlashCommandBuilder()
+    .setName("commandinformation")
+    .setDescription(
+      "Responds with a list of all command information available"
+    ),
   /**
    *
    * @param {CommandInteraction} interaction

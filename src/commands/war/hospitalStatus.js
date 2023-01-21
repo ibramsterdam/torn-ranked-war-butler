@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const { getFaction } = require("../../2022/util/tornApiUtil");
+const { getFaction } = require("../../util/tornApiUtil");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -17,13 +17,16 @@ module.exports = {
     ),
 
   /**
-   * @param {CommandInteraction} interaction
+   * @param {} interaction
    */
   async execute(interaction) {
     const { options } = interaction;
     const targetFactionId = options.getNumber("factionid");
     const hospitalMap = new Map();
+    console.log("targetFactionId", targetFactionId);
     const results = await getFaction(targetFactionId);
+
+    console.log("oi", results);
 
     if (results.data.error) {
       const err = new EmbedBuilder()
