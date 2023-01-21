@@ -5,7 +5,7 @@ const { handleCommands } = require("../../functions/handlers/commandHandler");
 module.exports = {
   developer: true,
   data: new SlashCommandBuilder()
-    .setName("reload")
+    .setName("test-reload")
     .setDescription("Reload your commands/events")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addSubcommand((options) =>

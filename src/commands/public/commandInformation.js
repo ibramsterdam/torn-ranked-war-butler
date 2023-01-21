@@ -24,10 +24,12 @@ module.exports = {
 
     client.commands //Loop over all commands and add to the response
       .forEach((command) => {
-        response.addFields({
-          name: `Command: /${command.data.name}`,
-          value: `${command.data.description}`,
-        });
+        if (!command.data.name.includes("test")) {
+          response.addFields({
+            name: `Command: /${command.data.name}`,
+            value: `${command.data.description}`,
+          });
+        }
       });
 
     //Reply to the discord client
