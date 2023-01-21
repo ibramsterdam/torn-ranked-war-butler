@@ -24,21 +24,22 @@ module.exports = {
    * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction) {
+    await interaction.deferReply();
+
     const { options } = interaction;
     const targetFactionId = options.getNumber("factionid");
     const hospitalMap = new Map();
     const results = await getFaction(targetFactionId);
 
-    console.log("oi", results);
-
     if (results.data.error) {
       const err = new EmbedBuilder()
         .setColor("Aqua")
         .setTitle(`🏥 No faction found 🏥`);
-      return interaction.reply({
+      await interaction.followUp({
         embeds: [err],
-        fetchReply: true,
       });
+
+      return;
     }
     //Destructure Json to array of faction members
     const factionInfo = Object.keys(results.data);
@@ -92,9 +93,8 @@ module.exports = {
     }
 
     //Reply to the discord client
-    interaction.reply({
+    await interaction.followUp({
       embeds: [response],
-      fetchReply: true,
     });
   },
 };

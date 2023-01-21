@@ -23,6 +23,8 @@ module.exports = {
    * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction) {
+    await interaction.deferReply();
+
     const results = await getTornRankedWarInfo();
     const { options } = interaction;
     const targetFactionId = options.getNumber("factionid");
@@ -35,7 +37,7 @@ module.exports = {
 
     //If targetFactionId was invalid
     if (warObject === undefined) {
-      interaction.reply({
+      await interaction.followUp({
         content: "Invalid input",
       });
       return;
@@ -119,9 +121,8 @@ module.exports = {
     }
 
     //Reply to the discord client
-    interaction.reply({
+    await interaction.followUp({
       embeds: [response],
-      fetchReply: true,
     });
   },
 };

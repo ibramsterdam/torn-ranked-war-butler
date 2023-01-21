@@ -6,6 +6,7 @@ const {
 } = require("discord.js");
 const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
+require("dotenv").config();
 
 const client = new Client({
   intents: [Guilds, GuildMembers, GuildMessages],
@@ -14,7 +15,7 @@ const client = new Client({
 
 const { loadEvents } = require("./handlers/eventHandler");
 
-client.config = require("../config.json");
+client.config = { token: process.env.BOT_TOKEN };
 client.events = new Collection();
 client.commands = new Collection();
 
