@@ -1,34 +1,20 @@
-const { EmbedBuilder } = require("discord.js");
-const { getFaction } = require("../../util/tornApiUtil");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { getFaction } = require("../../2022/util/tornApiUtil");
 
 module.exports = {
-  name: "hospitalstatus",
-  description:
-    "Deletes a specified number of messages from channel or a target.",
-  permission: "ADMINISTRATOR",
-  cooldown: 10,
-  options: [
-    {
-      name: "factionid",
-      description:
-        "Select the amount of messages to delete from a channel or a target.",
-      type: 4,
-      required: true,
-    },
-  ],
-  // data: new SlashCommandBuilder()
-  //   .setName("hospitalstatus")
-  //   .setDescription(
-  //     "Deletes a specified number of messages from channel or a target."
-  //   )
-  //   .addIntegerOption((option) =>
-  //     option
-  //       .setName("factionid")
-  //       .setDescription(
-  //         "Select the amount of messages to delete from a channel or a target."
-  //       )
-  //       .setRequired(true)
-  //   ),
+  data: new SlashCommandBuilder()
+    .setName("hospitalstatus")
+    .setDescription(
+      "Deletes a specified number of messages from channel or a target."
+    )
+    .addNumberOption((option) =>
+      option
+        .setName("factionid")
+        .setDescription(
+          "Select the amount of messages to delete from a channel or a target."
+        )
+        .setRequired(true)
+    ),
 
   /**
    * @param {CommandInteraction} interaction
@@ -39,6 +25,9 @@ module.exports = {
     const hospitalMap = new Map();
 
     Promise.all([getFaction(targetFactionId)]).then(function (results) {
+      if (results[0].data.error) {
+        console.log("cool");
+      }
       //Destructure Json to array of faction members
       const factionInfo = Object.keys(results[0].data);
       let factionMemberList = undefined;
@@ -84,7 +73,10 @@ module.exports = {
       for (const [key, value] of [...hospitalMap.entries()].sort(
         (a, b) => a[1] - b[1]
       )) {
-        response.addField(`${key}`, `Leaving hospital <t:${value}:R>`);
+        response.addFields({
+          name: `${key}`,
+          value: `Leaving hospital <t:${value}:R>`,
+        });
       }
 
       //Reply to the discord client
