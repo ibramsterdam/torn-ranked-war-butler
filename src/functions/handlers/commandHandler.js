@@ -1,4 +1,4 @@
-async function loadCommands(client) {
+async function handleCommands(client) {
   const { loadFiles } = require("../fileLoader");
   const ascii = require("ascii-table");
   const table = new ascii().setHeading("Commands", "Status");
@@ -24,4 +24,4 @@ async function loadCommands(client) {
   console.log(table.toString());
 }
 
-module.exports = { loadCommands };
+module.exports = { handleCommands };

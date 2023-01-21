@@ -15,13 +15,16 @@ const client = new Client({
   partials: [User, Message, GuildMember, ThreadMember],
 });
 
-const { loadEvents } = require("./functions/handlers/eventHandler");
+const { handleEvents } = require("./functions/handlers/eventHandler");
+const { handleComponent } = require("./functions/handlers/componentHandler");
 
 client.config = { token: process.env.BOT_TOKEN };
 client.events = new Collection();
 client.commands = new Collection();
+client.buttons = new Collection();
 
-loadEvents(client);
+handleEvents(client);
+handleComponent(client);
 
 const prisma = new PrismaClient();
 

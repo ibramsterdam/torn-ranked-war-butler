@@ -1,5 +1,5 @@
 const { ActivityType, Client } = require("discord.js");
-const { loadCommands } = require("../../functions/handlers/commandHandler");
+const { handleCommands } = require("../../functions/handlers/commandHandler");
 require("dotenv").config();
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
       }
     );
 
-    loadCommands(client).then(() => {
+    handleCommands(client).then(() => {
       console.log("\nThe bot has booted up!");
     });
   },
