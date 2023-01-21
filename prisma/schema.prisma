@@ -21,8 +21,8 @@ model User {
 }
 
 model DiscordServer {
-  id              Int    @id @default(autoincrement())
-  discordServerId BigInt @unique
+  id      Int    @id @default(autoincrement())
+  guildId BigInt @unique
 
   isWhitelisted Boolean  @default(false)
   apiKey        ApiKey[]

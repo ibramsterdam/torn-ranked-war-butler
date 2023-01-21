@@ -8,7 +8,7 @@ Torn Discord bot that assists in ranked wars.
 ## Installation
 
 To invite the bot over to your discord server
-click [here](https://discord.com/api/oauth2/authorize?client_id=932550905713270836&permissions=2147494912&scope=bot%20applications.commands).
+click [here](https://discord.com/api/oauth2/authorize?client_id=932550905713270836&permissions=2147485696&scope=bot).
 \
 At this moment the bot needs 4 rights, but do
 not worry our [repository](https://github.com/ibramsterdam/RankedWarAssistant) is open

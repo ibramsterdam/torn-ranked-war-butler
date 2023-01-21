@@ -9,31 +9,31 @@ module.exports = {
     );
     const KEY_LENGTH = 16;
 
-    //validate input
+    // validate length
     if (apiKey.length !== KEY_LENGTH) {
       return await interaction.editReply("Not a valid key");
     }
 
+    // validate if apikey returns a user
     const user = await getUser(apiKey);
-
     if (user.data.error) {
       return await interaction.editReply("Not a valid key");
     }
 
-    const guildID = Number(client.application.id);
-    console.log("guildID", guildID);
+    const guildID = Number(interaction.guildId);
+    console.log("interaction", interaction.guildId);
     const prisma = require("../../index");
 
     try {
       const dbDiscordServer = await prisma.discordServer.upsert({
         where: {
-          discordServerId: guildID,
+          guildId: guildID,
         },
         update: {
-          discordServerId: guildID,
+          guildId: guildID,
         },
         create: {
-          discordServerId: guildID,
+          guildId: guildID,
         },
       });
       const dbUser = await prisma.user.upsert({
@@ -49,7 +49,11 @@ module.exports = {
         where: {
           value: apiKey,
         },
-        update: {},
+        update: {
+          value: apiKey,
+          discordServerId: dbDiscordServer.id,
+          userId: dbUser.id,
+        },
         create: {
           value: apiKey,
           discordServerId: dbDiscordServer.id,
