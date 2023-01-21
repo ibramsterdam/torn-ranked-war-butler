@@ -26,7 +26,13 @@ module.exports = {
 
     Promise.all([getFaction(targetFactionId)]).then(function (results) {
       if (results[0].data.error) {
-        console.log("cool");
+        const err = new EmbedBuilder()
+          .setColor("Aqua")
+          .setTitle(`🏥 No faction found 🏥`);
+        return interaction.reply({
+          embeds: [err],
+          fetchReply: true,
+        });
       }
       //Destructure Json to array of faction members
       const factionInfo = Object.keys(results[0].data);
