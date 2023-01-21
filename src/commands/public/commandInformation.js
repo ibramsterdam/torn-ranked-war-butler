@@ -20,12 +20,11 @@ module.exports = {
   async execute(interaction, client) {
     //Make message
     const response = new EmbedBuilder()
-      .setColor("AQUA")
+      .setColor("Aqua")
       .setTitle("Command List");
 
     client.commands //Loop over all commands and add to the response
       .forEach((command) => {
-        console.log("command", command);
         response.addFields({
           name: `Command: /${command.data.name}`,
           value: `${command.data.description}`,
