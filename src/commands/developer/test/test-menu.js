@@ -9,13 +9,13 @@ const {
 module.exports = {
   developer: true,
   data: new SlashCommandBuilder()
-    .setName("menu")
-    .setDescription("Returns a menu.")
+    .setName("test-menu")
+    .setDescription("Menu blueprint")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
     const menu = new StringSelectMenuBuilder()
-      .setCustomId(`sub-menu`)
+      .setCustomId(`test-menu`)
       .setMinValues(1)
       .setMaxValues(1)
       .setOptions(

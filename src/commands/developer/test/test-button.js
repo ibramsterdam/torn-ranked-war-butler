@@ -9,13 +9,13 @@ const {
 module.exports = {
   developer: true,
   data: new SlashCommandBuilder()
-    .setName("button")
-    .setDescription("Shows a button")
+    .setName("test-button")
+    .setDescription("Button blueprint")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
     const button = new ButtonBuilder()
-      .setCustomId("Test")
+      .setCustomId("test-button")
       .setLabel("Click Me!")
       .setStyle(ButtonStyle.Primary);
 

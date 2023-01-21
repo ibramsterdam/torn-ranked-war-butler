@@ -10,7 +10,7 @@ async function handleComponent(client) {
       (file) => file.endsWith(".js")
     );
 
-    const { buttons, selectMenus } = client;
+    const { buttons, modals, selectMenus } = client;
 
     if (folder === "buttons") {
       for (const file of componentFiles) {
@@ -24,6 +24,13 @@ async function handleComponent(client) {
         const menu = require(`../../components/${folder}/${file}`);
         selectMenus.set(menu.data.name, menu);
         table.addRow(menu.data.name, "Menu", "🟢");
+      }
+    }
+    if (folder === "modals") {
+      for (const file of componentFiles) {
+        const modal = require(`../../components/${folder}/${file}`);
+        modals.set(modal.data.name, modal);
+        table.addRow(modal.data.name, "Modal", "🟢");
       }
     }
   }
