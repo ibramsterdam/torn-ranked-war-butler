@@ -1,4 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  CommandInteraction,
+  ClientApplication,
+} = require("discord.js");
 require("dotenv").config();
 
 module.exports = {
@@ -10,7 +15,7 @@ module.exports = {
   /**
    *
    * @param {CommandInteraction} interaction
-   * @param {Client} client
+   * @param {ClientApplication} client
    */
   async execute(interaction, client) {
     //Make message
@@ -18,14 +23,14 @@ module.exports = {
       .setColor("AQUA")
       .setTitle("Command List");
 
-    //Loop over all commands and add to the response
-    client.commands.forEach((command) => {
-      response.addFields(
-        `Command: /${command.name}`,
-        `${command.description}`,
-        false
-      );
-    });
+    client.commands //Loop over all commands and add to the response
+      .forEach((command) => {
+        console.log("command", command);
+        response.addFields({
+          name: `Command: /${command.data.name}`,
+          value: `${command.data.description}`,
+        });
+      });
 
     //Reply to the discord client
     interaction.reply({

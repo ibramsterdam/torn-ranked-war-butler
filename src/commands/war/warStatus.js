@@ -1,4 +1,8 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+} = require("discord.js");
 const { getTornRankedWarInfo } = require("../../util/tornApiUtil");
 const { getMyFactionWarInfo } = require("../../util/rankedWarUtil");
 
@@ -16,7 +20,7 @@ module.exports = {
     ),
   /**
    *
-   * @param {} interaction
+   * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction) {
     const results = await getTornRankedWarInfo();

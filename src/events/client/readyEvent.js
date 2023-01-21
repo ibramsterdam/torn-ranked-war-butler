@@ -1,20 +1,22 @@
-// eslint-disable-next-line no-unused-vars
-const { ActivityType } = require("discord.js");
+const { ActivityType, ClientApplication } = require("discord.js");
 const { loadCommands } = require("../../handlers/commandHandler");
 require("dotenv").config();
 
 module.exports = {
   name: "ready",
   once: true,
+  /**
+   *  @param {ClientApplication} client
+   */
   execute(client) {
-    loadCommands(client).then(() => {
-      client.user.setActivity(
-        `Torn with ${client.guilds.cache.size + 1} torn guilds`,
-        {
-          type: ActivityType.Playing,
-        }
-      );
+    client.user.setActivity(
+      `Torn with ${client.guilds.cache.size + 1} torn guilds`,
+      {
+        type: ActivityType.Playing,
+      }
+    );
 
+    loadCommands(client).then(() => {
       console.log("\nThe bot has booted up!");
     });
   },

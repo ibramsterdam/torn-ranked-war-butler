@@ -1,4 +1,8 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+} = require("discord.js");
 const { getFaction } = require("../../util/tornApiUtil");
 
 module.exports = {
@@ -17,13 +21,12 @@ module.exports = {
     ),
 
   /**
-   * @param {} interaction
+   * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction) {
     const { options } = interaction;
     const targetFactionId = options.getNumber("factionid");
     const hospitalMap = new Map();
-    console.log("targetFactionId", targetFactionId);
     const results = await getFaction(targetFactionId);
 
     console.log("oi", results);

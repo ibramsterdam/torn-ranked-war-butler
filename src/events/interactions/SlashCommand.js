@@ -1,10 +1,15 @@
-// eslint-disable-next-line no-unused-vars
-const { ChatInputCommandInteraction } = require("discord.js");
+/*global ChatInputCommandInteraction */
+
+const {
+  ChatInputCommandInteraction,
+  ClientApplication,
+} = require("discord.js");
 
 module.exports = {
   name: "interactionCreate",
   /**
    *  @param {ChatInputCommandInteraction} interaction
+   *  @param {ClientApplication} client
    */
   execute(interaction, client) {
     if (!interaction.isChatInputCommand()) return;
