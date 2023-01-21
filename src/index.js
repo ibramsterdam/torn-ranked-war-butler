@@ -15,7 +15,7 @@ const client = new Client({
   partials: [User, Message, GuildMember, ThreadMember],
 });
 
-const { loadEvents } = require("./handlers/eventHandler");
+const { loadEvents } = require("./functions/handlers/eventHandler");
 
 client.config = { token: process.env.BOT_TOKEN };
 client.events = new Collection();

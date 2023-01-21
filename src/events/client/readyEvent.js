@@ -1,5 +1,5 @@
 const { ActivityType, Client } = require("discord.js");
-const { loadCommands } = require("../../handlers/commandHandler");
+const { loadCommands } = require("../../functions/handlers/commandHandler");
 require("dotenv").config();
 
 module.exports = {
