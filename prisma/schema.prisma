@@ -41,3 +41,9 @@ model ApiKey {
   discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
   discordServerId Int
 }
+
+model Faction {
+  id      Int @id @default(autoincrement())
+  tornId  Int @unique
+  members Int
+}
