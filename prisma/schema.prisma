@@ -26,6 +26,8 @@ model DiscordServer {
 
   isWhitelisted Boolean  @default(false)
   apiKey        ApiKey[]
+
+  factions FactionsOnDiscordServer[]
 }
 
 model ApiKey {
@@ -46,4 +48,18 @@ model Faction {
   id      Int @id @default(autoincrement())
   tornId  Int @unique
   members Int
+
+  discordServers FactionsOnDiscordServer[]
+}
+
+model FactionsOnDiscordServer {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  DiscordServer   DiscordServer? @relation(fields: [discordServerId], references: [id])
+  discordServerId Int?
+  Faction         Faction?       @relation(fields: [factionId], references: [id])
+  factionId       Int?
 }

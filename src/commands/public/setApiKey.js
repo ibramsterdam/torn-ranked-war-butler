@@ -2,7 +2,6 @@ const {
   SlashCommandBuilder,
   ModalBuilder,
   PermissionFlagsBits,
-  EmbedBuilder,
   ActionRowBuilder,
   TextInputBuilder,
   TextInputStyle,

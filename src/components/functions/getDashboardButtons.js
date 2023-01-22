@@ -8,21 +8,21 @@ async function getDashboardButtons(activeButton) {
       .setStyle(
         activeButton === "keys" ? ButtonStyle.Success : ButtonStyle.Primary
       )
-      .setDisabled(activeButton === "keys"),
+      .setDisabled(activeButton === "keys" || activeButton === "none"),
     new ButtonBuilder()
       .setCustomId("dashboard-manage-factions")
       .setLabel("Manage Factions")
       .setStyle(
         activeButton === "factions" ? ButtonStyle.Success : ButtonStyle.Primary
       )
-      .setDisabled(activeButton === "factions"),
+      .setDisabled(activeButton === "factions" || activeButton === "none"),
     new ButtonBuilder()
       .setCustomId("dashboard-manage-channels")
       .setLabel("Configure Channels")
       .setStyle(
         activeButton === "channels" ? ButtonStyle.Success : ButtonStyle.Primary
       )
-      .setDisabled(activeButton === "channels"),
+      .setDisabled(activeButton === "channels" || activeButton === "none"),
     new ButtonBuilder()
       .setCustomId("dashboard-close-dashboard-button")
       .setLabel("Close Dashboard")
