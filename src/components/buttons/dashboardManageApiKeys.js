@@ -1,4 +1,4 @@
-const { dashBoardEmbed } = require("../embeds/dashboardEmbed");
+const { dashboardEmbed } = require("../embeds/dashboardEmbed");
 const {
   SlashCommandBuilder,
   PermissionFlagsBits,
@@ -15,7 +15,7 @@ module.exports = {
     interaction.message.delete();
     await interaction.deferReply();
 
-    const dashboardEmbed = await dashBoardEmbed();
+    const embeds = await dashboardEmbed();
 
     const menu = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
@@ -42,7 +42,7 @@ module.exports = {
     );
     //Reply to the discord client
     await interaction.followUp({
-      embeds: [dashboardEmbed],
+      embeds: [embeds],
       components: [menu, buttonRow],
     });
   },

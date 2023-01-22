@@ -1,11 +1,7 @@
 const {
-  EmbedBuilder,
   SlashCommandBuilder,
   CommandInteraction,
   Client,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
 } = require("discord.js");
 
 const { dashboardEmbed } = require("../../components/embeds/dashboardEmbed");
