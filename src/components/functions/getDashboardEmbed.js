@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 
-async function dashboardEmbed() {
+async function getDashboardEmbed() {
   return new EmbedBuilder()
     .setTitle("Ranked War Assistant")
     .setDescription("Whitelisting happends when payment is made")
@@ -29,4 +29,4 @@ async function dashboardEmbed() {
     .setTimestamp();
 }
 
-module.exports = { dashboardEmbed };
+module.exports = { getDashboardEmbed };

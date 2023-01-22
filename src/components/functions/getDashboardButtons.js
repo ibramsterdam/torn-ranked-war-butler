@@ -1,6 +1,6 @@
 const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 
-async function dashboardButtons() {
+async function getDashboardButtons() {
   const buttonRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("dashboard-manage-api-keys")
@@ -25,4 +25,4 @@ async function dashboardButtons() {
   return [buttonRow, buttonRow2];
 }
 
-module.exports = { dashboardButtons };
+module.exports = { getDashboardButtons };

@@ -4,8 +4,12 @@ const {
   Client,
 } = require("discord.js");
 
-const { dashboardEmbed } = require("../../components/embeds/dashboardEmbed");
-const { dashboardButtons } = require("../../functions/dashboardButtons");
+const {
+  getDashboardEmbed,
+} = require("../../components/functions/getDashboardEmbed");
+const {
+  getDashboardButtons,
+} = require("../../components/functions/getDashboardButtons");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dashboard")
@@ -18,8 +22,8 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
 
-    const embeds = await dashboardEmbed();
-    const buttons = await dashboardButtons();
+    const embeds = await getDashboardEmbed();
+    const buttons = await getDashboardButtons();
 
     //Reply to the discord client
     await interaction.followUp({
