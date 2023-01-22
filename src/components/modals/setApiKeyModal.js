@@ -1,4 +1,12 @@
 const { getUser } = require("../../util/tornApiUtil");
+const { getDashboardButtons } = require("../functions/getDashboardButtons");
+
+const {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+} = require("discord.js");
 
 module.exports = {
   data: { name: "set-api-key-modal" },
@@ -7,12 +15,6 @@ module.exports = {
     const apiKey = interaction.fields.getTextInputValue(
       "set-api-key-text-input"
     );
-    const KEY_LENGTH = 16;
-
-    // validate length
-    if (apiKey.length !== KEY_LENGTH) {
-      return await interaction.editReply("Not a valid key");
-    }
 
     // validate if apikey returns a user
     const user = await getUser(apiKey);
@@ -24,14 +26,8 @@ module.exports = {
     const prisma = require("../../index");
 
     try {
-      const dbDiscordServer = await prisma.discordServer.upsert({
+      const dbDiscordServer = await prisma.discordServer.findUnique({
         where: {
-          guildId: guildID,
-        },
-        update: {
-          guildId: guildID,
-        },
-        create: {
           guildId: guildID,
         },
       });
@@ -66,8 +62,21 @@ module.exports = {
         },
       });
 
-      return await interaction.editReply({
-        content: `Amount of keys connected: ${countKeysForGuild}`,
+      const embeds = new EmbedBuilder()
+        .setTitle("Manage Api Keys")
+        .setDescription(`Keys logged: ${countKeysForGuild}`);
+      const buttons = await getDashboardButtons("keys");
+
+      const manageApiKeysButtons = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId("dashboard-set-api-key")
+          .setLabel("Set Api Key")
+          .setStyle(ButtonStyle.Secondary)
+      );
+      //Reply to the discord client
+      return await interaction.followUp({
+        embeds: [embeds],
+        components: [buttons, manageApiKeysButtons],
       });
     } catch (error) {
       console.log("Err while working with prisma", error);
