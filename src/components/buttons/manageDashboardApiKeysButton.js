@@ -26,7 +26,6 @@ module.exports = {
           user: true,
         },
       });
-      console.log(users);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +48,7 @@ module.exports = {
       )
       .addFields({
         name: "Users are sharing their key",
-        value: ``,
+        value: `kkkk`,
       });
     const buttons = await getDashboardButtons("keys");
 

@@ -18,6 +18,7 @@ module.exports = {
 
     // validate if apikey returns a user
     const user = await getUser(apiKey);
+    console.log(user.data);
     if (user.data.error) {
       return await interaction.editReply("Not a valid key");
     }
@@ -25,10 +26,25 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
 
+    console.log("OI");
+    console.log(user.data.faction.faction_id);
+
     try {
       const dbDiscordServer = await prisma.discordServer.findUnique({
         where: {
           guildId: guildID,
+        },
+      });
+      const dbFaction = await prisma.faction.upsert({
+        where: {
+          tornId: user.data.faction.faction_id,
+        },
+        update: {
+          name: user.data.faction.faction_name,
+        },
+        create: {
+          tornId: user.data.faction.faction_id,
+          name: user.data.faction.faction_name,
         },
       });
       const dbUser = await prisma.user.upsert({
@@ -37,12 +53,19 @@ module.exports = {
         },
         update: {
           name: user.data.name,
+          faction: {
+            connect: { tornId: user.data.faction.faction_id },
+          },
         },
         create: {
           tornId: user.data.player_id,
           name: user.data.name,
+          faction: {
+            connect: { tornId: user.data.faction.faction_id },
+          },
         },
       });
+
       const dbApiKey = await prisma.apiKey.upsert({
         where: {
           value: apiKey,

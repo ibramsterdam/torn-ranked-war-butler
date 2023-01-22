@@ -20,7 +20,7 @@ model User {
 
   apiKey ApiKey?
 
-  Faction   Faction? @relation(fields: [factionId], references: [id])
+  faction   Faction? @relation(fields: [factionId], references: [id])
   factionId Int?
 }
 
@@ -51,6 +51,7 @@ model ApiKey {
 model Faction {
   id      Int    @id @default(autoincrement())
   tornId  Int    @unique
+  name    String
   members User[]
 
   discordServers FactionsOnDiscordServer[]
@@ -62,8 +63,8 @@ model FactionsOnDiscordServer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  DiscordServer   DiscordServer? @relation(fields: [discordServerId], references: [id])
+  discordServer   DiscordServer? @relation(fields: [discordServerId], references: [id])
   discordServerId Int?
-  Faction         Faction?       @relation(fields: [factionId], references: [id])
+  faction         Faction?       @relation(fields: [factionId], references: [id])
   factionId       Int?
 }
