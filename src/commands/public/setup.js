@@ -20,18 +20,28 @@ module.exports = {
    */
   async execute(interaction, client) {
     await interaction.deferReply();
-    const category = await interaction.guild.channels.create({
-      name: "Ranked War Butler",
-      type: ChannelType.GuildCategory,
-    });
-    const channel = await interaction.guild.channels.create({
-      name: "HQ",
-      type: ChannelType.GuildText,
-      parent: category.id,
-    });
+    const channelList = await interaction.guild.channels.fetch();
 
-    console.log(channel.id);
+    const butlerHQ = channelList.find(
+      (channel) => channel.name === "Ranked War Butler"
+    );
+
+    if (!butlerHQ) {
+      console.log("IN");
+      const category = await interaction.guild.channels.create({
+        name: "Ranked War Butler",
+        type: ChannelType.GuildCategory,
+      });
+      const channel = await interaction.guild.channels.create({
+        name: "Oi",
+        type: ChannelType.GuildText,
+        parent: category.id,
+      });
+      return interaction.followUp("Setup Successfull");
+    }
+
+    return interaction.followUp("You have already setup the butler");
+
     //Reply to the discord client
-    return interaction.followUp("DONE" + channel.id.toString());
   },
 };
