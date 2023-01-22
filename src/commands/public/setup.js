@@ -27,13 +27,12 @@ module.exports = {
     );
 
     if (!butlerHQ) {
-      console.log("IN");
       const category = await interaction.guild.channels.create({
         name: "Ranked War Butler",
         type: ChannelType.GuildCategory,
       });
       const channel = await interaction.guild.channels.create({
-        name: "Oi",
+        name: "butler-dashboard",
         type: ChannelType.GuildText,
         parent: category.id,
       });

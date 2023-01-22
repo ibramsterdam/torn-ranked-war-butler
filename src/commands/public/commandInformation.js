@@ -17,6 +17,17 @@ module.exports = {
    * @param {Client} client
    */
   async execute(interaction, client) {
+    await interaction.deferReply();
+    const channelList = await interaction.guild.channels.fetch();
+    const butlerHQ = channelList.find(
+      (channel) => channel.name === "butler-dashboard"
+    );
+
+    if (!butlerHQ) {
+      return await interaction.followUp(
+        "Please use the Butler Dashboard Channel"
+      );
+    }
     //Make message
     const response = new EmbedBuilder()
       .setColor("AQUA")
@@ -33,7 +44,7 @@ module.exports = {
       });
 
     //Reply to the discord client
-    interaction.reply({
+    interaction.followUp({
       embeds: [response],
       fetchReply: true,
     });

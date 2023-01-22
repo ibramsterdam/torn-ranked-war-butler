@@ -19,6 +19,17 @@ module.exports = {
    */
   async execute(interaction, client) {
     await interaction.deferReply();
+    const channelList = await interaction.guild.channels.fetch();
+    const butlerHQ = channelList.find(
+      (channel) => channel.name === "butler-dashboard"
+    );
+
+    if (!butlerHQ || interaction.channelId !== butlerHQ?.id) {
+      return await interaction.followUp(
+        "Please use the Butler Dashboard Channel"
+      );
+    }
+
     const prisma = require("../../index");
     const guildID = Number(interaction.guildId);
     let foundServer;
