@@ -22,8 +22,12 @@ module.exports = {
             guildId: guildID,
           },
         },
-        include: {
-          user: true,
+        select: {
+          user: {
+            include: {
+              faction: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -45,11 +49,15 @@ module.exports = {
       *2. We handle these keys with absolute secrecy*
       *3. Anyone trying to manipulate this bot forfeits the right to use it*
       `
-      )
-      .addFields({
-        name: "Users are sharing their key",
-        value: `kkkk`,
+      );
+
+    users.forEach((object) => {
+      embeds.addFields({
+        name: `${object.user.name} [${object.user.tornId}]`,
+        value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.tornId})
+        Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
       });
+    });
     const buttons = await getDashboardButtons("keys");
 
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(

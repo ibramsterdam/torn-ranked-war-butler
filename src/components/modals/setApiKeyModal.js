@@ -18,16 +18,12 @@ module.exports = {
 
     // validate if apikey returns a user
     const user = await getUser(apiKey);
-    console.log(user.data);
     if (user.data.error) {
       return await interaction.editReply("Not a valid key");
     }
 
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
-
-    console.log("OI");
-    console.log(user.data.faction.faction_id);
 
     try {
       const dbDiscordServer = await prisma.discordServer.findUnique({
