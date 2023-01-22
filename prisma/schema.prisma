@@ -11,13 +11,17 @@ datasource db {
 }
 
 model User {
-  id     Int @id @default(autoincrement())
-  tornId Int @unique
+  id     Int     @id @default(autoincrement())
+  tornId Int     @unique
+  name   String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   apiKey ApiKey?
+
+  Faction   Faction? @relation(fields: [factionId], references: [id])
+  factionId Int?
 }
 
 model DiscordServer {
@@ -33,7 +37,7 @@ model DiscordServer {
 model ApiKey {
   id          Int    @id @default(autoincrement())
   value       String @unique
-  accessLevel String @default("No Access")
+  accessLevel String @default("Public")
 
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
@@ -45,9 +49,9 @@ model ApiKey {
 }
 
 model Faction {
-  id      Int @id @default(autoincrement())
-  tornId  Int @unique
-  members Int
+  id      Int    @id @default(autoincrement())
+  tornId  Int    @unique
+  members User[]
 
   discordServers FactionsOnDiscordServer[]
 }

@@ -35,9 +35,12 @@ module.exports = {
         where: {
           tornId: user.data.player_id,
         },
-        update: {},
+        update: {
+          name: user.data.name,
+        },
         create: {
           tornId: user.data.player_id,
+          name: user.data.name,
         },
       });
       const dbApiKey = await prisma.apiKey.upsert({
