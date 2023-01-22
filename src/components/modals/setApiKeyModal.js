@@ -74,6 +74,8 @@ module.exports = {
           .setStyle(ButtonStyle.Secondary)
       );
       //Reply to the discord client
+      interaction.message.delete();
+
       return await interaction.followUp({
         embeds: [embeds],
         components: [buttons, manageApiKeysButtons],
