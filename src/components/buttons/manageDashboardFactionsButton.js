@@ -9,7 +9,9 @@ module.exports = {
 
     const embeds = new EmbedBuilder()
       .setTitle("Manage Factions")
-      .setDescription("List of factions!");
+      .setDescription(
+        "This is not done yet and under development, so for now. Click away :)"
+      );
     const buttons = await getDashboardButtons("factions");
 
     //Reply to the discord client

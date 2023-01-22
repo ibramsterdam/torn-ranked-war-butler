@@ -17,13 +17,6 @@ async function getDashboardButtons(activeButton) {
       )
       .setDisabled(activeButton === "factions" || activeButton === "none"),
     new ButtonBuilder()
-      .setCustomId("dashboard-manage-channels")
-      .setLabel("Configure Channels")
-      .setStyle(
-        activeButton === "channels" ? ButtonStyle.Success : ButtonStyle.Primary
-      )
-      .setDisabled(activeButton === "channels" || activeButton === "none"),
-    new ButtonBuilder()
       .setCustomId("dashboard-close-dashboard-button")
       .setLabel("Close Dashboard")
       .setStyle(ButtonStyle.Danger)
