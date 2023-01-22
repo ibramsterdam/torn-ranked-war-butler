@@ -8,9 +8,7 @@ const { getFaction } = require("../../util/tornApiUtil");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("hospitalstatus")
-    .setDescription(
-      "Deletes a specified number of messages from channel or a target."
-    )
+    .setDescription("Hospital list")
     .addNumberOption((option) =>
       option
         .setName("factionid")

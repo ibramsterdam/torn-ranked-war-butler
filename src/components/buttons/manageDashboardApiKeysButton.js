@@ -9,9 +9,9 @@ const { getDashboardButtons } = require("../functions/getDashboardButtons");
 module.exports = {
   data: { name: "dashboard-manage-api-keys" },
   async execute(interaction, client) {
-    await interaction.message.delete();
-
     await interaction.deferReply();
+    await interaction.message.delete();
+    const prisma = require("../../index");
 
     const embeds = new EmbedBuilder()
       .setTitle("Manage Api Keys")

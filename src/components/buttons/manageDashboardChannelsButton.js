@@ -19,20 +19,3 @@ module.exports = {
     });
   },
 };
-
-//    const menu = new ActionRowBuilder().addComponents(
-//   new StringSelectMenuBuilder()
-//   .setCustomId(`test-menu`)
-//   .setMinValues(1)
-//   .setMaxValues(1)
-//   .setOptions(
-//     new StringSelectMenuOptionBuilder({
-//       label: "Option One",
-//       value: "Test Option One",
-//     }),
-//     new StringSelectMenuOptionBuilder({
-//       label: "Option Two",
-//       value: "Test Option Two",
-//     })
-//   )
-// );
