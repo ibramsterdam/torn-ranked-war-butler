@@ -30,6 +30,12 @@ module.exports = {
       );
     }
 
+    // remove channel messages
+    const messages = await interaction.channel.messages.fetch();
+    const key = messages.entries().next().value[0];
+    messages.delete(key);
+    interaction.channel.bulkDelete(messages);
+
     const prisma = require("../../index");
     const guildID = Number(interaction.guildId);
     let foundServer;
