@@ -2,14 +2,9 @@ const {
   SlashCommandBuilder,
   CommandInteraction,
   Client,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
+  EmbedBuilder,
 } = require("discord.js");
 
-const {
-  getDashboardEmbed,
-} = require("../../components/functions/getDashboardEmbed");
 const {
   getDashboardButtons,
 } = require("../../components/functions/getDashboardButtons");
@@ -25,8 +20,33 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
 
-    const embeds = await getDashboardEmbed();
     const buttons = await getDashboardButtons();
+    const embeds = new EmbedBuilder()
+      .setTitle("Ranked War Assistant")
+      .setDescription("Whitelisting happends when payment is made")
+      .addFields(
+        {
+          name: "General information",
+          value:
+            "*Whitelist status* : <Yes/no>\n*ApiKey status* : <x keys connected>\n*Polling speed* : <60 requests p/m>",
+        },
+        {
+          name: "Tracking the following factions",
+          value: "Barry\nMaud\nHarry\nBanoe",
+          inline: true,
+        },
+        {
+          name: "Using the Api keys from",
+          value: "Barry\nMaud\nHarry\nBanoe",
+          inline: true,
+        }
+      )
+      .setColor("#00b0f4")
+      .setFooter({
+        text: "Good luck on warring!",
+        iconURL: "https://slate.dan.onl/slate.png",
+      })
+      .setTimestamp();
 
     //Reply to the discord client
     await interaction.followUp({
