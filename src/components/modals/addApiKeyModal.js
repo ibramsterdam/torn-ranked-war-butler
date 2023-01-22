@@ -9,11 +9,11 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  data: { name: "set-api-key-modal" },
+  data: { name: "add-api-key-modal" },
   async execute(interaction, client) {
     await interaction.deferReply();
     const apiKey = interaction.fields.getTextInputValue(
-      "set-api-key-text-input"
+      "add-api-key-text-input"
     );
 
     // validate if apikey returns a user
@@ -117,12 +117,17 @@ module.exports = {
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
         });
       });
-      const buttons = await getDashboardButtons("keys");
+
+      const buttons = await getDashboardButtons(
+        "keys",
+        !dbDiscordServer.isWhitelisted,
+        false
+      );
 
       const manageApiKeysButtons = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setCustomId("dashboard-set-api-key")
-          .setLabel("Set Api Key")
+          .setCustomId("dashboard-add-api-key")
+          .setLabel("Add Api Key")
           .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
           .setCustomId("dashboard-remove-api-key")

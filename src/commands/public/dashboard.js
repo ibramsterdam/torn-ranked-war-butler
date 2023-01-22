@@ -83,14 +83,17 @@ module.exports = {
           text: "Good luck on warring!",
         })
         .setTimestamp();
+
       buttons = await getDashboardButtons(
-        foundServer.isWhitelisted ? "" : "none"
+        "noMenuType",
+        !foundServer.isWhitelisted,
+        foundServer.apiKey.length === 0
       );
     } else {
       embeds = new EmbedBuilder()
         .setTitle("Ranked War Butler")
         .setDescription("Something went wrong, please contact the developer");
-      buttons = await getDashboardButtons("none");
+      buttons = await getDashboardButtons("noMenyType", true, true);
     }
 
     //Reply to the discord client

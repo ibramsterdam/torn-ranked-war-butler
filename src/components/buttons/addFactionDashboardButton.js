@@ -6,16 +6,15 @@ const {
 } = require("discord.js");
 module.exports = {
   developer: false,
-
-  data: { name: "dashboard-remove-api-key" },
+  data: { name: "dashboard-add-faction" },
   async execute(interaction, client) {
     const modal = new ModalBuilder()
-      .setCustomId("remove-api-key-modal")
-      .setTitle("Remove your api key");
+      .setCustomId("add-faction-modal")
+      .setTitle("Add a Faction");
 
     const textInput = new TextInputBuilder()
-      .setCustomId("remove-api-key-text-input")
-      .setLabel("Please paste the torn id of the user")
+      .setCustomId("add-faction-text-input")
+      .setLabel("Please paste the torn id of the faction")
       .setRequired(true)
       .setMaxLength(16)
       .setStyle(TextInputStyle.Short);

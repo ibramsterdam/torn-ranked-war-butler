@@ -7,10 +7,13 @@ const getTornRankedWarInfo = async () => {
   );
 };
 
-const getFaction = async (factionID) => {
+const getFaction = async (factionID, apiKey) => {
+  console.log(
+    `https://api.torn.com/faction/${factionID}?selections=&key=${apiKey}`
+  );
   try {
     return axios.get(
-      `https://api.torn.com/faction/${factionID}?selections=&key=${process.env.TORN_API_KEY}`
+      `https://api.torn.com/faction/${factionID}?selections=&key=${apiKey}`
     );
   } catch (error) {
     return "error";

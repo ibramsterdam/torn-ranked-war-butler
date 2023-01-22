@@ -5,14 +5,15 @@ const {
   TextInputStyle,
 } = require("discord.js");
 module.exports = {
-  data: { name: "dashboard-set-api-key" },
+  developer: false,
+  data: { name: "dashboard-add-api-key" },
   async execute(interaction, client) {
     const modal = new ModalBuilder()
-      .setCustomId("set-api-key-modal")
+      .setCustomId("add-api-key-modal")
       .setTitle("Paste your api key");
 
     const textInput = new TextInputBuilder()
-      .setCustomId("set-api-key-text-input")
+      .setCustomId("add-api-key-text-input")
       .setLabel("Api key is used for 20 requests per minute")
       .setRequired(true)
       .setMaxLength(16)

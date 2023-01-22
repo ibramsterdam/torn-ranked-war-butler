@@ -7,6 +7,7 @@ const { getTornRankedWarInfo } = require("../../util/tornApiUtil");
 const { getMyFactionWarInfo } = require("../../util/rankedWarUtil");
 
 module.exports = {
+  developer: true,
   data: new SlashCommandBuilder()
     .setName("warstatus")
     .setDescription(" Responds with war details ")

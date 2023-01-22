@@ -51,6 +51,16 @@ module.exports = {
         },
       });
 
+      const discordServerInfo = await prisma.discordServer.findUnique({
+        where: {
+          guildId: guildID,
+        },
+        select: {
+          apiKey: true,
+          isWhitelisted: true,
+        },
+      });
+
       const embeds = new EmbedBuilder()
         .setColor("Aqua")
         .setTitle("Manage Api Keys")
@@ -75,17 +85,22 @@ module.exports = {
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
         });
       });
-      const buttons = await getDashboardButtons("keys");
+      const buttons = await getDashboardButtons(
+        "keys",
+        !discordServerInfo.isWhitelisted,
+        discordServerInfo.apiKey.length === 0
+      );
 
       const manageApiKeysButtons = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setCustomId("dashboard-set-api-key")
+          .setCustomId("dashboard-add-api-key")
           .setLabel("Set Api Key")
           .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
           .setCustomId("dashboard-remove-api-key")
           .setLabel("Remove Api Key")
           .setStyle(ButtonStyle.Secondary)
+          .setDisabled(discordServerInfo.apiKey.length === 0)
       );
       //Reply to the discord client
       interaction.message.delete();

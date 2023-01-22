@@ -7,6 +7,8 @@ const {
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 
 module.exports = {
+  developer: false,
+
   data: { name: "dashboard-manage-api-keys" },
   async execute(interaction, client) {
     await interaction.deferReply();
@@ -14,6 +16,7 @@ module.exports = {
     const prisma = require("../../index");
     const guildID = Number(interaction.guildId);
     let users;
+    let discordServer;
 
     try {
       users = await prisma.apiKey.findMany({
@@ -26,6 +29,19 @@ module.exports = {
           user: {
             include: {
               faction: true,
+            },
+          },
+        },
+      });
+      discordServer = await prisma.discordServer.findUnique({
+        where: {
+          guildId: guildID,
+        },
+        select: {
+          isWhitelisted: true,
+          _count: {
+            select: {
+              apiKey: true,
             },
           },
         },
@@ -58,17 +74,25 @@ module.exports = {
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
       });
     });
-    const buttons = await getDashboardButtons("keys");
+    let buttons = await getDashboardButtons("keys", true, true);
+    if (discordServer) {
+      buttons = await getDashboardButtons(
+        "keys",
+        !discordServer.isWhitelisted,
+        discordServer._count.apiKey === 0
+      );
+    }
 
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId("dashboard-set-api-key")
-        .setLabel("Set Api Key")
+        .setCustomId("dashboard-add-api-key")
+        .setLabel("Add Api Key")
         .setStyle(ButtonStyle.Secondary),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-api-key")
         .setLabel("Remove Api Key")
         .setStyle(ButtonStyle.Secondary)
+        .setDisabled(discordServer._count.apiKey === 0)
     );
 
     //Reply to the discord client

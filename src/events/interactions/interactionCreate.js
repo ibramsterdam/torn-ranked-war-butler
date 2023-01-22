@@ -19,8 +19,7 @@ module.exports = {
           ephemeral: true,
         });
       }
-
-      if (command.developer && interaction.user.id !== "125402917678219264")
+      if (command.developer && interaction.user.id !== "12540291767821926")
         return interaction.reply({
           content: "This command is only available to the developer",
           ephemeral: true,
@@ -33,6 +32,13 @@ module.exports = {
       const { buttons } = client;
       const { customId } = interaction;
       const button = buttons.get(customId);
+
+      if (button.developer && interaction.user.id !== "125402917678219264")
+        return interaction.reply({
+          content:
+            "This command is under development and thus only available to the developer",
+          ephemeral: true,
+        });
 
       if (!button) return new Error("There is no code for this button");
 

@@ -6,6 +6,7 @@ const {
 const { getFaction } = require("../../util/tornApiUtil");
 
 module.exports = {
+  developer: true,
   data: new SlashCommandBuilder()
     .setName("hospitalstatus")
     .setDescription("Hospital list")
