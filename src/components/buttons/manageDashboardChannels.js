@@ -2,15 +2,15 @@ const { getDashboardButtons } = require("../functions/getDashboardButtons");
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  data: { name: "dashboard-manage-api-keys" },
+  data: { name: "dashboard-manage-channels" },
   async execute(interaction, client) {
     interaction.message.delete();
     await interaction.deferReply();
 
     const embeds = new EmbedBuilder()
-      .setTitle("Manage Api Keys")
-      .setDescription("GOod luck!");
-    const buttons = await getDashboardButtons("keys");
+      .setTitle("Manage Channels")
+      .setDescription("List of channels!");
+    const buttons = await getDashboardButtons("channels");
 
     //Reply to the discord client
     await interaction.followUp({

@@ -2,6 +2,9 @@ const {
   SlashCommandBuilder,
   CommandInteraction,
   Client,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
 } = require("discord.js");
 
 const {
@@ -28,7 +31,7 @@ module.exports = {
     //Reply to the discord client
     await interaction.followUp({
       embeds: [embeds],
-      components: buttons,
+      components: [buttons],
     });
   },
 };
