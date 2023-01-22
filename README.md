@@ -1,6 +1,6 @@
 # No Longer in development
 
-# RankedWarAssistant
+# RankedWarButler
 
 Torn Discord bot that assists in ranked wars.
 ![A Torn Discord bot that assists in ranked wars.](/AdmiralProfile.png)
@@ -8,10 +8,10 @@ Torn Discord bot that assists in ranked wars.
 ## Installation
 
 To invite the bot over to your discord server
-click [here](https://discord.com/api/oauth2/authorize?client_id=932550905713270836&permissions=2147503104&scope=applications.commands%20bot).
+click [here](https://discord.com/api/oauth2/authorize?client_id=932550905713270836&permissions=2147510288&scope=bot%20applications.commands).
 \
 At this moment the bot needs 4 rights, but do
-not worry our [repository](https://github.com/ibramsterdam/RankedWarAssistant) is open
+not worry our [repository](https://github.com/ibramsterdam/RankedWarButler) is open
 source so you can see what we are up to :-).
 `Read Messages`
 `Send Messages`

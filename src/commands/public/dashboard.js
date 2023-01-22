@@ -45,7 +45,7 @@ module.exports = {
 
     if (foundServer) {
       embeds = new EmbedBuilder()
-        .setTitle("Ranked War Assistant")
+        .setTitle("Ranked War Butler")
         .setDescription(
           `Buttons enable when you are whitelisted.
         Whitelisting happends when payment is made`
@@ -75,7 +75,7 @@ module.exports = {
       );
     } else {
       embeds = new EmbedBuilder()
-        .setTitle("Ranked War Assistant")
+        .setTitle("Ranked War Butler")
         .setDescription("Something went wrong, please contact the developer");
       buttons = await getDashboardButtons("none");
     }

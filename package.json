@@ -1,5 +1,5 @@
 {
-  "name": "rankedwarassistant",
+  "name": "rankedwarbutler",
   "version": "1.0.0",
   "description": "Torn Discord bot that assists in ranked wars",
   "main": "src/index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ibramsterdam/torn-ranked-war-assistant.git"
+    "url": "git+https://github.com/ibramsterdam/torn-ranked-war-butler.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ibramsterdam/torn-ranked-war-assistant/issues"
+    "url": "https://github.com/ibramsterdam/torn-ranked-war-butler/issues"
   },
-  "homepage": "https://github.com/ibramsterdam/torn-ranked-war-assistant#readme",
+  "homepage": "https://github.com/ibramsterdam/torn-ranked-war-butler#readme",
   "dependencies": {
     "@prisma/client": "^4.9.0",
     "ascii-table": "^0.0.9",
