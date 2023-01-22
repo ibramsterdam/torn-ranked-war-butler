@@ -37,12 +37,8 @@ module.exports = {
     let buttons;
 
     try {
-      foundServer = await prisma.discordServer.upsert({
+      foundServer = await prisma.discordServer.findUnique({
         where: {
-          guildId: guildID,
-        },
-        update: {},
-        create: {
           guildId: guildID,
         },
         include: {
