@@ -58,13 +58,13 @@ model Faction {
 }
 
 model FactionsOnDiscordServer {
-  id Int @id @default(autoincrement())
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   discordServer   DiscordServer? @relation(fields: [discordServerId], references: [id])
-  discordServerId Int?
+  discordServerId Int
   faction         Faction?       @relation(fields: [factionId], references: [id])
-  factionId       Int?
+  factionId       Int
+
+  @@id([factionId, discordServerId])
 }

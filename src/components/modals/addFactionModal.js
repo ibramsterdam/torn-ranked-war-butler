@@ -59,8 +59,15 @@ module.exports = {
         },
       });
 
-      const connection = await prisma.factionsOnDiscordServer.create({
-        data: {
+      const connection = await prisma.factionsOnDiscordServer.upsert({
+        where: {
+          factionId_discordServerId: {
+            discordServerId: dbDiscordServer.id,
+            factionId: dbFaction.id,
+          },
+        },
+        update: {},
+        create: {
           discordServerId: dbDiscordServer.id,
           factionId: dbFaction.id,
         },
