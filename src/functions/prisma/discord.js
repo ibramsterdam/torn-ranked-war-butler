@@ -1,6 +1,6 @@
 async function getDiscordServer(guildId, prisma) {
   try {
-    const discordServer = await prisma.discordServer.findUnique({
+    const result = await prisma.discordServer.findUnique({
       where: {
         guildId: guildId,
       },
@@ -10,7 +10,7 @@ async function getDiscordServer(guildId, prisma) {
       },
     });
     console.log("Succes: getDiscordServer");
-    return discordServer;
+    return result;
   } catch (error) {
     console.log("error", error);
   }
@@ -18,7 +18,7 @@ async function getDiscordServer(guildId, prisma) {
 
 async function upsertDiscordServer(guildId, prisma) {
   try {
-    const discordServer = await prisma.discordServer.upsert({
+    const result = await prisma.discordServer.upsert({
       where: {
         guildId: guildId,
       },
@@ -32,7 +32,7 @@ async function upsertDiscordServer(guildId, prisma) {
       },
     });
     console.log("Succes: upsertDiscordServer");
-    return discordServer;
+    return result;
   } catch (error) {
     console.log("error", error);
   }

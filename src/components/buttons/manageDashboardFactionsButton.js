@@ -5,6 +5,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
+const { getDiscordServer } = require("../../functions/prisma/discord");
 
 module.exports = {
   developer: true,
@@ -14,22 +15,8 @@ module.exports = {
     await interaction.deferReply();
     const prisma = require("../../index");
     const guildID = Number(interaction.guildId);
-    let discordServerInfo;
 
-    try {
-      discordServerInfo = await prisma.discordServer.findUnique({
-        where: {
-          guildId: guildID,
-        },
-        select: {
-          factions: true,
-          isWhitelisted: true,
-          apiKey: true,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const server = await getDiscordServer(guildID, prisma);
 
     const manageFactionsButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -40,7 +27,7 @@ module.exports = {
         .setCustomId("dashboard-remove-faction")
         .setLabel("Remove Faction")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(discordServerInfo.factions.length === 0)
+        .setDisabled(server.factions.length === 0)
     );
 
     const embeds = new EmbedBuilder()
@@ -49,11 +36,11 @@ module.exports = {
         "This is not done yet and under development, so for now. Click away :)"
       );
     let buttons = await getDashboardButtons("factions", true, true);
-    if (discordServerInfo.isWhitelisted) {
+    if (server.isWhitelisted) {
       buttons = await getDashboardButtons(
         "factions",
-        !discordServerInfo.isWhitelisted,
-        discordServerInfo.apiKey.length === 0
+        !server.isWhitelisted,
+        server.apiKey.length === 0
       );
     }
 
