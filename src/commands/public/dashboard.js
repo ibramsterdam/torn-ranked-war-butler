@@ -8,6 +8,7 @@ const {
 const {
   getDashboardButtons,
 } = require("../../components/functions/getDashboardButtons");
+const { getDiscordServer } = require("../../functions/prisma/discord");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dashboard")
@@ -19,14 +20,22 @@ module.exports = {
    */
   async execute(interaction, client) {
     await interaction.deferReply();
+
+    // check if the /setup command was run on the server
     const channelList = await interaction.guild.channels.fetch();
-    const butlerHQ = channelList.find(
+    const butlerDashboardChannel = channelList.find(
       (channel) => channel.name === "butler-dashboard"
     );
 
-    if (!butlerHQ || interaction.channelId !== butlerHQ?.id) {
+    if (!butlerDashboardChannel) {
       return await interaction.followUp(
-        "Please use the Butler Dashboard Channel"
+        `No Butler Dashboard Channel was found.\nPlease run the command /setup`
+      );
+    }
+
+    if (interaction.channelId !== butlerDashboardChannel?.id) {
+      return await interaction.followUp(
+        "Please use the Butler Dashboard Channel for this command"
       );
     }
 
@@ -36,27 +45,13 @@ module.exports = {
     messages.delete(key);
     interaction.channel.bulkDelete(messages);
 
-    const prisma = require("../../index");
+    // create the message
     const guildID = Number(interaction.guildId);
-    let foundServer;
     let embeds;
     let buttons;
+    const server = await getDiscordServer(guildID);
 
-    try {
-      foundServer = await prisma.discordServer.findUnique({
-        where: {
-          guildId: guildID,
-        },
-        include: {
-          apiKey: true,
-          factions: true,
-        },
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-
-    if (foundServer) {
+    if (server) {
       embeds = new EmbedBuilder()
         .setTitle("Ranked War Butler")
         .setDescription(
@@ -66,15 +61,13 @@ module.exports = {
         .addFields({
           name: "General information",
           value: `
-          *Whitelist status* : ${foundServer.isWhitelisted ? "🟢" : "🔴"}
-          *ApiKey status* : ${foundServer.apiKey.length} keys connected!
+          *Whitelist status* : ${server.isWhitelisted ? "🟢" : "🔴"}
+          *ApiKey status* : ${server.apiKey.length} keys connected!
           *Polling speed* : ${
-            foundServer.apiKey.length * 20 > 100
-              ? 100
-              : foundServer.apiKey.length * 20
+            server.apiKey.length * 20 > 100 ? 100 : server.apiKey.length * 20
           } requests per minute
           *Faction tracking status* : tracking ${
-            foundServer.factions.length
+            server.factions.length
           } factions!
           `,
         })
@@ -86,8 +79,8 @@ module.exports = {
 
       buttons = await getDashboardButtons(
         "noMenuType",
-        !foundServer.isWhitelisted,
-        foundServer.apiKey.length === 0
+        !server.isWhitelisted,
+        server.apiKey.length === 0
       );
     } else {
       embeds = new EmbedBuilder()
