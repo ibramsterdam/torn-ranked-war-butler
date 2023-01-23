@@ -4,6 +4,10 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
+const {
+  getUsersThatSharedTheirApiKeyOnDiscordServer,
+} = require("../../functions/prisma/apiKey");
+const { getDiscordServer } = require("../../functions/prisma/discord");
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 
 module.exports = {
@@ -13,42 +17,14 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
     await interaction.message.delete();
-    const prisma = require("../../index");
-    const guildID = Number(interaction.guildId);
-    let users;
-    let discordServer;
 
-    try {
-      users = await prisma.apiKey.findMany({
-        where: {
-          discordServer: {
-            guildId: guildID,
-          },
-        },
-        select: {
-          user: {
-            include: {
-              faction: true,
-            },
-          },
-        },
-      });
-      discordServer = await prisma.discordServer.findUnique({
-        where: {
-          guildId: guildID,
-        },
-        select: {
-          isWhitelisted: true,
-          _count: {
-            select: {
-              apiKey: true,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const guildID = Number(interaction.guildId);
+    const prisma = require("../../index");
+    const users = await getUsersThatSharedTheirApiKeyOnDiscordServer(
+      guildID,
+      prisma
+    );
+    const server = await getDiscordServer(guildID, prisma);
 
     const embeds = new EmbedBuilder()
       .setColor("Aqua")
@@ -74,14 +50,11 @@ module.exports = {
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
       });
     });
-    let buttons = await getDashboardButtons("keys", true, true);
-    if (discordServer) {
-      buttons = await getDashboardButtons(
-        "keys",
-        !discordServer.isWhitelisted,
-        discordServer._count.apiKey === 0
-      );
-    }
+    const buttons = await getDashboardButtons(
+      "keys",
+      !server.isWhitelisted,
+      server.apiKey.length === 0
+    );
 
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -92,7 +65,7 @@ module.exports = {
         .setCustomId("dashboard-remove-api-key")
         .setLabel("Remove Api Key")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(discordServer._count.apiKey === 0)
+        .setDisabled(server.apiKey.length === 0)
     );
 
     //Reply to the discord client

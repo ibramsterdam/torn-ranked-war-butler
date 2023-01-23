@@ -49,7 +49,9 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     let embeds;
     let buttons;
-    const server = await getDiscordServer(guildID);
+    const prisma = require("../../index");
+
+    const server = await getDiscordServer(guildID, prisma);
 
     if (server) {
       embeds = new EmbedBuilder()
