@@ -9,11 +9,11 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  data: { name: "add-faction-modal" },
+  data: { name: "remove-faction-modal" },
   async execute(interaction, client) {
     await interaction.deferReply();
     const factionId = interaction.fields.getTextInputValue(
-      "add-faction-text-input"
+      "remove-faction-text-input"
     );
 
     // validate if apikey returns a user
@@ -27,53 +27,39 @@ module.exports = {
     const prisma = require("../../index");
 
     try {
-      const apiKey = await prisma.apiKey.findFirst({
-        where: {
-          discordServer: {
-            guildId: guildID,
-          },
-        },
-      });
-
       const dbDiscordServer = await prisma.discordServer.findUnique({
         where: {
           guildId: guildID,
         },
-        select: {
-          apiKey: true,
-          isWhitelisted: true,
-          id: true,
-        },
       });
 
-      const response = await getFaction(factionId, apiKey.value);
-      const dbFaction = await prisma.faction.upsert({
+      const dbFaction = await prisma.faction.findUnique({
         where: {
-          tornId: response.data.ID,
-        },
-        update: {
-          name: response.data.name,
-        },
-        create: {
-          tornId: response.data.ID,
-          name: response.data.name,
+          tornId: Number(factionId),
         },
       });
 
-      const connection = await prisma.factionsOnDiscordServer.upsert({
+      const connection = await prisma.factionsOnDiscordServer.findUnique({
         where: {
           factionId_discordServerId: {
             discordServerId: dbDiscordServer.id,
             factionId: dbFaction.id,
           },
         },
-        update: {},
-        create: {
-          discordServerId: dbDiscordServer.id,
-          factionId: dbFaction.id,
-        },
       });
 
+      if (!connection) {
+        return await interaction.editReply("Faction id not found");
+      }
+
+      const deletedConnection = await prisma.factionsOnDiscordServer.delete({
+        where: {
+          factionId_discordServerId: {
+            discordServerId: dbDiscordServer.id,
+            factionId: dbFaction.id,
+          },
+        },
+      });
       const connectedFaction = await prisma.factionsOnDiscordServer.findMany({
         where: {
           discordServerId: dbDiscordServer.id,
@@ -82,8 +68,6 @@ module.exports = {
           faction: true,
         },
       });
-
-      console.log(connectedFaction);
 
       const embeds = new EmbedBuilder()
         .setColor("Aqua")
@@ -104,6 +88,7 @@ module.exports = {
           .setCustomId("dashboard-remove-faction")
           .setLabel("Remove Faction")
           .setStyle(ButtonStyle.Secondary)
+          .setDisabled(connectedFaction.length === 0)
       );
       //Reply to the discord client
       interaction.message.delete();
