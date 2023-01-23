@@ -1,15 +1,15 @@
-async function upsertFaction(prisma, faction) {
+async function upsertFaction(prisma, factionId, factionName) {
   try {
     const result = await prisma.faction.upsert({
       where: {
-        tornId: faction.faction_id,
+        tornId: factionId,
       },
       update: {
-        name: faction.faction_name,
+        name: factionName,
       },
       create: {
-        tornId: faction.faction_id,
-        name: faction.faction_name,
+        tornId: factionId,
+        name: factionName,
       },
     });
     console.log("Success: upsertFaction");
