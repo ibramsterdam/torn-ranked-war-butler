@@ -20,7 +20,7 @@ async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildId) {
     console.log("error", error);
   }
 }
-async function upsertApiKey(prisma, key, server, user) {
+async function upsertApiKey(prisma, key, serverId, userId) {
   try {
     const result = await prisma.apiKey.upsert({
       where: {
@@ -28,13 +28,13 @@ async function upsertApiKey(prisma, key, server, user) {
       },
       update: {
         value: key,
-        discordServerId: server.id,
-        userId: user.id,
+        discordServerId: serverId,
+        userId: userId,
       },
       create: {
         value: key,
-        discordServerId: server.id,
-        userId: user.id,
+        discordServerId: serverId,
+        userId: userId,
       },
     });
     console.log("Success: upsertApiKey");

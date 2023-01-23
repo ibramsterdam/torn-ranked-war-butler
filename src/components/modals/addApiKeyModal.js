@@ -38,7 +38,7 @@ module.exports = {
       user.data.faction.faction_name
     );
     const dbUser = await upsertUserAndConnectFaction(user.data, prisma);
-    const dbApiKey = await upsertApiKey(prisma, apiKey, server, dbUser);
+    const dbApiKey = await upsertApiKey(prisma, apiKey, server.id, dbUser.id);
     const usersWhoSharedTheirKey =
       await getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildID);
 
