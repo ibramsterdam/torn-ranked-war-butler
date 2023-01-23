@@ -1,4 +1,4 @@
-async function getUsersThatSharedTheirApiKeyOnDiscordServer(guildId, prisma) {
+async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildId) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {

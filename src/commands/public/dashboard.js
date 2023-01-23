@@ -51,7 +51,7 @@ module.exports = {
     let buttons;
     const prisma = require("../../index");
 
-    const server = await getDiscordServer(guildID, prisma);
+    const server = await getDiscordServer(prisma, guildID);
 
     if (server) {
       embeds = new EmbedBuilder()

@@ -21,10 +21,10 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
     const users = await getUsersThatSharedTheirApiKeyOnDiscordServer(
-      guildID,
-      prisma
+      prisma,
+      guildID
     );
-    const server = await getDiscordServer(guildID, prisma);
+    const server = await getDiscordServer(prisma, guildID);
 
     const embeds = new EmbedBuilder()
       .setColor("Aqua")

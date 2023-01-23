@@ -16,7 +16,7 @@ module.exports = {
     const prisma = require("../../index");
     const guildID = Number(interaction.guildId);
 
-    const server = await getDiscordServer(guildID, prisma);
+    const server = await getDiscordServer(prisma, guildID);
 
     const manageFactionsButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()

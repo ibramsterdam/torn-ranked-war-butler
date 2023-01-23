@@ -1,4 +1,4 @@
-async function upsertFaction(faction, prisma) {
+async function upsertFaction(prisma, faction) {
   try {
     const result = await prisma.faction.upsert({
       where: {

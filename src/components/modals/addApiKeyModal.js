@@ -31,12 +31,12 @@ module.exports = {
 
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
-    const server = await getDiscordServer(guildID, prisma);
-    const faction = await upsertFaction(user.data.faction, prisma);
+    const server = await getDiscordServer(prisma, guildID);
+    const faction = await upsertFaction(prisma, user.data.faction);
     const dbUser = await upsertUserAndConnectFaction(user.data, prisma);
     const dbApiKey = await upsertApiKey(prisma, apiKey, server, dbUser);
     const usersWhoSharedTheirKey =
-      await getUsersThatSharedTheirApiKeyOnDiscordServer(guildID, prisma);
+      await getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildID);
 
     const embeds = new EmbedBuilder()
       .setColor("Aqua")

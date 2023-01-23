@@ -1,4 +1,4 @@
-async function getDiscordServer(guildId, prisma) {
+async function getDiscordServer(prisma, guildId) {
   try {
     const result = await prisma.discordServer.findUnique({
       where: {
