@@ -1,4 +1,4 @@
-const { getUser } = require("../../util/tornApiUtil");
+const { getUserFromTornApi } = require("../../util/tornApiUtil");
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 
 const {
@@ -24,7 +24,7 @@ module.exports = {
     );
 
     // validate if apikey returns a user
-    const result = await getUser(apiKey);
+    const result = await getUserFromTornApi(apiKey);
     if (result.data.error) {
       return await interaction.editReply("Not a valid key");
     }

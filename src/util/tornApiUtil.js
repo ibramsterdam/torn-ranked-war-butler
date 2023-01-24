@@ -16,7 +16,7 @@ const getFactionFromTornApi = async (factionID, apiKey) => {
     return "error";
   }
 };
-const getUser = async (apiKey) => {
+const getUserFromTornApi = async (apiKey) => {
   try {
     return axios.get(
       `https://api.torn.com/user/?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
@@ -29,5 +29,5 @@ const getUser = async (apiKey) => {
 module.exports = {
   getTornRankedWarInfo,
   getFactionFromTornApi,
-  getUser,
+  getUserFromTornApi,
 };
