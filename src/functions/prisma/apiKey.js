@@ -43,8 +43,24 @@ async function upsertApiKey(prisma, key, serverId, userId) {
     console.log("error", error);
   }
 }
+async function getFirstConnectedApiKeyDiscordServer(prisma, guildId) {
+  try {
+    const result = await prisma.apiKey.findFirst({
+      where: {
+        discordServer: {
+          guildId: guildId,
+        },
+      },
+    });
+    console.log("Success: getFirstConnectedApiKeyDiscordServer");
+    return result;
+  } catch (error) {
+    console.log("error", error);
+  }
+}
 
 module.exports = {
   getUsersThatSharedTheirApiKeyOnDiscordServer,
   upsertApiKey,
+  getFirstConnectedApiKeyDiscordServer,
 };

@@ -1,4 +1,4 @@
-const { getFaction } = require("../../util/tornApiUtil");
+const { getFactionFromTornApi } = require("../../util/tornApiUtil");
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 
 const {
@@ -7,6 +7,12 @@ const {
   EmbedBuilder,
   ButtonStyle,
 } = require("discord.js");
+const { getDiscordServer } = require("../../functions/prisma/discord");
+const { upsertFaction } = require("../../functions/prisma/faction");
+const {
+  upsertFactionOnDiscordServerConnection,
+  getConnectedFactionsOnDiscordServer,
+} = require("../../functions/prisma/factionsOnDiscordServer");
 
 module.exports = {
   data: { name: "add-faction-modal" },
@@ -26,98 +32,57 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
 
-    try {
-      const apiKey = await prisma.apiKey.findFirst({
-        where: {
-          discordServer: {
-            guildId: guildID,
-          },
-        },
-      });
+    const server = await getDiscordServer(prisma, guildID);
 
-      const dbDiscordServer = await prisma.discordServer.findUnique({
-        where: {
-          guildId: guildID,
-        },
-        select: {
-          apiKey: true,
-          isWhitelisted: true,
-          id: true,
-        },
-      });
+    const result = await getFactionFromTornApi(
+      factionId,
+      server.apiKey[0].value
+    );
+    const faction = await upsertFaction(
+      prisma,
+      result.data.ID,
+      result.data.name
+    );
+    const connection = await upsertFactionOnDiscordServerConnection(
+      prisma,
+      server.id,
+      faction.id
+    );
 
-      const response = await getFaction(factionId, apiKey.value);
-      const dbFaction = await prisma.faction.upsert({
-        where: {
-          tornId: response.data.ID,
-        },
-        update: {
-          name: response.data.name,
-        },
-        create: {
-          tornId: response.data.ID,
-          name: response.data.name,
-        },
-      });
+    const connectedFactions = await getConnectedFactionsOnDiscordServer(
+      prisma,
+      server.id
+    );
 
-      const connection = await prisma.factionsOnDiscordServer.upsert({
-        where: {
-          factionId_discordServerId: {
-            discordServerId: dbDiscordServer.id,
-            factionId: dbFaction.id,
-          },
-        },
-        update: {},
-        create: {
-          discordServerId: dbDiscordServer.id,
-          factionId: dbFaction.id,
-        },
-      });
-
-      const connectedFaction = await prisma.factionsOnDiscordServer.findMany({
-        where: {
-          discordServerId: dbDiscordServer.id,
-        },
-        select: {
-          faction: true,
-        },
-      });
-
-      console.log(connectedFaction);
-
-      const embeds = new EmbedBuilder()
-        .setColor("Aqua")
-        .setTitle("Manage Factions")
-        .setDescription(
-          `You have connected ${connectedFaction.length} factions`
-        );
-
-      //TODO
-      const buttons = await getDashboardButtons("factions", false, false);
-
-      const manageApiKeysButtons = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId("dashboard-add-faction")
-          .setLabel("Add Faction")
-          .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
-          .setCustomId("dashboard-remove-faction")
-          .setLabel("Remove Faction")
-          .setStyle(ButtonStyle.Secondary)
+    const embeds = new EmbedBuilder()
+      .setColor("Aqua")
+      .setTitle("Manage Factions")
+      .setDescription(
+        `You have connected ${connectedFactions.length} factions`
       );
-      //Reply to the discord client
-      interaction.message.delete();
 
-      return await interaction.followUp({
-        embeds: [embeds],
-        components: [buttons, manageApiKeysButtons],
-      });
-    } catch (error) {
-      console.log("Err while working with prisma", error);
-    }
+    const buttons = await getDashboardButtons(
+      "factions",
+      !server.isWhitelisted,
+      server.apiKey.length
+    );
 
-    await interaction.editReply({
-      content: `something went wrong`,
+    const manageApiKeysButtons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("dashboard-add-faction")
+        .setLabel("Add Faction")
+        .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+        .setCustomId("dashboard-remove-faction")
+        .setLabel("Remove Faction")
+        .setStyle(ButtonStyle.Secondary)
+    );
+    //Reply to the discord client
+    interaction.message.delete();
+
+    return await interaction.followUp({
+      embeds: [embeds],
+      components: [buttons, manageApiKeysButtons],
     });
   },
 };

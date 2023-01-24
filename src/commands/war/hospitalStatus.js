@@ -3,7 +3,7 @@ const {
   SlashCommandBuilder,
   ChatInputCommandInteraction,
 } = require("discord.js");
-const { getFaction } = require("../../util/tornApiUtil");
+const { getFactionFromTornApi } = require("../../util/tornApiUtil");
 
 module.exports = {
   developer: true,
@@ -28,7 +28,7 @@ module.exports = {
     const { options } = interaction;
     const targetFactionId = options.getNumber("factionid");
     const hospitalMap = new Map();
-    const results = await getFaction(targetFactionId);
+    const results = await getFactionFromTornApi(targetFactionId);
 
     if (results.data.error) {
       const err = new EmbedBuilder()
