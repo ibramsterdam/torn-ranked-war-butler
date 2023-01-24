@@ -24,8 +24,8 @@ module.exports = {
     );
 
     // validate if apikey returns a user
-    const user = await getUser(apiKey);
-    if (user.data.error) {
+    const result = await getUser(apiKey);
+    if (result.data.error) {
       return await interaction.editReply("Not a valid key");
     }
 
@@ -34,10 +34,16 @@ module.exports = {
     const server = await getDiscordServer(prisma, guildID);
     const faction = await upsertFaction(
       prisma,
-      user.data.faction.faction_id,
-      user.data.faction.faction_name
+      result.data.faction.faction_id,
+      result.data.faction.faction_name
     );
-    const dbUser = await upsertUserAndConnectFaction(user.data, prisma);
+
+    const dbUser = await upsertUserAndConnectFaction(
+      prisma,
+      result.data.player_id,
+      result.data.player_name,
+      result.data.faction.faction_id
+    );
     const dbApiKey = await upsertApiKey(prisma, apiKey, server.id, dbUser.id);
     const usersWhoSharedTheirKey =
       await getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildID);

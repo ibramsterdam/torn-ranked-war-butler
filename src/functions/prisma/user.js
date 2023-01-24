@@ -1,20 +1,20 @@
-async function upsertUserAndConnectFaction(user, prisma) {
+async function upsertUserAndConnectFaction(prisma, tornId, name, factionId) {
   try {
     const result = await prisma.user.upsert({
       where: {
-        tornId: user.player_id,
+        tornId: tornId,
       },
       update: {
-        name: user.name,
+        name: name,
         faction: {
-          connect: { tornId: user.faction.faction_id },
+          connect: { tornId: factionId },
         },
       },
       create: {
-        tornId: user.player_id,
-        name: user.name,
+        tornId: tornId,
+        name: name,
         faction: {
-          connect: { tornId: user.faction.faction_id },
+          connect: { tornId: factionId },
         },
       },
     });
@@ -24,7 +24,21 @@ async function upsertUserAndConnectFaction(user, prisma) {
     console.log("error", error);
   }
 }
+async function getUser(prisma, tornId) {
+  try {
+    const result = await prisma.user.findUnique({
+      where: {
+        tornId: tornId,
+      },
+    });
+    console.log("Success: getUser");
+    return result;
+  } catch (error) {
+    console.log("error", error);
+  }
+}
 
 module.exports = {
   upsertUserAndConnectFaction,
+  getUser,
 };
