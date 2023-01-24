@@ -1,5 +1,5 @@
-const { getUser } = require("../../util/tornApiUtil");
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
+const { getUser } = require("../../functions/prisma/user");
 
 const {
   ButtonBuilder,
@@ -7,6 +7,12 @@ const {
   EmbedBuilder,
   ButtonStyle,
 } = require("discord.js");
+const {
+  getApiKeyFromUser,
+  deleteApiKeyOfUser,
+  getApiKeysThatAreUsedOnDiscordServer,
+} = require("../../functions/prisma/apiKey");
+const { getDiscordServer } = require("../../functions/prisma/discord");
 
 module.exports = {
   data: { name: "remove-api-key-modal" },
@@ -23,98 +29,60 @@ module.exports = {
 
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
+    const user = await getUser(prisma, Number(tornIdOfUser));
+    // const apiKeyOfUserUsed = await
+    // const foundKey = await getApiKeyFromUser(prisma, user.id);
+    const apiKey = await deleteApiKeyOfUser(prisma, user.id);
+    const users = await getApiKeysThatAreUsedOnDiscordServer(prisma, guildID);
+    const server = await getDiscordServer(prisma, guildID);
 
-    try {
-      const user = await prisma.user.findUnique({
-        where: {
-          tornId: Number(tornIdOfUser),
-        },
-      });
-      const apiKey = await prisma.apiKey.delete({
-        where: {
-          userId: user.id,
-        },
-      });
-
-      const users = await prisma.apiKey.findMany({
-        where: {
-          discordServer: {
-            guildId: guildID,
-          },
-        },
-        select: {
-          user: {
-            include: {
-              faction: true,
-            },
-          },
-        },
-      });
-
-      const discordServerInfo = await prisma.discordServer.findUnique({
-        where: {
-          guildId: guildID,
-        },
-        select: {
-          apiKey: true,
-          isWhitelisted: true,
-        },
-      });
-
-      const embeds = new EmbedBuilder()
-        .setColor("Aqua")
-        .setTitle("Manage Api Keys")
-        .setDescription(
-          `
+    const embeds = new EmbedBuilder()
+      .setColor("Aqua")
+      .setTitle("Manage Api Keys")
+      .setDescription(
+        `
       For every key that you add, you are allowed to add 3 factions to track. 
       You have ${users.length} api keys connected and are allowed to track ${
-            users.length * 3
-          } factions\n
+          users.length * 3
+        } factions\n
       
       Please remember
       *1. We make sure that every key is from a different user and only use the key for the discord server that it is inserted in.*
       *2. We handle these keys with absolute secrecy*
       *3. Anyone trying to manipulate this bot forfeits the right to use it*
       `
-        );
+      );
 
-      users.forEach((object) => {
-        embeds.addFields({
-          name: `${object.user.name} [${object.user.tornId}]`,
-          value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.tornId})
+    users.forEach((object) => {
+      embeds.addFields({
+        name: `${object.user.name} [${object.user.tornId}]`,
+        value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.tornId})
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
-        });
       });
-      const buttons = await getDashboardButtons(
-        "keys",
-        !discordServerInfo.isWhitelisted,
-        discordServerInfo.apiKey.length === 0
-      );
+    });
+    const buttons = await getDashboardButtons(
+      "keys",
+      !server.isWhitelisted,
+      server.apiKey.length === 0
+    );
 
-      const manageApiKeysButtons = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId("dashboard-add-api-key")
-          .setLabel("Set Api Key")
-          .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
-          .setCustomId("dashboard-remove-api-key")
-          .setLabel("Remove Api Key")
-          .setStyle(ButtonStyle.Secondary)
-          .setDisabled(discordServerInfo.apiKey.length === 0)
-      );
-      //Reply to the discord client
-      interaction.message.delete();
+    const manageApiKeysButtons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("dashboard-add-api-key")
+        .setLabel("Set Api Key")
+        .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+        .setCustomId("dashboard-remove-api-key")
+        .setLabel("Remove Api Key")
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(server.apiKey.length === 10)
+    );
+    //Reply to the discord client
+    interaction.message.delete();
 
-      return await interaction.followUp({
-        embeds: [embeds],
-        components: [buttons, manageApiKeysButtons],
-      });
-    } catch (error) {
-      console.log("Err while working with prisma", error);
-    }
-
-    await interaction.editReply({
-      content: `something went wrong`,
+    return await interaction.followUp({
+      embeds: [embeds],
+      components: [buttons, manageApiKeysButtons],
     });
   },
 };
