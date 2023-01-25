@@ -74,18 +74,15 @@ module.exports = {
       .setColor("Aqua")
       .setTitle("Manage Api Keys")
       .setDescription(
-        `
-      For every key that you add, you are allowed to add 3 factions to track. 
-      You have ${
-        usersWhoSharedTheirKey.length
-      } api keys connected and are allowed to track ${
-          usersWhoSharedTheirKey.length * 3
-        } factions\n
+        `The amount of api keys you are allowed to add is based on the deal you struck with the developer.
+      You can create a new api key [here](https://www.torn.com/preferences.php#tab=api).
       
       Please remember
       *1. We make sure that every key is from a different user and only use the key for the discord server that it is inserted in.*
       *2. We handle these keys with absolute secrecy*
       *3. Anyone trying to manipulate this bot forfeits the right to use it*
+      
+      **Api Key:**
       `
       );
 

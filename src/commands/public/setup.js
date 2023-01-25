@@ -55,22 +55,29 @@ module.exports = {
     const embeds = new EmbedBuilder()
       .setTitle("Ranked War Butler")
       .setDescription(
-        `Buttons enable when you are whitelisted.
-          Whitelisting happends when payment is made`
+        "Welcome to the dashboard! From here you can manage which factions you would like to track."
       )
-      .addFields({
-        name: "General information",
-        value: `
-            *Whitelist status* : ${server.isWhitelisted ? "🟢" : "🔴"}
-            *ApiKey status* : ${server.apiKey.length} keys connected!
-            *Polling speed* : ${
-              server.apiKey.length * 20 > 100 ? 100 : server.apiKey.length * 20
-            } requests per minute
-            *Faction tracking status* : tracking ${
-              server.factions.length
-            } factions!
-            `,
-      })
+      .addFields(
+        {
+          name: "General information",
+          value: `
+        **Whitelist status:** ${server.isWhitelisted ? "🟢" : "🔴"}
+        **ApiKey status:** ${server.apiKey.length}/${server.apiKeyAmount}
+        **Faction tracking status:** ${server.factions.length}/${
+            server.factionAmount
+          }
+        `,
+        },
+        {
+          name: "Other information",
+          value: `
+        1. Buttons enable when you are whitelisted.
+        2. Whitelisting happends when payment is made to the developer
+        3. If any problems arise, please reach out to the developer
+        4. How many apikeys and factions can be connected depends on the deal you made with the developer
+        `,
+        }
+      )
       .setColor("#00b0f4")
       .setFooter({
         text: "Good luck on warring!",

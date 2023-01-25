@@ -47,13 +47,11 @@ module.exports = {
 
     // create the message
     const guildID = Number(interaction.guildId);
-    let embeds;
-    let buttons;
     const prisma = require("../../index");
 
     const server = await getDiscordServer(prisma, guildID);
 
-    embeds = new EmbedBuilder()
+    const embeds = new EmbedBuilder()
       .setTitle("Ranked War Butler")
       .setDescription(
         "Welcome to the dashboard! From here you can manage which factions you would like to track."
@@ -85,7 +83,7 @@ module.exports = {
       })
       .setTimestamp();
 
-    buttons = await getDashboardButtons(
+    const buttons = await getDashboardButtons(
       "noMenuType",
       !server.isWhitelisted,
       server.apiKey.length === 0
