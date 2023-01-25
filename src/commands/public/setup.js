@@ -42,7 +42,9 @@ module.exports = {
     });
 
     const guildID = Number(interaction.guildId);
-    const server = await upsertDiscordServer(guildID);
+    const prisma = require("../../index");
+
+    const server = await upsertDiscordServer(prisma, guildID);
 
     if (!server) {
       return interaction.followUp(

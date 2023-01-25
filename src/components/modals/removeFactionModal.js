@@ -53,14 +53,39 @@ module.exports = {
       prisma,
       server.id
     );
+    const factions = await getConnectedFactionsOnDiscordServer(
+      prisma,
+      server.id
+    );
     server = await getDiscordServer(prisma, guildID);
 
     const embeds = new EmbedBuilder()
-      .setColor("Aqua")
+      .setColor("DarkAqua")
       .setTitle("Manage Factions")
       .setDescription(
-        `You have connected ${connectedFactions.length} factions`
+        `This is not done yet and under development, so for now. Click away :)`
+      )
+      .addFields(
+        {
+          name: "Adding a faction",
+          value:
+            "This functionality automatically creates a channel where the bot starts messageing status updates",
+          inline: true,
+        },
+        {
+          name: "Removing a faction",
+          value:
+            "This functionality removes the channel connected to the faction",
+          inline: true,
+        }
       );
+
+    factions.forEach((object) => {
+      embeds.addFields({
+        name: `${object.faction.name} [${object.faction.tornId}]`,
+        value: `Profile: [Click here!](https://www.torn.com/factions.php?step=profile&ID=${object.faction.tornId})`,
+      });
+    });
 
     const buttons = await getDashboardButtons(
       "factions",

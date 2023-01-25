@@ -17,7 +17,7 @@ async function getDiscordServer(prisma, guildId) {
   }
 }
 
-async function upsertDiscordServer(guildId, prisma) {
+async function upsertDiscordServer(prisma, guildId) {
   try {
     const result = await prisma.discordServer.upsert({
       where: {
