@@ -29,6 +29,8 @@ model DiscordServer {
   guildId BigInt @unique
 
   isWhitelisted Boolean  @default(false)
+  factionAmount Int      @default(1)
+  apiKeyAmount  Int      @default(1)
   apiKey        ApiKey[]
 
   factions FactionsOnDiscordServer[]

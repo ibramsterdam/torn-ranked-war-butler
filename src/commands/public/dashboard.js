@@ -53,46 +53,46 @@ module.exports = {
 
     const server = await getDiscordServer(prisma, guildID);
 
-    if (server) {
-      embeds = new EmbedBuilder()
-        .setTitle("Ranked War Butler")
-        .setDescription(
-          `Buttons enable when you are whitelisted.
-        Whitelisting happends when payment is made`
-        )
-        .addFields({
+    embeds = new EmbedBuilder()
+      .setTitle("Ranked War Butler")
+      .setDescription(
+        "Welcome to the dashboard! From here you can manage which factions you would like to track."
+      )
+      .addFields(
+        {
           name: "General information",
           value: `
-          *Whitelist status* : ${server.isWhitelisted ? "🟢" : "🔴"}
-          *ApiKey status* : ${server.apiKey.length} keys connected!
-          *Polling speed* : ${
-            server.apiKey.length * 20 > 100 ? 100 : server.apiKey.length * 20
-          } requests per minute
-          *Faction tracking status* : tracking ${
-            server.factions.length
-          } factions!
+          **Whitelist status:** ${server.isWhitelisted ? "🟢" : "🔴"}
+          **ApiKey status:** ${server.apiKey.length}/${server.apiKeyAmount}
+          **Faction tracking status:** ${server.factions.length}/${
+            server.factionAmount
+          }
           `,
-        })
-        .setColor("#00b0f4")
-        .setFooter({
-          text: "Good luck on warring!",
-        })
-        .setTimestamp();
+        },
+        {
+          name: "Other information",
+          value: `
+          1. Buttons enable when you are whitelisted.
+          2. Whitelisting happends when payment is made to the developer
+          3. If any problems arise, please reach out to the developer
+          4. How many apikeys and factions can be connected depends on the deal you made with the developer
+          `,
+        }
+      )
+      .setColor("#00b0f4")
+      .setFooter({
+        text: "Good luck on warring!",
+      })
+      .setTimestamp();
 
-      buttons = await getDashboardButtons(
-        "noMenuType",
-        !server.isWhitelisted,
-        server.apiKey.length === 0
-      );
-    } else {
-      embeds = new EmbedBuilder()
-        .setTitle("Ranked War Butler")
-        .setDescription("Something went wrong, please contact the developer");
-      buttons = await getDashboardButtons("noMenyType", true, true);
-    }
+    buttons = await getDashboardButtons(
+      "noMenuType",
+      !server.isWhitelisted,
+      server.apiKey.length === 0
+    );
 
     //Reply to the discord client
-    await interaction.followUp({
+    return await interaction.followUp({
       embeds: [embeds],
       components: [buttons],
     });

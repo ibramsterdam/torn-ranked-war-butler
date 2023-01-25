@@ -44,6 +44,12 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const server = await upsertDiscordServer(guildID);
 
+    if (!server) {
+      return interaction.followUp(
+        "Something is going wrong, please contact the developer"
+      );
+    }
+
     const embeds = new EmbedBuilder()
       .setTitle("Ranked War Butler")
       .setDescription(
