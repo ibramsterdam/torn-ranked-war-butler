@@ -31,7 +31,7 @@ module.exports = {
 
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
-    const server = await getDiscordServer(prisma, guildID);
+    let server = await getDiscordServer(prisma, guildID);
     const faction = await getFaction(prisma, Number(factionId));
     const connection = await getConnectionBetweenFactionAndDiscordServer(
       prisma,
@@ -53,6 +53,7 @@ module.exports = {
       prisma,
       server.id
     );
+    server = await getDiscordServer(prisma, guildID);
 
     const embeds = new EmbedBuilder()
       .setColor("Aqua")
@@ -71,7 +72,8 @@ module.exports = {
       new ButtonBuilder()
         .setCustomId("dashboard-add-faction")
         .setLabel("Add Faction")
-        .setStyle(ButtonStyle.Secondary),
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(server.factions.length >= server.factionAmount),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-faction")
         .setLabel("Remove Faction")
