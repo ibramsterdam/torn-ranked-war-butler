@@ -35,7 +35,7 @@ module.exports = {
 
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
-    const server = await getDiscordServer(prisma, guildID);
+    let server = await getDiscordServer(prisma, guildID);
 
     // validate if the key is not already in use on the server
     if (server.apiKey.find((key) => key.value === apiKey)) {
@@ -68,6 +68,7 @@ module.exports = {
     const dbApiKey = await createApiKey(prisma, apiKey, server.id, dbUser.id);
     const usersWhoSharedTheirKey =
       await getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildID);
+    server = await getDiscordServer(prisma, guildID);
 
     const embeds = new EmbedBuilder()
       .setColor("Aqua")
@@ -106,11 +107,13 @@ module.exports = {
       new ButtonBuilder()
         .setCustomId("dashboard-add-api-key")
         .setLabel("Add Api Key")
-        .setStyle(ButtonStyle.Secondary),
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(server.apiKey.length >= server.apiKeyAmount),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-api-key")
         .setLabel("Remove Api Key")
         .setStyle(ButtonStyle.Secondary)
+        .setDisabled(server.apiKey.length === 0)
     );
     //Reply to the discord client
     interaction.message.delete();

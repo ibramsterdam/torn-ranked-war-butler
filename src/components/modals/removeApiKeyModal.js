@@ -70,13 +70,15 @@ module.exports = {
       new ButtonBuilder()
         .setCustomId("dashboard-add-api-key")
         .setLabel("Set Api Key")
-        .setStyle(ButtonStyle.Secondary),
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(server.apiKey.length >= server.apiKeyAmount),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-api-key")
         .setLabel("Remove Api Key")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(server.apiKey.length === 10)
+        .setDisabled(server.apiKey.length === 0)
     );
+
     //Reply to the discord client
     interaction.message.delete();
 

@@ -60,7 +60,8 @@ module.exports = {
       new ButtonBuilder()
         .setCustomId("dashboard-add-api-key")
         .setLabel("Add Api Key")
-        .setStyle(ButtonStyle.Secondary),
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(server.apiKey.length >= server.apiKeyAmount),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-api-key")
         .setLabel("Remove Api Key")
