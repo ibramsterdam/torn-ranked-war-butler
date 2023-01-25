@@ -30,8 +30,20 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
     const user = await getUser(prisma, Number(tornIdOfUser));
-    // const apiKeyOfUserUsed = await
-    // const foundKey = await getApiKeyFromUser(prisma, user.id);
+
+    if (!user) {
+      return await interaction.editReply("Can't find this user");
+    }
+    const keys = await getApiKeysThatAreUsedOnDiscordServer(prisma, guildID);
+    const userKey = await getApiKeyFromUser(prisma, user.id);
+
+    // validate if the key exists on this server
+    if (!keys.find((key) => key?.value === userKey?.value)) {
+      return await interaction.editReply(
+        "The key of the user you are trying to remove does exist"
+      );
+    }
+
     const apiKey = await deleteApiKeyOfUser(prisma, user.id);
     const users = await getApiKeysThatAreUsedOnDiscordServer(prisma, guildID);
     const server = await getDiscordServer(prisma, guildID);

@@ -118,6 +118,7 @@ async function getApiKeysThatAreUsedOnDiscordServer(prisma, guildId) {
         },
       },
       select: {
+        value: true,
         user: {
           include: {
             faction: true,
