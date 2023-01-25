@@ -6,6 +6,13 @@ const {
   EmbedBuilder,
   ButtonStyle,
 } = require("discord.js");
+const { getDiscordServer } = require("../../functions/prisma/discord");
+const { getFaction } = require("../../functions/prisma/faction");
+const {
+  getConnectedFactionsOnDiscordServer,
+  getConnectionBetweenFactionAndDiscordServer,
+  deleteConnectionBetweenFactionAndDiscordServer,
+} = require("../../functions/prisma/factionsOnDiscordServer");
 
 module.exports = {
   data: { name: "remove-faction-modal" },
@@ -24,84 +31,59 @@ module.exports = {
 
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
+    const server = await getDiscordServer(prisma, guildID);
+    const faction = await getFaction(prisma, Number(factionId));
+    const connection = await getConnectionBetweenFactionAndDiscordServer(
+      prisma,
+      server.id,
+      faction.id
+    );
 
-    try {
-      const dbDiscordServer = await prisma.discordServer.findUnique({
-        where: {
-          guildId: guildID,
-        },
-      });
-
-      const dbFaction = await prisma.faction.findUnique({
-        where: {
-          tornId: Number(factionId),
-        },
-      });
-
-      const connection = await prisma.factionsOnDiscordServer.findUnique({
-        where: {
-          factionId_discordServerId: {
-            discordServerId: dbDiscordServer.id,
-            factionId: dbFaction.id,
-          },
-        },
-      });
-
-      if (!connection) {
-        return await interaction.editReply("Faction id not found");
-      }
-
-      const deletedConnection = await prisma.factionsOnDiscordServer.delete({
-        where: {
-          factionId_discordServerId: {
-            discordServerId: dbDiscordServer.id,
-            factionId: dbFaction.id,
-          },
-        },
-      });
-      const connectedFaction = await prisma.factionsOnDiscordServer.findMany({
-        where: {
-          discordServerId: dbDiscordServer.id,
-        },
-        select: {
-          faction: true,
-        },
-      });
-
-      const embeds = new EmbedBuilder()
-        .setColor("Aqua")
-        .setTitle("Manage Factions")
-        .setDescription(
-          `You have connected ${connectedFaction.length} factions`
-        );
-
-      //TODO
-      const buttons = await getDashboardButtons("factions", false, false);
-
-      const manageApiKeysButtons = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId("dashboard-add-faction")
-          .setLabel("Add Faction")
-          .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
-          .setCustomId("dashboard-remove-faction")
-          .setLabel("Remove Faction")
-          .setStyle(ButtonStyle.Secondary)
-          .setDisabled(connectedFaction.length === 0)
-      );
-      //Reply to the discord client
-      interaction.message.delete();
-
-      return await interaction.followUp({
-        embeds: [embeds],
-        components: [buttons, manageApiKeysButtons],
-      });
-    } catch (error) {
-      console.log("Err while working with prisma", error);
+    if (!connection) {
+      return await interaction.editReply("Faction is not connected");
     }
 
-    await interaction.editReply({
-      content: `something went wrong`,
+    const deletedConnection =
+      await deleteConnectionBetweenFactionAndDiscordServer(
+        prisma,
+        server.id,
+        faction.id
+      );
+    const connectedFactions = await getConnectedFactionsOnDiscordServer(
+      prisma,
+      server.id
+    );
+
+    const embeds = new EmbedBuilder()
+      .setColor("Aqua")
+      .setTitle("Manage Factions")
+      .setDescription(
+        `You have connected ${connectedFactions.length} factions`
+      );
+
+    const buttons = await getDashboardButtons(
+      "factions",
+      !server.isWhitelisted,
+      server.apiKey.length === 0
+    );
+
+    const manageApiKeysButtons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("dashboard-add-faction")
+        .setLabel("Add Faction")
+        .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+        .setCustomId("dashboard-remove-faction")
+        .setLabel("Remove Faction")
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(connectedFactions.length === 0)
+    );
+    //Reply to the discord client
+    interaction.message.delete();
+
+    return await interaction.followUp({
+      embeds: [embeds],
+      components: [buttons, manageApiKeysButtons],
     });
   },
 };

@@ -40,8 +40,52 @@ async function getConnectedFactionsOnDiscordServer(prisma, discordServerId) {
     console.log("error", error);
   }
 }
+async function getConnectionBetweenFactionAndDiscordServer(
+  prisma,
+  discordServerId,
+  factionId
+) {
+  try {
+    const result = await prisma.factionsOnDiscordServer.findUnique({
+      where: {
+        factionId_discordServerId: {
+          discordServerId: discordServerId,
+          factionId: factionId,
+        },
+      },
+    });
+
+    console.log("Succes: getConnectionBetweenFactionAndDiscordServer");
+    return result;
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+async function deleteConnectionBetweenFactionAndDiscordServer(
+  prisma,
+  discordServerId,
+  factionId
+) {
+  try {
+    const result = await prisma.factionsOnDiscordServer.delete({
+      where: {
+        factionId_discordServerId: {
+          discordServerId: discordServerId,
+          factionId: factionId,
+        },
+      },
+    });
+
+    console.log("Succes: deleteConnectionOfFactionAndDiscordServer");
+    return result;
+  } catch (error) {
+    console.log("error", error);
+  }
+}
 
 module.exports = {
   upsertFactionOnDiscordServerConnection,
   getConnectedFactionsOnDiscordServer,
+  getConnectionBetweenFactionAndDiscordServer,
+  deleteConnectionBetweenFactionAndDiscordServer,
 };
