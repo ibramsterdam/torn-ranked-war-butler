@@ -12,6 +12,7 @@ async function getDiscordServer(prisma, guildId) {
     console.log("Succes: getDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: getDiscordServer");
     console.log("error", error);
   }
 }
@@ -34,6 +35,7 @@ async function upsertDiscordServer(guildId, prisma) {
     console.log("Succes: upsertDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: upsertDiscordServer");
     console.log("error", error);
   }
 }

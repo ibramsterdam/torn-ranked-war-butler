@@ -21,6 +21,7 @@ async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildId) {
     console.log("Success: getUsersThatSharedTheirApiKeyOnDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: getUsersThatSharedTheirApiKeyOnDiscordServer");
     console.log("error", error);
   }
 }
@@ -30,26 +31,19 @@ async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildId) {
  *  @param {Number} serverId
  *  @param {Number} userId
  */
-async function upsertApiKey(prisma, key, serverId, userId) {
+async function createApiKey(prisma, key, serverId, userId) {
   try {
-    const result = await prisma.apiKey.upsert({
-      where: {
+    const result = await prisma.apiKey.create({
+      data: {
         value: key,
-      },
-      update: {
-        value: key,
-        discordServerId: serverId,
         userId: userId,
-      },
-      create: {
-        value: key,
         discordServerId: serverId,
-        userId: userId,
       },
     });
-    console.log("Success: upsertApiKey");
+    console.log("Success: createApiKey");
     return result;
   } catch (error) {
+    console.log("Failure: createApiKey");
     console.log("error", error);
   }
 }
@@ -69,6 +63,7 @@ async function getFirstConnectedApiKeyDiscordServer(prisma, guildId) {
     console.log("Success: getFirstConnectedApiKeyDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: getFirstConnectedApiKeyDiscordServer");
     console.log("error", error);
   }
 }
@@ -88,6 +83,7 @@ async function getApiKeyFromUser(prisma, userId) {
     console.log("Success: getApiKey");
     return result;
   } catch (error) {
+    console.log("Failure: getApiKey");
     console.log("error", error);
   }
 }
@@ -105,6 +101,7 @@ async function deleteApiKeyOfUser(prisma, userId) {
     console.log("Success: deleteApiKeyOfUser");
     return result;
   } catch (error) {
+    console.log("Failure: deleteApiKeyOfUser");
     console.log("error", error);
   }
 }
@@ -131,15 +128,36 @@ async function getApiKeysThatAreUsedOnDiscordServer(prisma, guildId) {
     console.log("Success: getApiKeysThatAreUsedOnDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: getApiKeysThatAreUsedOnDiscordServer");
+    console.log("error", error);
+  }
+}
+
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {String} key
+ */
+async function getApiKeyByValue(prisma, key) {
+  try {
+    const result = await prisma.apiKey.findUnique({
+      where: {
+        value: key,
+      },
+    });
+    console.log("Success: getApiKey");
+    return result;
+  } catch (error) {
+    console.log("Failure: getApiKey");
     console.log("error", error);
   }
 }
 
 module.exports = {
   getUsersThatSharedTheirApiKeyOnDiscordServer,
-  upsertApiKey,
+  createApiKey,
   getFirstConnectedApiKeyDiscordServer,
   getApiKeyFromUser,
   deleteApiKeyOfUser,
   getApiKeysThatAreUsedOnDiscordServer,
+  getApiKeyByValue,
 };

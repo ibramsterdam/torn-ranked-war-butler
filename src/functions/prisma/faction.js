@@ -15,6 +15,7 @@ async function upsertFaction(prisma, factionId, factionName) {
     console.log("Success: upsertFaction");
     return result;
   } catch (error) {
+    console.log("Failure: upsertFaction");
     console.log("error", error);
   }
 }
@@ -28,6 +29,7 @@ async function getFaction(prisma, tornId) {
     console.log("Success: getFaction");
     return result;
   } catch (error) {
+    console.log("Failure: getFaction");
     console.log("error", error);
   }
 }

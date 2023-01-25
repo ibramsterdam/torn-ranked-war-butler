@@ -11,9 +11,13 @@ const { getDiscordServer } = require("../../functions/prisma/discord");
 const { upsertFaction } = require("../../functions/prisma/faction");
 const { upsertUserAndConnectFaction } = require("../../functions/prisma/user");
 const {
-  upsertApiKey,
+  createApiKey,
   getUsersThatSharedTheirApiKeyOnDiscordServer,
+  getApiKeyByValue,
 } = require("../../functions/prisma/apiKey");
+const {
+  getConnectionBetweenFactionAndDiscordServer,
+} = require("../../functions/prisma/factionsOnDiscordServer");
 
 module.exports = {
   data: { name: "add-api-key-modal" },
@@ -32,6 +36,23 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
     const server = await getDiscordServer(prisma, guildID);
+
+    // validate if the key is not already in use on the server
+    if (server.apiKey.find((key) => key.value === apiKey)) {
+      return await interaction.editReply(
+        "Key is already connected to this server"
+      );
+    }
+
+    const key = await getApiKeyByValue(prisma, apiKey);
+
+    // prevent the key beind used twice in our system
+    if (key) {
+      return await interaction.editReply(
+        "Key is already used in our system. If this is not supposed to be, please revoke the key on torn and reach out to the developer to remove it from the butler"
+      );
+    }
+
     const faction = await upsertFaction(
       prisma,
       result.data.faction.faction_id,
@@ -44,7 +65,7 @@ module.exports = {
       result.data.player_name,
       result.data.faction.faction_id
     );
-    const dbApiKey = await upsertApiKey(prisma, apiKey, server.id, dbUser.id);
+    const dbApiKey = await createApiKey(prisma, apiKey, server.id, dbUser.id);
     const usersWhoSharedTheirKey =
       await getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildID);
 

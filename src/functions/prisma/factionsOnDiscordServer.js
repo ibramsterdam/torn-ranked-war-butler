@@ -20,6 +20,7 @@ async function upsertFactionOnDiscordServerConnection(
     console.log("Succes: upsertFactionOnDiscordServerConnection");
     return result;
   } catch (error) {
+    console.log("Failure: upsertFactionOnDiscordServerConnection");
     console.log("error", error);
   }
 }
@@ -37,6 +38,7 @@ async function getConnectedFactionsOnDiscordServer(prisma, discordServerId) {
     console.log("Succes: getConnectedFactionsOnDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: getConnectedFactionsOnDiscordServer");
     console.log("error", error);
   }
 }
@@ -58,6 +60,7 @@ async function getConnectionBetweenFactionAndDiscordServer(
     console.log("Succes: getConnectionBetweenFactionAndDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: getConnectionBetweenFactionAndDiscordServer");
     console.log("error", error);
   }
 }
@@ -79,6 +82,7 @@ async function deleteConnectionBetweenFactionAndDiscordServer(
     console.log("Succes: deleteConnectionOfFactionAndDiscordServer");
     return result;
   } catch (error) {
+    console.log("Failure: deleteConnectionBetweenFactionAndDiscordServer");
     console.log("error", error);
   }
 }

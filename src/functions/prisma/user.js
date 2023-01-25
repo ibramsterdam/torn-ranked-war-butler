@@ -21,6 +21,7 @@ async function upsertUserAndConnectFaction(prisma, tornId, name, factionId) {
     console.log("Success: upsertUserAndConnectFaction");
     return result;
   } catch (error) {
+    console.log("Failure: upsertUserAndConnectFaction");
     console.log("error", error);
   }
 }
@@ -34,6 +35,7 @@ async function getUser(prisma, tornId) {
     console.log("Success: getUser");
     return result;
   } catch (error) {
+    console.log("Failure: getUser");
     console.log("error", error);
   }
 }
