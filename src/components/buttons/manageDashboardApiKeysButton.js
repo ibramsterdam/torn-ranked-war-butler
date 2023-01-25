@@ -37,15 +37,15 @@ module.exports = {
         *1. We make sure that every key is from a different user and only use the key for the discord server that it is inserted in.*
         *2. We handle these keys with absolute secrecy*
         *3. Anyone trying to manipulate this bot forfeits the right to use it*
-        
+
         **Api Key:**
         `
       );
 
     users.forEach((object) => {
       embeds.addFields({
-        name: `${object.user.name} [${object.user.tornId}]`,
-        value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.tornId})
+        name: `${object.user.name} [${object.user.id}]`,
+        value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.id})
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
       });
     });

@@ -100,8 +100,8 @@ module.exports = {
 
     usersWhoSharedTheirKey.forEach((object) => {
       embeds.addFields({
-        name: `${object.user.name} [${object.user.tornId}]`,
-        value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.tornId})
+        name: `${object.user.name} [${object.user.id}]`,
+        value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.id})
         Faction: [${object.user.faction.name}](https://www.torn.com/factions.php?step=profile&ID=${object.user.faction.tornId}#/)`,
       });
     });

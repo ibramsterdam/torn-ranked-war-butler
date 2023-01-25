@@ -1,14 +1,14 @@
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} tornId
+ *  @param {Number} id
  *  @param {String} name
  *  @param {Number} factionId
  */
-async function upsertUserAndConnectFaction(prisma, tornId, name, factionId) {
+async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
   try {
     const result = await prisma.user.upsert({
       where: {
-        tornId: tornId,
+        id: id,
       },
       update: {
         name: name,
@@ -17,7 +17,7 @@ async function upsertUserAndConnectFaction(prisma, tornId, name, factionId) {
         },
       },
       create: {
-        tornId: tornId,
+        id: id,
         name: name,
         faction: {
           connect: { tornId: factionId },
@@ -31,11 +31,11 @@ async function upsertUserAndConnectFaction(prisma, tornId, name, factionId) {
     console.log("error", error);
   }
 }
-async function getUser(prisma, tornId) {
+async function getUser(prisma, id) {
   try {
     const result = await prisma.user.findUnique({
       where: {
-        tornId: tornId,
+        id: id,
       },
       include: {
         apiKey: true,

@@ -1,7 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "tornId" INTEGER NOT NULL,
     "name" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
@@ -62,9 +61,6 @@ CREATE TABLE "FactionsOnDiscordServer" (
     CONSTRAINT "FactionsOnDiscordServer_discordServerId_fkey" FOREIGN KEY ("discordServerId") REFERENCES "DiscordServer" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "FactionsOnDiscordServer_factionId_fkey" FOREIGN KEY ("factionId") REFERENCES "Faction" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_tornId_key" ON "User"("tornId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "DiscordServer_id_key" ON "DiscordServer"("id");
