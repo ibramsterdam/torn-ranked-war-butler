@@ -63,7 +63,7 @@ module.exports = {
       .setColor("DarkAqua")
       .setTitle("Manage Factions")
       .setDescription(
-        `This is not done yet and under development, so for now. Click away :)`
+        `The amount of factions you are allowed to add is based on the deal you struck with the developer.`
       )
       .addFields(
         {
