@@ -1,8 +1,8 @@
-async function getDiscordServer(prisma, guildId) {
+async function getDiscordServer(prisma, id) {
   try {
     const result = await prisma.discordServer.findUnique({
       where: {
-        guildId: guildId,
+        id: id,
       },
       include: {
         apiKey: true,
@@ -17,15 +17,15 @@ async function getDiscordServer(prisma, guildId) {
   }
 }
 
-async function upsertDiscordServer(prisma, guildId) {
+async function upsertDiscordServer(prisma, id) {
   try {
     const result = await prisma.discordServer.upsert({
       where: {
-        guildId: guildId,
+        id: id,
       },
       update: {},
       create: {
-        guildId: guildId,
+        id: id,
       },
       include: {
         apiKey: true,

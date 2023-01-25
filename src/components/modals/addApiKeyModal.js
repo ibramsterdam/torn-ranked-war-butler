@@ -65,7 +65,7 @@ module.exports = {
     const dbUser = await upsertUserAndConnectFaction(
       prisma,
       result.data.player_id,
-      result.data.player_name,
+      result.data.name,
       result.data.faction.faction_id
     );
 

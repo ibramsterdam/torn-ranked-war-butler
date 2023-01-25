@@ -25,8 +25,7 @@ model User {
 }
 
 model DiscordServer {
-  id      Int    @id @default(autoincrement())
-  guildId BigInt @unique
+  id BigInt @id @unique
 
   isWhitelisted Boolean  @default(false)
   factionAmount Int      @default(1)
@@ -44,10 +43,24 @@ model ApiKey {
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
 
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
-  discordServerId Int
+  discordServerId BigInt
+}
+
+model DiscordCategory {
+  id             BigInt           @id
+  name           String
+  discordChannel DiscordChannel[]
+}
+
+model DiscordChannel {
+  id                BigInt          @id
+  name              String
+  discordCategory   DiscordCategory @relation(fields: [discordCategoryId], references: [id])
+  discordCategoryId BigInt
 }
 
 model Faction {
@@ -63,9 +76,9 @@ model FactionsOnDiscordServer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  discordServer   DiscordServer? @relation(fields: [discordServerId], references: [id])
-  discordServerId Int
-  faction         Faction?       @relation(fields: [factionId], references: [id])
+  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
+  discordServerId BigInt
+  faction         Faction?      @relation(fields: [factionId], references: [id])
   factionId       Int
 
   @@id([factionId, discordServerId])

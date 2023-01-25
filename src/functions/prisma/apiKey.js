@@ -1,13 +1,13 @@
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} guildId
+ *  @param {Number} id
  */
-async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildId) {
+async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, id) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {
         discordServer: {
-          guildId: guildId,
+          id: id,
         },
       },
       select: {
@@ -49,14 +49,14 @@ async function createApiKey(prisma, key, serverId, userId) {
 }
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} guildId
+ *  @param {Number} id
  */
-async function getFirstConnectedApiKeyDiscordServer(prisma, guildId) {
+async function getFirstConnectedApiKeyDiscordServer(prisma, id) {
   try {
     const result = await prisma.apiKey.findFirst({
       where: {
         discordServer: {
-          guildId: guildId,
+          id: id,
         },
       },
     });
@@ -107,14 +107,14 @@ async function deleteApiKeyOfUser(prisma, userId) {
 }
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} guildId
+ *  @param {Number} id
  */
-async function getApiKeysThatAreUsedOnDiscordServer(prisma, guildId) {
+async function getApiKeysThatAreUsedOnDiscordServer(prisma, id) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {
         discordServer: {
-          guildId: guildId,
+          id: id,
         },
       },
       select: {
