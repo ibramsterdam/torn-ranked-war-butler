@@ -1,3 +1,9 @@
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {Number} tornId
+ *  @param {String} name
+ *  @param {Number} factionId
+ */
 async function upsertUserAndConnectFaction(prisma, tornId, name, factionId) {
   try {
     const result = await prisma.user.upsert({
@@ -30,6 +36,9 @@ async function getUser(prisma, tornId) {
     const result = await prisma.user.findUnique({
       where: {
         tornId: tornId,
+      },
+      include: {
+        apiKey: true,
       },
     });
     console.log("Success: getUser");

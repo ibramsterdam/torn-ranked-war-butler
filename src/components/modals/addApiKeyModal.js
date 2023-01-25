@@ -9,7 +9,10 @@ const {
 } = require("discord.js");
 const { getDiscordServer } = require("../../functions/prisma/discord");
 const { upsertFaction } = require("../../functions/prisma/faction");
-const { upsertUserAndConnectFaction } = require("../../functions/prisma/user");
+const {
+  upsertUserAndConnectFaction,
+  getUser,
+} = require("../../functions/prisma/user");
 const {
   createApiKey,
   getUsersThatSharedTheirApiKeyOnDiscordServer,
@@ -65,6 +68,15 @@ module.exports = {
       result.data.player_name,
       result.data.faction.faction_id
     );
+
+    const user = await getUser(prisma, result.data.player_id);
+
+    if (user.apiKey) {
+      return await interaction.editReply(
+        "Key you submitted is from a user that already has a key in use in our system"
+      );
+    }
+
     const dbApiKey = await createApiKey(prisma, apiKey, server.id, dbUser.id);
     const usersWhoSharedTheirKey =
       await getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, guildID);
