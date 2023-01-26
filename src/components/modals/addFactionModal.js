@@ -36,7 +36,7 @@ module.exports = {
 
     const result = await getFactionFromTornApi(
       factionId,
-      server.apiKey[0].value
+      server.apiKeys[0].value
     );
     const faction = await upsertFaction(
       prisma,
@@ -90,7 +90,7 @@ module.exports = {
     const buttons = await getDashboardButtons(
       "factions",
       !server.isWhitelisted,
-      server.apiKey.length
+      server.apiKeys.length
     );
 
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(

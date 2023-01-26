@@ -5,7 +5,7 @@ async function getDiscordServer(prisma, id) {
         id: id,
       },
       include: {
-        apiKey: true,
+        apiKeys: true,
         factions: true,
       },
     });
@@ -28,7 +28,7 @@ async function upsertDiscordServer(prisma, id) {
         id: id,
       },
       include: {
-        apiKey: true,
+        apiKeys: true,
         factions: true,
       },
     });

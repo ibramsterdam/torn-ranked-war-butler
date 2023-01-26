@@ -70,13 +70,13 @@ module.exports = {
     let buttons = await getDashboardButtons(
       "factions",
       !server.isWhitelisted,
-      server.apiKey.length === 0
+      server.apiKeys.length === 0
     );
     if (server.isWhitelisted) {
       buttons = await getDashboardButtons(
         "factions",
         !server.isWhitelisted,
-        server.apiKey.length === 0
+        server.apiKeys.length === 0
       );
     }
 

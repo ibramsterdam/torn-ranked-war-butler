@@ -52,7 +52,7 @@ module.exports = {
     const buttons = await getDashboardButtons(
       "keys",
       !server.isWhitelisted,
-      server.apiKey.length === 0
+      server.apiKeys.length === 0
     );
 
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(
@@ -60,12 +60,12 @@ module.exports = {
         .setCustomId("dashboard-add-api-key")
         .setLabel("Add Api Key")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(server.apiKey.length >= server.apiKeyAmount),
+        .setDisabled(server.apiKeys.length >= server.apiKeyAmount),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-api-key")
         .setLabel("Remove Api Key")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(server.apiKey.length === 0)
+        .setDisabled(server.apiKeys.length === 0)
     );
 
     //Reply to the discord client

@@ -61,7 +61,7 @@ module.exports = {
           name: "General information",
           value: `
           **Whitelist status:** ${server.isWhitelisted ? "🟢" : "🔴"}
-          **ApiKey status:** ${server.apiKey.length}/${server.apiKeyAmount}
+          **ApiKey status:** ${server.apiKeys.length}/${server.apiKeyAmount}
           **Faction tracking status:** ${server.factions.length}/${
             server.factionAmount
           }
@@ -86,7 +86,7 @@ module.exports = {
     const buttons = await getDashboardButtons(
       "noMenuType",
       !server.isWhitelisted,
-      server.apiKey.length === 0
+      server.apiKeys.length === 0
     );
 
     //Reply to the discord client

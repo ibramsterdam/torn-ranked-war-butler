@@ -11,42 +11,36 @@ datasource db {
 }
 
 model User {
-  id   Int     @id
-  name String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  apiKey ApiKey?
-
+  id        Int      @id
+  name      String?
+  apiKey    ApiKey?
   faction   Faction? @relation(fields: [factionId], references: [id])
   factionId Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model DiscordServer {
-  id BigInt @id @unique
-
-  isWhitelisted Boolean  @default(false)
-  factionAmount Int      @default(1)
-  apiKeyAmount  Int      @default(1)
-  apiKey        ApiKey[]
-
-  factions FactionsOnDiscordServer[]
+  id            BigInt                    @id @unique
+  isWhitelisted Boolean                   @default(false)
+  factionAmount Int                       @default(1)
+  apiKeyAmount  Int                       @default(1)
+  apiKeys       ApiKey[]
+  factions      FactionsOnDiscordServer[]
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
 }
 
 model ApiKey {
-  id          Int    @id @default(autoincrement())
-  value       String @unique
-  accessLevel String @default("Public")
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id              Int           @id @default(autoincrement())
+  value           String        @unique
+  accessLevel     String        @default("Public")
+  user            User          @relation(fields: [userId], references: [id])
+  userId          Int           @unique
   discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
   discordServerId BigInt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model DiscordCategory {
@@ -71,13 +65,12 @@ model Faction {
 }
 
 model FactionsOnDiscordServer {
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
   discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
   discordServerId BigInt
   faction         Faction?      @relation(fields: [factionId], references: [id])
   factionId       Int
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
   @@id([factionId, discordServerId])
 }
