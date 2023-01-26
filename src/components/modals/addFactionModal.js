@@ -4,8 +4,8 @@ const { getDashboardButtons } = require("../functions/getDashboardButtons");
 const {
   ButtonBuilder,
   ActionRowBuilder,
-  EmbedBuilder,
   ButtonStyle,
+  ChannelType,
 } = require("discord.js");
 const { getDiscordServer } = require("../../functions/prisma/discord");
 const { upsertFaction } = require("../../functions/prisma/faction");
@@ -14,6 +14,9 @@ const {
   getConnectedFactionsOnDiscordServer,
 } = require("../../functions/prisma/factionsOnDiscordServer");
 const { getFactionsEmbed } = require("../functions/factionsEmbed");
+const {
+  createDiscordChannel,
+} = require("../../functions/prisma/discordChannel");
 
 module.exports = {
   data: { name: "add-faction-modal" },
@@ -79,6 +82,23 @@ module.exports = {
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(server.factions.length === 0)
     );
+
+    // create factionChannel
+    const channel = await interaction.guild.channels.create({
+      name: `${faction.name}-${faction.id}`,
+      type: ChannelType.GuildText,
+      parent: server.discordCategory.id.toString(),
+    });
+
+    await createDiscordChannel(
+      prisma,
+      channel.id,
+      channel.name,
+      server.discordCategory.id,
+      server.id,
+      faction.id
+    );
+
     //Reply to the discord client
     interaction.message.delete();
 

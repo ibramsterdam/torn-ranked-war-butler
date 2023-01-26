@@ -23,6 +23,7 @@ model User {
 
 model DiscordServer {
   id              BigInt                    @id @unique
+  name            String
   isWhitelisted   Boolean                   @default(false)
   factionAmount   Int                       @default(1)
   apiKeyAmount    Int                       @default(1)
@@ -64,6 +65,9 @@ model DiscordChannel {
 
   DiscordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
   discordServerId BigInt
+
+  faction   Faction? @relation(fields: [factionId], references: [id])
+  factionId Int?
 }
 
 model Faction {
@@ -72,6 +76,7 @@ model Faction {
   members User[]
 
   discordServers FactionsOnDiscordServer[]
+  DiscordChannel DiscordChannel[]
 }
 
 model FactionsOnDiscordServer {

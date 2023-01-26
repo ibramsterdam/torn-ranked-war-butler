@@ -42,7 +42,7 @@ module.exports = {
     }
 
     // create in discord
-    server = await createDiscordServer(prisma, guildID);
+    server = await createDiscordServer(prisma, guildID, interaction.guild.name);
     const category = await interaction.guild.channels.create({
       name: "Ranked War Butler",
       type: ChannelType.GuildCategory,
@@ -60,7 +60,8 @@ module.exports = {
       channel.id,
       channel.name,
       category.id,
-      server.id
+      server.id,
+      null
     );
 
     const embeds = new EmbedBuilder()

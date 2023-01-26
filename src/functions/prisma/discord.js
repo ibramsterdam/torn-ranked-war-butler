@@ -28,12 +28,14 @@ async function getDiscordServer(prisma, id) {
 /**
  *  @param {PrismaClient} prisma
  *  @param {BigInt} serverId
+ *  @param {String} name
  */
-async function createDiscordServer(prisma, serverId) {
+async function createDiscordServer(prisma, serverId, name) {
   try {
     const result = await prisma.discordServer.create({
       data: {
         id: BigInt(serverId),
+        name: name,
       },
       include: {
         apiKeys: true,
