@@ -16,8 +16,6 @@ async function getApiKeysEmbed(users) {
         `
     );
 
-  console.log(users);
-
   users.forEach((object) => {
     embed.addFields({
       name: `${object.user.name} [${object.user.id}]`,

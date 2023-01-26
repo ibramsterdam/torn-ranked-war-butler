@@ -63,8 +63,6 @@ module.exports = {
       server.id
     );
 
-    const serverr = await getDiscordServer(prisma, guildID);
-    console.log(serverr);
     const embeds = new EmbedBuilder()
       .setTitle("Ranked War Butler")
       .setDescription(

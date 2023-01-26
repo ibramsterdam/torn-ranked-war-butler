@@ -25,8 +25,6 @@ module.exports = {
       server.id
     );
 
-    console.log(server);
-
     const manageFactionsButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("dashboard-add-faction")
