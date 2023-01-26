@@ -17,7 +17,6 @@ async function getDiscordServer(prisma, id) {
         discordChannel: true,
       },
     });
-    console.log("Succes: getDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getDiscordServer");
@@ -42,7 +41,6 @@ async function createDiscordServer(prisma, serverId, name) {
         factions: true,
       },
     });
-    console.log("Succes: getDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getDiscordServer");
@@ -70,7 +68,6 @@ async function upsertDiscordServer(prisma, id) {
         discordChannel: true,
       },
     });
-    console.log("Succes: upsertDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: upsertDiscordServer");

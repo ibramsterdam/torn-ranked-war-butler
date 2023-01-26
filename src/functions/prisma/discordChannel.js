@@ -24,7 +24,6 @@ async function createDiscordChannel(
       },
     });
 
-    console.log("Succes: createDiscordChannel");
     return result;
   } catch (error) {
     console.log("Failure: createDiscordChannel");

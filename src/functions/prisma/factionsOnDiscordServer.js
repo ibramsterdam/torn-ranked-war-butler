@@ -20,7 +20,6 @@ async function createFactionOnDiscordServerConnection(
         factionId: factionId,
       },
     });
-    console.log("Succes: createFactionOnDiscordServerConnection");
     return result;
   } catch (error) {
     console.log("Failure: createFactionOnDiscordServerConnection");
@@ -38,7 +37,6 @@ async function getConnectedFactionsOnDiscordServer(prisma, discordServerId) {
       },
     });
 
-    console.log("Succes: getConnectedFactionsOnDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getConnectedFactionsOnDiscordServer");
@@ -60,7 +58,6 @@ async function getConnectionBetweenFactionAndDiscordServer(
       },
     });
 
-    console.log("Succes: getConnectionBetweenFactionAndDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getConnectionBetweenFactionAndDiscordServer");
@@ -82,7 +79,6 @@ async function deleteConnectionBetweenFactionAndDiscordServer(
       },
     });
 
-    console.log("Succes: deleteConnectionOfFactionAndDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: deleteConnectionBetweenFactionAndDiscordServer");
@@ -110,7 +106,6 @@ async function getDiscordChannelFromFactionAndDiscordServer(
       },
     });
 
-    console.log("Succes: getDiscordChannelFromFactionAndDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getDiscordChannelFromFactionAndDiscordServer");

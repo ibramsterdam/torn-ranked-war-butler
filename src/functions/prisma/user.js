@@ -24,7 +24,6 @@ async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
         },
       },
     });
-    console.log("Success: upsertUserAndConnectFaction");
     return result;
   } catch (error) {
     console.log("Failure: upsertUserAndConnectFaction");
@@ -41,7 +40,6 @@ async function getUser(prisma, id) {
         apiKey: true,
       },
     });
-    console.log("Success: getUser");
     return result;
   } catch (error) {
     console.log("Failure: getUser");

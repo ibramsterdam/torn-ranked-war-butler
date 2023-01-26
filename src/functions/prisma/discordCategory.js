@@ -19,7 +19,6 @@ async function createDiscordCategory(
         discordServerId: serverId,
       },
     });
-    console.log("Succes: createDiscordCategory");
     return result;
   } catch (error) {
     console.log("Failure: createDiscordCategory");

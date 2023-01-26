@@ -18,7 +18,6 @@ async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, id) {
         },
       },
     });
-    console.log("Success: getUsersThatSharedTheirApiKeyOnDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getUsersThatSharedTheirApiKeyOnDiscordServer");
@@ -40,7 +39,6 @@ async function createApiKey(prisma, key, serverId, userId) {
         discordServerId: serverId,
       },
     });
-    console.log("Success: createApiKey");
     return result;
   } catch (error) {
     console.log("Failure: createApiKey");
@@ -60,7 +58,6 @@ async function getFirstConnectedApiKeyDiscordServer(prisma, id) {
         },
       },
     });
-    console.log("Success: getFirstConnectedApiKeyDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getFirstConnectedApiKeyDiscordServer");
@@ -80,7 +77,6 @@ async function getApiKeyFromUser(prisma, userId) {
         userId: userId,
       },
     });
-    console.log("Success: getApiKey");
     return result;
   } catch (error) {
     console.log("Failure: getApiKey");
@@ -98,7 +94,6 @@ async function deleteApiKeyOfUser(prisma, userId) {
         userId: userId,
       },
     });
-    console.log("Success: deleteApiKeyOfUser");
     return result;
   } catch (error) {
     console.log("Failure: deleteApiKeyOfUser");
@@ -126,7 +121,6 @@ async function getApiKeysThatAreUsedOnDiscordServer(prisma, id) {
         },
       },
     });
-    console.log("Success: getApiKeysThatAreUsedOnDiscordServer");
     return result;
   } catch (error) {
     console.log("Failure: getApiKeysThatAreUsedOnDiscordServer");
@@ -145,7 +139,6 @@ async function getApiKeyByValue(prisma, key) {
         value: key,
       },
     });
-    console.log("Success: getApiKey");
     return result;
   } catch (error) {
     console.log("Failure: getApiKey");
