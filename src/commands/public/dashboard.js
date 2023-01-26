@@ -24,6 +24,12 @@ module.exports = {
     const guildID = Number(interaction.guildId);
     const prisma = require("../../index");
     const server = await getDiscordServer(prisma, guildID);
+
+    if (!server) {
+      return await interaction.followUp(
+        `Unable to find the server, have you run the /setup command already? If so, please contact the developer...`
+      );
+    }
     const butlerChannel = server.discordChannel.find(
       (channel) => channel.name === "butler-dashboard"
     );
@@ -34,7 +40,7 @@ module.exports = {
       );
     }
 
-    if (Number(interaction.channelId) !== Number(butlerChannel.id)) {
+    if (BigInt(interaction.channelId) !== butlerChannel.id) {
       return await interaction.followUp(
         "Please use the Butler Dashboard Channel for this command"
       );

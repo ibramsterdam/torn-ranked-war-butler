@@ -53,23 +53,14 @@ module.exports = {
     });
 
     // create in db
-    await createDiscordCategory(
-      prisma,
-      Number(category.id),
-      category.name,
-      server.id
-    );
+    await createDiscordCategory(prisma, category.id, category.name, server.id);
     await createDiscordChannel(
       prisma,
-      Number(channel.id),
+      channel.id,
       channel.name,
-      Number(category.id),
+      category.id,
       server.id
     );
-
-    console.log("coffee");
-    console.log(category.id);
-    console.log(channel.id);
 
     const serverr = await getDiscordServer(prisma, guildID);
     console.log(serverr);

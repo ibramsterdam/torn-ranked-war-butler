@@ -2,13 +2,13 @@ const { PrismaClient } = require("@prisma/client");
 
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} id
+ *  @param {BigInt} id
  */
 async function getDiscordServer(prisma, id) {
   try {
     const result = await prisma.discordServer.findUnique({
       where: {
-        id: id,
+        id: BigInt(id),
       },
       include: {
         apiKeys: true,
@@ -27,13 +27,13 @@ async function getDiscordServer(prisma, id) {
 
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} serverId
+ *  @param {BigInt} serverId
  */
 async function createDiscordServer(prisma, serverId) {
   try {
     const result = await prisma.discordServer.create({
       data: {
-        id: serverId,
+        id: BigInt(serverId),
       },
       include: {
         apiKeys: true,
@@ -50,17 +50,17 @@ async function createDiscordServer(prisma, serverId) {
 
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} id
+ *  @param {BigInt} id
  */
 async function upsertDiscordServer(prisma, id) {
   try {
     const result = await prisma.discordServer.upsert({
       where: {
-        id: id,
+        id: BigInt(id),
       },
       update: {},
       create: {
-        id: id,
+        id: BigInt(id),
       },
       include: {
         apiKeys: true,

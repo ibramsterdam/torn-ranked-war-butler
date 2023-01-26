@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 
 /**
  *  @param {PrismaClient} prisma
- *  @param {Number} categoryId
+ *  @param {BigInt} categoryId
  *  @param {String} categoryName
  */
 async function createDiscordCategory(
@@ -11,16 +11,14 @@ async function createDiscordCategory(
   categoryName,
   serverId
 ) {
-  console.log("OI", categoryId);
   try {
     const result = await prisma.discordCategory.create({
       data: {
-        id: categoryId,
+        id: BigInt(categoryId),
         name: categoryName,
         discordServerId: serverId,
       },
     });
-    console.log(typeof result.id);
     console.log("Succes: createDiscordCategory");
     return result;
   } catch (error) {
