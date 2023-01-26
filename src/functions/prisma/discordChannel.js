@@ -6,15 +6,13 @@ const { PrismaClient } = require("@prisma/client");
  *  @param {String} channelName
  *  @param {BigInt} categoryId
  *  @param {BigInt} serverId
- *  @param {BigInt | null} factionId
  */
 async function createDiscordChannel(
   prisma,
   channelId,
   channelName,
   categoryId,
-  serverId,
-  factionId
+  serverId
 ) {
   try {
     const result = await prisma.discordChannel.create({
@@ -23,7 +21,6 @@ async function createDiscordChannel(
         name: channelName,
         discordCategoryId: BigInt(categoryId),
         discordServerId: BigInt(serverId),
-        factionId: factionId,
       },
     });
 

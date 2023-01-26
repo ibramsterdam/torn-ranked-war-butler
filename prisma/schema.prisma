@@ -58,8 +58,9 @@ model DiscordCategory {
 }
 
 model DiscordChannel {
-  id                BigInt          @id
-  name              String
+  id   BigInt @id
+  name String
+
   discordCategory   DiscordCategory @relation(fields: [discordCategoryId], references: [id])
   discordCategoryId BigInt
 
@@ -68,13 +69,15 @@ model DiscordChannel {
 
   faction   Faction? @relation(fields: [factionId], references: [id])
   factionId Int?
+
+  factionsOnDiscordServer FactionsOnDiscordServer[]
 }
 
 model Faction {
-  id      Int    @id
-  name    String
-  members User[]
+  id   Int    @id
+  name String
 
+  members        User[]
   discordServers FactionsOnDiscordServer[]
   DiscordChannel DiscordChannel[]
 }
@@ -84,6 +87,9 @@ model FactionsOnDiscordServer {
   discordServerId BigInt
   faction         Faction?      @relation(fields: [factionId], references: [id])
   factionId       Int
+
+  discordChannel   DiscordChannel @relation(fields: [discordChannelId], references: [id])
+  discordChannelId BigInt         @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

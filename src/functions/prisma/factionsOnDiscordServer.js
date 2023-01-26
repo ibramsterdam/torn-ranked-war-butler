@@ -1,26 +1,29 @@
-async function upsertFactionOnDiscordServerConnection(
+const { PrismaClient } = require("@prisma/client");
+
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {BigInt} serverId
+ *  @param {number} factionId
+ *  @param {BigInt} discordChannelId
+ */
+async function createFactionOnDiscordServerConnection(
   prisma,
   serverId,
-  factionId
+  factionId,
+  discordChannelId
 ) {
   try {
-    const result = await prisma.factionsOnDiscordServer.upsert({
-      where: {
-        factionId_discordServerId: {
-          discordServerId: serverId,
-          factionId: factionId,
-        },
-      },
-      update: {},
-      create: {
-        discordServerId: serverId,
+    const result = await prisma.factionsOnDiscordServer.create({
+      data: {
+        discordServerId: BigInt(serverId),
+        discordChannelId: BigInt(discordChannelId),
         factionId: factionId,
       },
     });
-    console.log("Succes: upsertFactionOnDiscordServerConnection");
+    console.log("Succes: createFactionOnDiscordServerConnection");
     return result;
   } catch (error) {
-    console.log("Failure: upsertFactionOnDiscordServerConnection");
+    console.log("Failure: createFactionOnDiscordServerConnection");
     console.log("error", error);
   }
 }
@@ -87,9 +90,38 @@ async function deleteConnectionBetweenFactionAndDiscordServer(
   }
 }
 
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {BigInt} discordServerId
+ *  @param {number} factionId
+ */
+async function getDiscordChannelFromFactionAndDiscordServer(
+  prisma,
+  discordServerId,
+  factionId
+) {
+  try {
+    const result = await prisma.factionsOnDiscordServer.findUnique({
+      where: {
+        factionId_discordServerId: {
+          discordServerId: discordServerId,
+          factionId: factionId,
+        },
+      },
+    });
+
+    console.log("Succes: getDiscordChannelFromFactionAndDiscordServer");
+    return result;
+  } catch (error) {
+    console.log("Failure: getDiscordChannelFromFactionAndDiscordServer");
+    console.log("error", error);
+  }
+}
+
 module.exports = {
-  upsertFactionOnDiscordServerConnection,
+  createFactionOnDiscordServerConnection,
   getConnectedFactionsOnDiscordServer,
   getConnectionBetweenFactionAndDiscordServer,
   deleteConnectionBetweenFactionAndDiscordServer,
+  getDiscordChannelFromFactionAndDiscordServer,
 };

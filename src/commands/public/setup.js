@@ -60,8 +60,7 @@ module.exports = {
       channel.id,
       channel.name,
       category.id,
-      server.id,
-      null
+      server.id
     );
 
     const embeds = new EmbedBuilder()

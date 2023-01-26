@@ -12,6 +12,7 @@ const {
   getConnectedFactionsOnDiscordServer,
   getConnectionBetweenFactionAndDiscordServer,
   deleteConnectionBetweenFactionAndDiscordServer,
+  getDiscordChannelFromFactionAndDiscordServer,
 } = require("../../functions/prisma/factionsOnDiscordServer");
 const { getFactionsEmbed } = require("../functions/factionsEmbed");
 
@@ -32,7 +33,7 @@ module.exports = {
 
     const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
-    let server = await getDiscordServer(prisma, guildID);
+    const server = await getDiscordServer(prisma, guildID);
     const faction = await getFaction(prisma, Number(factionId));
     const connection = await getConnectionBetweenFactionAndDiscordServer(
       prisma,
@@ -44,12 +45,26 @@ module.exports = {
       return await interaction.editReply("Faction is not connected");
     }
 
+    // remove factionChannel & connection
     const deletedConnection =
       await deleteConnectionBetweenFactionAndDiscordServer(
         prisma,
         server.id,
         faction.id
       );
+
+    const channelList = await interaction.guild.channels.fetch();
+    if (
+      channelList.find(
+        (channel) =>
+          channel.id === deletedConnection.discordChannelId.toString()
+      )
+    ) {
+      await interaction.guild.channels.delete(
+        deletedConnection.discordChannelId.toString()
+      );
+    }
+
     const connectedFactions = await getConnectedFactionsOnDiscordServer(
       prisma,
       server.id
@@ -58,7 +73,6 @@ module.exports = {
       prisma,
       server.id
     );
-    server = await getDiscordServer(prisma, guildID);
 
     // create ui
     const embeds = await getFactionsEmbed(factions);
@@ -72,7 +86,7 @@ module.exports = {
         .setCustomId("dashboard-add-faction")
         .setLabel("Add Faction")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(server.factions.length >= server.factionAmount),
+        .setDisabled(factions.length >= server.factionAmount),
       new ButtonBuilder()
         .setCustomId("dashboard-remove-faction")
         .setLabel("Remove Faction")
