@@ -13,11 +13,7 @@ async function getDashboardButtons(menuType, isNotWhitelisted, hasNoApiKey) {
       .setStyle(
         menuType === "factions" ? ButtonStyle.Success : ButtonStyle.Primary
       )
-      .setDisabled(menuType === "factions" || isNotWhitelisted || hasNoApiKey),
-    new ButtonBuilder()
-      .setCustomId("dashboard-close-dashboard-button")
-      .setLabel("Close Dashboard")
-      .setStyle(ButtonStyle.Danger)
+      .setDisabled(menuType === "factions" || isNotWhitelisted || hasNoApiKey)
   );
 }
 
