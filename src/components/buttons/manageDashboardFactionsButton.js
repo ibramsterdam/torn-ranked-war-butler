@@ -17,7 +17,7 @@ module.exports = {
     interaction.message.delete();
     await interaction.deferReply();
     const prisma = require("../../index");
-    const guildID = Number(interaction.guildId);
+    const guildID = BigInt(interaction.guildId);
 
     const server = await getDiscordServer(prisma, guildID);
     const factions = await getConnectedFactionsOnDiscordServer(

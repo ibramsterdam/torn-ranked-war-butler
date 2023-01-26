@@ -29,7 +29,7 @@ module.exports = {
       );
     }
 
-    const guildID = Number(interaction.guildId);
+    const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
 
     let server = await getDiscordServer(prisma, guildID);

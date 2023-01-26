@@ -27,7 +27,7 @@ module.exports = {
       return await interaction.editReply("Torn Id is composed of numbers...");
     }
 
-    const guildID = Number(interaction.guildId);
+    const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
     const user = await getUser(prisma, Number(tornIdOfUser));
 

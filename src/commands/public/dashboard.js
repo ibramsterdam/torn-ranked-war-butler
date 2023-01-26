@@ -21,7 +21,7 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
 
-    const guildID = Number(interaction.guildId);
+    const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
     const server = await getDiscordServer(prisma, guildID);
 

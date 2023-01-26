@@ -32,7 +32,7 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
     const prisma = require("../../index");
-    const guildID = Number(interaction.guildId);
+    const guildID = BigInt(interaction.guildId);
 
     let server = await getDiscordServer(prisma, guildID);
     if (server) {
