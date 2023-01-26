@@ -8,7 +8,16 @@ const {
 const {
   getDashboardButtons,
 } = require("../../components/functions/getDashboardButtons");
-const { upsertDiscordServer } = require("../../functions/prisma/discord");
+const {
+  getDiscordServer,
+  createDiscordServer,
+} = require("../../functions/prisma/discord");
+const {
+  createDiscordCategory,
+} = require("../../functions/prisma/discordCategory");
+const {
+  createDiscordChannel,
+} = require("../../functions/prisma/discordChannel");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,16 +30,18 @@ module.exports = {
    */
   async execute(interaction, client) {
     await interaction.deferReply();
+    const prisma = require("../../index");
+    const guildID = Number(interaction.guildId);
 
-    const channelList = await interaction.guild.channels.fetch();
-    const butlerHQ = channelList.find(
-      (channel) => channel.name === "Ranked War Butler"
-    );
-
-    if (butlerHQ) {
-      return interaction.followUp("You have already setup the butler");
+    let server = await getDiscordServer(prisma, guildID);
+    if (server) {
+      return interaction.followUp(
+        `You have already setup the butler in the past and no longer can use this command. Please contact the developer if you want to setup the butler once more`
+      );
     }
 
+    // create in discord
+    server = await createDiscordServer(prisma, guildID);
     const category = await interaction.guild.channels.create({
       name: "Ranked War Butler",
       type: ChannelType.GuildCategory,
@@ -41,17 +52,27 @@ module.exports = {
       parent: category.id,
     });
 
-    const guildID = Number(interaction.guildId);
-    const prisma = require("../../index");
+    // create in db
+    await createDiscordCategory(
+      prisma,
+      Number(category.id),
+      category.name,
+      server.id
+    );
+    await createDiscordChannel(
+      prisma,
+      Number(channel.id),
+      channel.name,
+      Number(category.id),
+      server.id
+    );
 
-    const server = await upsertDiscordServer(prisma, guildID);
+    console.log("coffee");
+    console.log(category.id);
+    console.log(channel.id);
 
-    if (!server) {
-      return interaction.followUp(
-        "Something is going wrong, please contact the developer"
-      );
-    }
-
+    const serverr = await getDiscordServer(prisma, guildID);
+    console.log(serverr);
     const embeds = new EmbedBuilder()
       .setTitle("Ranked War Butler")
       .setDescription(

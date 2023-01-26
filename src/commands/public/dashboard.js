@@ -21,19 +21,20 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
 
-    // check if the /setup command was run on the server
-    const channelList = await interaction.guild.channels.fetch();
-    const butlerDashboardChannel = channelList.find(
+    const guildID = Number(interaction.guildId);
+    const prisma = require("../../index");
+    const server = await getDiscordServer(prisma, guildID);
+    const butlerChannel = server.discordChannel.find(
       (channel) => channel.name === "butler-dashboard"
     );
 
-    if (!butlerDashboardChannel) {
+    if (!butlerChannel) {
       return await interaction.followUp(
         `No Butler Dashboard Channel was found.\nPlease run the command /setup`
       );
     }
 
-    if (interaction.channelId !== butlerDashboardChannel?.id) {
+    if (Number(interaction.channelId) !== Number(butlerChannel.id)) {
       return await interaction.followUp(
         "Please use the Butler Dashboard Channel for this command"
       );
@@ -44,12 +45,6 @@ module.exports = {
     const key = messages.entries().next().value[0];
     messages.delete(key);
     interaction.channel.bulkDelete(messages);
-
-    // create the message
-    const guildID = Number(interaction.guildId);
-    const prisma = require("../../index");
-
-    const server = await getDiscordServer(prisma, guildID);
 
     const embeds = new EmbedBuilder()
       .setTitle("Ranked War Butler")
