@@ -89,7 +89,8 @@ module.exports = {
     const buttons = await getDashboardButtons(
       "keys",
       !server.isWhitelisted,
-      server.apiKeys.length === 0
+      server.apiKeys.length === 0,
+      server.factions.length === 0
     );
 
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(

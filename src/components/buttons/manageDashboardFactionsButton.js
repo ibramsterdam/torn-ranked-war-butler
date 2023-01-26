@@ -40,18 +40,12 @@ module.exports = {
     );
 
     const embeds = await getFactionsEmbed(factions);
-    let buttons = await getDashboardButtons(
+    const buttons = await getDashboardButtons(
       "factions",
       !server.isWhitelisted,
-      server.apiKeys.length === 0
+      server.apiKeys.length === 0,
+      server.factions.length === 0
     );
-    if (server.isWhitelisted) {
-      buttons = await getDashboardButtons(
-        "factions",
-        !server.isWhitelisted,
-        server.apiKeys.length === 0
-      );
-    }
 
     //Reply to the discord client
     await interaction.followUp({

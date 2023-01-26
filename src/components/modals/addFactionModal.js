@@ -35,7 +35,7 @@ module.exports = {
 
     const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
-    const server = await getDiscordServer(prisma, guildID);
+    let server = await getDiscordServer(prisma, guildID);
 
     // validate if faction is already being tracked
     if (
@@ -80,12 +80,14 @@ module.exports = {
       server.id
     );
 
+    server = await getDiscordServer(prisma, guildID);
     // create ui
     const embeds = await getFactionsEmbed(factions);
     const buttons = await getDashboardButtons(
       "factions",
       !server.isWhitelisted,
-      server.apiKeys.length
+      server.apiKeys.length === 0,
+      server.factions.length === 0
     );
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()

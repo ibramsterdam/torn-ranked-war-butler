@@ -87,7 +87,8 @@ module.exports = {
     const buttons = await getDashboardButtons(
       "noMenuType",
       !server.isWhitelisted,
-      server.apiKeys.length === 0
+      server.apiKeys.length === 0,
+      server.factions.length === 0
     );
 
     //Reply to the discord client

@@ -33,7 +33,7 @@ module.exports = {
 
     const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
-    const server = await getDiscordServer(prisma, guildID);
+    let server = await getDiscordServer(prisma, guildID);
     const faction = await getFaction(prisma, Number(factionId));
     const connection = await getConnectionBetweenFactionAndDiscordServer(
       prisma,
@@ -74,12 +74,14 @@ module.exports = {
       server.id
     );
 
+    server = await getDiscordServer(prisma, guildID);
     // create ui
     const embeds = await getFactionsEmbed(factions);
     const buttons = await getDashboardButtons(
       "factions",
       !server.isWhitelisted,
-      server.apiKeys.length === 0
+      server.apiKeys.length === 0,
+      server.factions.length === 0
     );
     const manageApiKeysButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()

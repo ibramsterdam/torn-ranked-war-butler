@@ -1,6 +1,11 @@
 const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 
-async function getDashboardButtons(menuType, isNotWhitelisted, hasNoApiKey) {
+async function getDashboardButtons(
+  menuType,
+  isNotWhitelisted,
+  hasNoApiKey,
+  hasNoFactions
+) {
   return new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("dashboard-manage-api-keys")
@@ -13,7 +18,12 @@ async function getDashboardButtons(menuType, isNotWhitelisted, hasNoApiKey) {
       .setStyle(
         menuType === "factions" ? ButtonStyle.Success : ButtonStyle.Primary
       )
-      .setDisabled(menuType === "factions" || isNotWhitelisted || hasNoApiKey)
+      .setDisabled(menuType === "factions" || isNotWhitelisted || hasNoApiKey),
+    new ButtonBuilder()
+      .setCustomId("dashboard-start-polling")
+      .setLabel("Get me that faction info!")
+      .setStyle(ButtonStyle.Danger)
+      .setDisabled(hasNoFactions)
   );
 }
 
