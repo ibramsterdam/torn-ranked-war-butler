@@ -19,7 +19,7 @@ module.exports = {
           ephemeral: true,
         });
       }
-      if (command.developer && interaction.user.id !== "12540291767821926")
+      if (command.developer && interaction.user.id !== "125402917678219264")
         return interaction.reply({
           content: "This command is only available to the developer",
           ephemeral: true,

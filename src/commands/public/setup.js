@@ -20,6 +20,7 @@ const {
 } = require("../../functions/prisma/discordChannel");
 
 module.exports = {
+  developer: true,
   data: new SlashCommandBuilder()
     .setName("setup")
     .setDescription("Create the space for the butler to work in"),
