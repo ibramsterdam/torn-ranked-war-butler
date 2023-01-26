@@ -7,8 +7,8 @@ const {
 
 const {
   getDashboardButtons,
-} = require("../../components/functions/getDashboardButtons");
-const { getDiscordServer } = require("../../functions/prisma/discord");
+} = require("../components/functions/getDashboardButtons");
+const { getDiscordServer } = require("../functions/prisma/discord");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dashboard")
@@ -22,7 +22,7 @@ module.exports = {
     await interaction.deferReply();
 
     const guildID = BigInt(interaction.guildId);
-    const prisma = require("../../index");
+    const prisma = require("../index");
     const server = await getDiscordServer(prisma, guildID);
 
     if (!server) {

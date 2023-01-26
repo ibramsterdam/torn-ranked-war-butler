@@ -7,17 +7,15 @@ const {
 } = require("discord.js");
 const {
   getDashboardButtons,
-} = require("../../components/functions/getDashboardButtons");
+} = require("../components/functions/getDashboardButtons");
 const {
   getDiscordServer,
   createDiscordServer,
-} = require("../../functions/prisma/discord");
+} = require("../functions/prisma/discord");
 const {
   createDiscordCategory,
-} = require("../../functions/prisma/discordCategory");
-const {
-  createDiscordChannel,
-} = require("../../functions/prisma/discordChannel");
+} = require("../functions/prisma/discordCategory");
+const { createDiscordChannel } = require("../functions/prisma/discordChannel");
 
 module.exports = {
   developer: true,
@@ -31,7 +29,7 @@ module.exports = {
    */
   async execute(interaction, client) {
     await interaction.deferReply();
-    const prisma = require("../../index");
+    const prisma = require("../index");
     const guildID = BigInt(interaction.guildId);
 
     let server = await getDiscordServer(prisma, guildID);
