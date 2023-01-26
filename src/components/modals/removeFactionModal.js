@@ -82,8 +82,8 @@ module.exports = {
 
     factions.forEach((object) => {
       embeds.addFields({
-        name: `${object.faction.name} [${object.faction.tornId}]`,
-        value: `Profile: [Click here!](https://www.torn.com/factions.php?step=profile&ID=${object.faction.tornId})`,
+        name: `${object.faction.name} [${object.faction.id}]`,
+        value: `Profile: [Click here!](https://www.torn.com/factions.php?step=profile&ID=${object.faction.id})`,
       });
     });
 

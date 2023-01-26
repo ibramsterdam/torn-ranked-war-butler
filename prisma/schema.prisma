@@ -63,8 +63,7 @@ model DiscordChannel {
 }
 
 model Faction {
-  id      Int    @id @default(autoincrement())
-  tornId  Int    @unique
+  id      Int    @id
   name    String
   members User[]
 

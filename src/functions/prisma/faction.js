@@ -1,14 +1,14 @@
-async function upsertFaction(prisma, factionId, factionName) {
+async function upsertFaction(prisma, id, factionName) {
   try {
     const result = await prisma.faction.upsert({
       where: {
-        tornId: factionId,
+        id: id,
       },
       update: {
         name: factionName,
       },
       create: {
-        tornId: factionId,
+        id: id,
         name: factionName,
       },
     });
@@ -19,11 +19,11 @@ async function upsertFaction(prisma, factionId, factionName) {
     console.log("error", error);
   }
 }
-async function getFaction(prisma, tornId) {
+async function getFaction(prisma, id) {
   try {
     const result = await prisma.faction.findUnique({
       where: {
-        tornId: tornId,
+        id: id,
       },
     });
     console.log("Success: getFaction");

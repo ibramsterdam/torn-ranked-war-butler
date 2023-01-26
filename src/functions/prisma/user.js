@@ -13,14 +13,14 @@ async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
       update: {
         name: name,
         faction: {
-          connect: { tornId: factionId },
+          connect: { id: factionId },
         },
       },
       create: {
         id: id,
         name: name,
         faction: {
-          connect: { tornId: factionId },
+          connect: { id: factionId },
         },
       },
     });
