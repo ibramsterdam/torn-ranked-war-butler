@@ -48,9 +48,8 @@ module.exports = {
       );
     }
 
-    const key = await getApiKeyByValue(prisma, apiKey);
-
     // prevent the key beind used twice in our system
+    const key = await getApiKeyByValue(prisma, apiKey);
     if (key) {
       return await interaction.editReply(
         "Key is already used in our system. If this is not supposed to be, please revoke the key on torn and reach out to the developer to remove it from the butler"
@@ -85,8 +84,8 @@ module.exports = {
     );
     server = await getDiscordServer(prisma, guildID);
 
+    // create ui
     const embeds = await getApiKeysEmbed(users);
-
     const buttons = await getDashboardButtons(
       "keys",
       !server.isWhitelisted,
