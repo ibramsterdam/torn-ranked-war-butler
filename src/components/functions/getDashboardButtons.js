@@ -23,7 +23,7 @@ async function getDashboardButtons(
       .setCustomId("dashboard-start-polling")
       .setLabel("Get me that faction info!")
       .setStyle(ButtonStyle.Danger)
-      .setDisabled(hasNoFactions)
+      .setDisabled(hasNoFactions || isNotWhitelisted)
   );
 }
 
