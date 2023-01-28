@@ -30,48 +30,53 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
     }
   }
 
-  const response = new EmbedBuilder().setColor("Aqua").setDescription(
-    `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-
-        **Important:**
-        *This list does not update on its own when someone takes medication.*`
-  );
-
-  //Make map based on if member is in hospital
-  factionMemberList.forEach((factionMember, id) => {
-    if (factionMember.status.description.includes("In hospital")) {
-      hospitalMap.set(
-        [factionMember.name, playerId[id]],
-        factionMember.status.until
-      );
-    }
-  });
+  const response = new EmbedBuilder().setColor("Aqua");
 
   //If hospital list is empty
-  if (hospitalMap.size === 0) {
+  if (factionMemberList.length !== 0) {
     response.setTitle(`🏥 No one in hospital of ${factionName} 🏥`);
+
+    //Make map based on if member is in hospital
+    factionMemberList.forEach((factionMember, id) => {
+      if (factionMember.status.description.includes("In hospital")) {
+        hospitalMap.set(
+          [factionMember.name, playerId[id]],
+          factionMember.status.until
+        );
+      }
+    });
+
+    let userList = "";
+
+    if (hospitalMap.size !== 0) {
+      //Order list so that earliest to leave hospital is above in message
+      for (const [key, value] of [...hospitalMap.entries()].sort(
+        (a, b) => a[1] - b[1]
+      )) {
+        userList += `**[${key[0]}](https://www.torn.com/profiles.php?XID=${key[1]})** is leaving hospital <t:${value}:R> • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${key[1]}) \n`;
+      }
+    }
+
+    response.setDescription(
+      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+  
+          **Important:**
+          *This list does not update on its own when someone takes medication.*\n
+          Hostpital List
+          ${userList}`
+    );
   } else {
     response.setTitle(`🏥 Hospital List of ${factionName} 🏥`);
-  }
 
-  let userList = ``;
-  //Order list so that earliest to leave hospital is above in message
-  for (const [key, value] of [...hospitalMap.entries()].sort(
-    (a, b) => a[1] - b[1]
-  )) {
-    userList += `[${key[0]}](https://www.torn.com/profiles.php?XID=${key[1]}) is leaving hospital <t:${value}:R> - [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${key[1]}) \n`;
-  }
-
-  if (hospitalMap.size !== 0) {
-    response.addFields({
-      name: "Hospital List",
-      value: userList,
-    });
-  } else {
-    response.addFields({
-      name: "Hospital List",
-      value: "No one",
-    });
+    response.setDescription(
+      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+  
+          **Important:**
+          *This list does not update on its own when someone takes medication.*\n
+          
+          Hostpital List\n
+        No One`
+    );
   }
 
   await interaction.guild.channels.cache
