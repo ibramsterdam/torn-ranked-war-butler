@@ -8,6 +8,7 @@ setInterval(async () => {
     console.log(`Calls per Minute from key '${key}' is: ${value}`);
   });
   console.log(`Total Torn calls per minute: ${totalCount}`);
+  totalCount = 0;
 
   apiKeyCountMap.clear();
 }, ONE_MINUTE);
