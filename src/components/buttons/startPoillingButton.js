@@ -23,7 +23,7 @@ module.exports = {
     // Run everything again at a 2 minute interval
     setInterval(async () => {
       setHospitalStatus(interaction, server);
-    }, 15000);
+    }, 60000);
 
     /*
      * 1. Load api keys
