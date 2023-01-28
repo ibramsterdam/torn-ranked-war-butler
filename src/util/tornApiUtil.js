@@ -1,7 +1,8 @@
 const axios = require("axios");
-require("dotenv").config();
+const { logApiCount } = require("./logApiCount");
 
 const getFactionFromTornApi = async (factionID, apiKey) => {
+  logApiCount(apiKey);
   try {
     return axios.get(
       `https://api.torn.com/faction/${factionID}?selections=&key=${apiKey}`
@@ -11,6 +12,8 @@ const getFactionFromTornApi = async (factionID, apiKey) => {
   }
 };
 const getUserFromTornApi = async (apiKey) => {
+  logApiCount(apiKey);
+
   try {
     return axios.get(
       `https://api.torn.com/user/?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`

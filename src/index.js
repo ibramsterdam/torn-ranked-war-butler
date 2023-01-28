@@ -5,7 +5,6 @@ const {
   Partials,
 } = require("discord.js");
 const { PrismaClient } = require("@prisma/client");
-
 const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
 require("dotenv").config();
