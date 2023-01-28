@@ -29,9 +29,7 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
   }
 
   const response = new EmbedBuilder().setColor("Aqua").setDescription(
-    `${interaction.member} has asked for the the hospital list <t:${Math.round(
-      Date.now() / 1000
-    )}:R>.
+    `List was requested: <t:${Math.round(Date.now() / 1000)}:R>.
 
         **Important:**
 
@@ -52,15 +50,18 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
     response.setTitle(`🏥 Hospital List of ${factionName} 🏥`);
   }
 
+  let userList = ``;
   //Order list so that earliest to leave hospital is above in message
   for (const [key, value] of [...hospitalMap.entries()].sort(
     (a, b) => a[1] - b[1]
   )) {
-    response.addFields({
-      name: `${key}`,
-      value: `Leaving hospital <t:${value}:R>`,
-    });
+    userList += `${key} is leaving hospital <t:${value}:R>\n`;
   }
+
+  response.addFields({
+    name: "Hospital List",
+    value: userList,
+  });
   await interaction.guild.channels.cache
     .get(faction.discordChannelId.toString())
     .send({
