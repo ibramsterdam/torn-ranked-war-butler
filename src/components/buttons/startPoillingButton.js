@@ -1,7 +1,12 @@
 const { getDiscordServer } = require("../../functions/prisma/discord");
 const { getRandomItemFromArray } = require("../../util/randomItemFromArray");
 const { getFactionFromTornApi } = require("../../util/tornApiUtil");
-const { sendHospitalStatusEmbed } = require("../functions/hospitalStatusEmbed");
+const {
+  sendHospitalStatusEmbed,
+} = require("../functions/hospital-status/hospitalStatusEmbed");
+const {
+  setHospitalStatus,
+} = require("../functions/hospital-status/setHospitalStatus");
 
 module.exports = {
   developer: false,
@@ -12,32 +17,16 @@ module.exports = {
     const prisma = require("../../index");
     const server = await getDiscordServer(prisma, guildID);
 
+    // Hospital status
+    setHospitalStatus(interaction, server);
+
+    // Run everything again at a 2 minute interval
     setInterval(async () => {
-      // Hospital status
-      for (const faction of server.factions) {
-        // Select a random ApiKey from the list
-        const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
-        // remove channel messages
-        const channel = await interaction.guild.channels.cache.get(
-          faction.discordChannelId.toString()
-        );
-        const messages = await channel.messages.fetch();
-        await channel.bulkDelete(messages);
-
-        // fetch faction information
-        const results = await getFactionFromTornApi(
-          faction.factionId,
-          randomApiKeyObject.value
-        );
-
-        await sendHospitalStatusEmbed(interaction, results, faction);
-
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-      }
-    }, 60000);
+      setHospitalStatus(interaction, server);
+    }, 120000);
 
     /*
-     * 1. load api keys
+     * 1. Load api keys
      * 2. do everything in a trycatch
      * 3. load factions and their respective channelID's
      * 4. do everything in a setInterval and
