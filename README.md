@@ -25,7 +25,7 @@ At this moment the bot needs 5 rights
 
 ## Database
 
-We use postgresql
+We use Postgresql
 
 ## Environment Variables
 
