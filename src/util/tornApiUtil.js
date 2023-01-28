@@ -1,12 +1,6 @@
 const axios = require("axios");
 require("dotenv").config();
 
-const getTornRankedWarInfo = async () => {
-  return axios.get(
-    `https://api.torn.com/torn/?selections=rankedwars&key=${process.env.TORN_API_KEY}`
-  );
-};
-
 const getFactionFromTornApi = async (factionID, apiKey) => {
   try {
     return axios.get(
@@ -27,7 +21,6 @@ const getUserFromTornApi = async (apiKey) => {
 };
 
 module.exports = {
-  getTornRankedWarInfo,
   getFactionFromTornApi,
   getUserFromTornApi,
 };
