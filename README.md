@@ -2,7 +2,8 @@
 
 # RankedWarButler
 
-Torn Discord bot that assists in ranked wars.
+Torn Discord Bot that assists in ranked wars.
+\
 ![A Torn Discord bot that assists in ranked wars.](/AdmiralProfile.png)
 
 ## Installation
@@ -10,15 +11,17 @@ Torn Discord bot that assists in ranked wars.
 To invite the bot over to your discord server
 click [here](https://discord.com/api/oauth2/authorize?client_id=932550905713270836&permissions=2147510288&scope=bot%20applications.commands).
 
-DEVELOP BOT = [here](https://discord.com/api/oauth2/authorize?client_id=1068813614829539338&permissions==2147510288&scope=bot%20applications.commands)
+DEVELOP BOT = [here](https://discord.com/api/oauth2/authorize?client_id=1068813614829539338&permissions=2147510288&scope=bot%20applications.commands).
+
 \
-At this moment the bot needs 4 rights, but do
-not worry our [repository](https://github.com/ibramsterdam/RankedWarButler) is open
-source so you can see what we are up to :-).
-`Read Messages`
-`Send Messages`
-`Manage Messages`
-`Use Application Commands`
+At this moment the bot needs 5 rights
+\
+
+- `Manage Channels`
+- `Send Messages`
+- `Manage Messages`
+- `Use Application Commands`
+- `Embed Links`
 
 ## Database
 
@@ -29,41 +32,30 @@ We use postgresql
 To run this project, you will need to add the following environment variables to your .env file
 
 `BOT_TOKEN`
-`CLIENT_ID`
-`PUBLIC_KEY`
-`BOT_OWNER`
-`TORN_FACTION_ID`
-`TORN_API_KEY`
-`TORN_API_URL`
+`DATABASE_URL`
 
 ## Commands for war
 
 ### Available
 
-**Set Opponent** _Essential!_
+**Setup Butler** _Essential!_
 \
-Command: `/setopponent [ENEMY_FACTION_ID]`
+Command: `/setup`
 \
-Description: Defines enemy faction ID.
+Description: Creates the RankedWar Butler Category and butler-dashboard
 Note: Using jsonStorage, at later date will be connected to a server
 
-**War Status**
+**Create Dashboard** _Essential!_
 \
-Command: `/warstatus [FACTION_ID]`
+Command: `/dashboard`
 \
 Description: Command calls the torn rankedwars api and gives
 information about the (upcomming) war. if no faction ID is given then it searches on own faction.
 Note: Can only be called every 10 seconds
 
-**Hospital timers**
-\
-Command: `/hospitalstatus [FACTION_ID]`
-\
-Description: List of enemy faction members that are in
-hospital with timers sorted by remaining time in hospital.
-Note: Can only be called every 10 seconds
+## Functionalities
 
-### In Development
+### Done
 
 **Track faction chain**
 \
@@ -71,19 +63,15 @@ Command: `/chainfaction`
 \
 Description: Status updates about own chain.
 
-### Unavailable
+### Development
 
-**Spy enemy faction**
+**Track faction chain**
 \
-Command: `/spyenemyfaction on`
+Command: `/chainfaction`
 \
-Command: `/spyenemyfaction off`
-\
-Description: Turn on or turn off listener that retrieves new information
-about faction every 6 seconds.
-\
-This includes: Change online/offline status,
-change state (Traveling, Hospital, Torn, Okay).
+Description: Status updates about own chain.
+
+## Ideas
 
 **Incomming from flight**
 \
@@ -118,25 +106,3 @@ Command: `/givemetarget`
 \
 Description: List of targets that can be attacked sorted from easiest -> harders to kill.
 This is based on age, xanax, refills, level.
-
-## Other Commands
-
-### Available
-
-**Clear Messages**
-\
-Command: `/clear [target]`
-\
-Description: Ability to clear chatbox.
-
-**Command List**
-\
-Command: `/information`
-\
-Description: List of commands available.
-\
-Note: Can only be called every 10 seconds.
-
-### In Development
-
-### Unavailable

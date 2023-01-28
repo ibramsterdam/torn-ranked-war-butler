@@ -16,6 +16,10 @@ module.exports = {
       }
     );
 
+    // Deletion of channels on prod
+    // const guild = await client.guilds.fetch();
+    // await guild.channels.delete();
+
     handleCommands(client).then(() => {
       console.log("\nThe bot has booted up!");
     });
