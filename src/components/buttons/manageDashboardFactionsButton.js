@@ -12,7 +12,7 @@ const {
 const { getFactionsEmbed } = require("../functions/factionsEmbed");
 
 module.exports = {
-  developer: true,
+  developer: false,
   data: { name: "dashboard-manage-factions" },
   async execute(interaction, client) {
     interaction.message.delete();

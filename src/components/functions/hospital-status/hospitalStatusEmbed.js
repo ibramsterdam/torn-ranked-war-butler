@@ -58,10 +58,18 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
     userList += `${key} is leaving hospital <t:${value}:R>\n`;
   }
 
-  response.addFields({
-    name: "Hospital List",
-    value: userList,
-  });
+  if (hospitalMap.size !== 0) {
+    response.addFields({
+      name: "Hospital List",
+      value: userList,
+    });
+  } else {
+    response.addFields({
+      name: "Hospital List",
+      value: "No one",
+    });
+  }
+
   await interaction.guild.channels.cache
     .get(faction.discordChannelId.toString())
     .send({
