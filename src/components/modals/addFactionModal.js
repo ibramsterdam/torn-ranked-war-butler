@@ -48,6 +48,12 @@ module.exports = {
       factionID,
       server.apiKeys[0].value
     );
+
+    if (result.data.error) {
+      return await interaction.editReply("Invalid ID");
+    }
+
+    console.log(result.data.error);
     const faction = await upsertFaction(
       prisma,
       result.data.ID,

@@ -32,10 +32,7 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
 
   const response = new EmbedBuilder().setColor("Aqua");
 
-  //If hospital list is empty
-  if (factionMemberList.length !== 0) {
-    response.setTitle(`🏥 No one in hospital of ${factionName} 🏥`);
-
+  if (factionMemberList.length > 0) {
     //Make map based on if member is in hospital
     factionMemberList.forEach((factionMember, id) => {
       if (factionMember.status.description.includes("In hospital")) {
@@ -46,44 +43,54 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
       }
     });
 
-    let userList = "";
-
+    let userList = [];
     if (hospitalMap.size !== 0) {
       //Order list so that earliest to leave hospital is above in message
       for (const [key, value] of [...hospitalMap.entries()].sort(
         (a, b) => a[1] - b[1]
       )) {
-        userList += `**[${key[0]}](https://www.torn.com/profiles.php?XID=${key[1]})** is leaving hospital <t:${value}:R> • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${key[1]}) \n`;
+        userList.push(
+          `**[${key[0]}](https://www.torn.com/profiles.php?XID=${key[1]})** is leaving hospital <t:${value}:R> • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${key[1]}) \n`
+        );
       }
     }
 
-    response.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-  
-          **Important:**
-          *This list does not update on its own when someone takes medication.*\n
-          Hostpital List
-          ${userList}`
-    );
+    for (let i = 0; i < userList.length; i += 20) {
+      response.setTitle(`🏥 Hospital List of ${factionName} 🏥`);
+      response.setDescription(
+        `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+
+      **Hospital List**: (**${userList.length} / ${
+          factionMemberList.length
+        }** members in hospital)
+
+      **${i}-${i + 20}**
+      ${userList.slice(i, i + 20).join("")}`
+      );
+      await interaction.guild.channels.cache
+        .get(faction.discordChannelId.toString())
+        .send({
+          embeds: [response],
+        });
+    }
   } else {
     response.setTitle(`🏥 Hospital List of ${factionName} 🏥`);
 
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
   
-          **Important:**
-          *This list does not update on its own when someone takes medication.*\n
+      **Important:**
+      *This list does not update on its own when someone takes medication.*\n
           
-          Hostpital List\n
-        No One`
+      Hostpital List\n
+      No One`
     );
+    await interaction.guild.channels.cache
+      .get(faction.discordChannelId.toString())
+      .send({
+        embeds: [response],
+      });
   }
-
-  await interaction.guild.channels.cache
-    .get(faction.discordChannelId.toString())
-    .send({
-      embeds: [response],
-    });
 }
 
 module.exports = { sendHospitalStatusEmbed };
