@@ -59,14 +59,21 @@ async function sendHospitalStatusEmbed(interaction, results, faction) {
       response.setTitle(`🏥 Hospital List of ${factionName} 🏥`);
       response.setDescription(
         `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-
-      **Hospital List**: (**${userList.length} / ${
+        
+        **Hospital List**: (**${userList.length} / ${
           factionMemberList.length
         }** members in hospital)
-
-      **${i}-${i + 20}**
-      ${userList.slice(i, i + 20).join("")}`
+        
+        **${i}-${i + 20}**
+        ${userList.slice(i, i + 20).join("")}`
       );
+      if (i > 0) {
+        response.setTitle(`${i}-${i + 20}`);
+        response.setDescription(
+          `
+        ${userList.slice(i, i + 20).join("")}`
+        );
+      }
       await interaction.guild.channels.cache
         .get(faction.discordChannelId.toString())
         .send({
