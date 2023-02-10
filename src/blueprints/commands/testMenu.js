@@ -21,7 +21,7 @@ module.exports = {
       .setOptions(
         new StringSelectMenuOptionBuilder({
           label: "Option One",
-          value: "Test Option One",
+          value: "Test Option Onee",
         }),
         new StringSelectMenuOptionBuilder({
           label: "Option Two",
