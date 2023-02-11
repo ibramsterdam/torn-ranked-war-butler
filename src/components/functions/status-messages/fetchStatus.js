@@ -13,8 +13,9 @@ async function fetchStatus(interaction, server) {
     const channel = await interaction.guild.channels.cache.get(
       faction.discordChannelId.toString()
     );
-    if (channel.messages) {
-      const messages = await channel.messages.fetch();
+    const messages = await channel.messages.fetch();
+
+    if (messages) {
       await channel.bulkDelete(messages);
     }
 
