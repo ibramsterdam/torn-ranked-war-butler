@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 
-async function sendOkayStatusEmbed(interaction, results, faction) {
+async function sendAttackStatusEmbed(interaction, results, faction) {
   const travelMap = new Map();
   //Destructure Json to array of faction members
   const factionInfo = Object.keys(results.data);
@@ -93,4 +93,4 @@ async function sendOkayStatusEmbed(interaction, results, faction) {
   }
 }
 
-module.exports = { sendOkayStatusEmbed };
+module.exports = { sendAttackStatusEmbed };

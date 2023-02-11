@@ -2,7 +2,7 @@ const { getRandomItemFromArray } = require("../../../util/randomItemFromArray");
 const { getFactionFromTornApi } = require("../../../util/tornApiUtil");
 const { sendHospitalStatusEmbed } = require("./hospitalStatusEmbed");
 const { sendTravelStatusEmbed } = require("./travelStatusEmbed");
-const { sendOkayStatusEmbed } = require("./okayStatusEmbed");
+const { sendAttackStatusEmbed } = require("./attackStatusEmbed");
 const { EmbedBuilder } = require("discord.js");
 
 async function fetchStatus(interaction, server) {
@@ -42,7 +42,7 @@ async function fetchStatus(interaction, server) {
     await sendTravelStatusEmbed(interaction, results, faction);
 
     // Flight status
-    await sendOkayStatusEmbed(interaction, results, faction);
+    await sendAttackStatusEmbed(interaction, results, faction);
 
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
