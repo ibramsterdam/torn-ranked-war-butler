@@ -21,7 +21,7 @@ module.exports = {
     // Run everything again at a 2 minute interval
     setInterval(async () => {
       fetchStatus(interaction, server);
-    }, 60000);
+    }, 20000);
 
     /*
      * 1. Load api keys
