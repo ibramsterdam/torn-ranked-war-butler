@@ -1,15 +1,17 @@
-async function handleCommands(client) {
+import { Client } from "discord.js";
+
+async function handleCommands(client: any) {
   const { loadFiles } = require("../fileLoader");
   const ascii = require("ascii-table");
   const table = new ascii().setHeading("Commands", "Status");
 
   await client.commands.clear();
 
-  let commandsArray = [];
+  let commandsArray: any = [];
 
   const Files = await loadFiles("commands");
 
-  Files.forEach((file) => {
+  Files.forEach((file: any) => {
     const command = require(file);
     client.commands.set(command.data.name, command);
 
@@ -18,7 +20,7 @@ async function handleCommands(client) {
     table.addRow(command.data.name, "🟢");
   });
 
-  client.application.commands.set(commandsArray);
+  client.application?.commands.set(commandsArray);
 
   console.log("Commands Loaded");
   console.log(table.toString());

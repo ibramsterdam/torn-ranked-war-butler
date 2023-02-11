@@ -1,16 +1,9 @@
-const {
-  ChatInputCommandInteraction,
-  Client,
-  InteractionType,
-} = require("discord.js");
+import { BotEvent } from "../../types";
+import { Interaction, Client, InteractionType } from "discord.js";
 
-module.exports = {
+const event: BotEvent = {
   name: "interactionCreate",
-  /**
-   *  @param {ChatInputCommandInteraction} interaction
-   *  @param {Client} client
-   */
-  async execute(interaction, client) {
+  async execute(interaction: Interaction, client: Client) {
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) {
@@ -76,3 +69,5 @@ module.exports = {
     }
   },
 };
+
+export default event;

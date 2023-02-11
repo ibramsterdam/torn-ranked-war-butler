@@ -1,13 +1,13 @@
 const { readdirSync } = require("fs");
 const ascii = require("ascii-table");
 
-async function handleComponent(client) {
+async function handleComponent(client: any) {
   const table = new ascii().setHeading("Components ", "Type", "Status");
   const componentFolders = readdirSync(`./src/components`);
 
   for (const folder of componentFolders) {
     const componentFiles = readdirSync(`./src/components/${folder}`).filter(
-      (file) => file.endsWith(".js")
+      (file: any) => file.endsWith(".js")
     );
 
     const { buttons, modals, selectMenus } = client;
