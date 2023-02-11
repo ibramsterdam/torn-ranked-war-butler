@@ -21,69 +21,70 @@ async function sendOkayStatusEmbed(interaction, results, faction) {
 
   const response = new EmbedBuilder().setColor("Green");
 
-  if (factionMemberList.length > 0) {
-    //Make map based on if member is in hospital
-    factionMemberList.forEach((factionMember, id) => {
-      if (factionMember.status.state.includes("Okay")) {
-        travelMap.set(
-          [factionMember.name, playerId[id]],
-          factionMember.last_action
-        );
-      }
-    });
-
-    let userList = [];
-    if (travelMap.size !== 0) {
-      //Order list so that earliest to leave hospital is above in message
-      for (const [key, value] of [...travelMap.entries()].sort(
-        (a, b) => a[1].timestamp - b[1].timestamp
-      )) {
-        userList.push(
-          `**[${key[0]}](https://www.torn.com/profiles.php?XID=${
-            key[1]
-          })** is ${value.status.toLowerCase()} ${
-            value.relative
-          } • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${
-            key[1]
-          }) \n`
-        );
-      }
-    }
-
-    for (let i = 0; i < userList.length; i += 20) {
-      response.setTitle(`🔫 Okay List of ${factionName} 🔫`);
-      response.setDescription(
-        `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-        
-        **Okay List**: (**${userList.length} / ${
-          factionMemberList.length
-        }** members)
-        
-        **${i}-${i + 20}**
-        ${userList.slice(i, i + 20).join("")}`
+  //Make map based on if member is in hospital
+  factionMemberList.forEach((factionMember, id) => {
+    if (factionMember.status.state.includes("Okay")) {
+      travelMap.set(
+        [factionMember.name, playerId[id]],
+        factionMember.last_action
       );
-      if (i > 0) {
-        response.setTitle(`${i}-${i + 20}`);
-        response.setDescription(
-          `
-        ${userList.slice(i, i + 20).join("")}`
-        );
-      }
-      await interaction.guild.channels.cache
-        .get(faction.discordChannelId.toString())
-        .send({
-          embeds: [response],
-        });
     }
-  } else {
+  });
+
+  let userList = [];
+  if (travelMap.size !== 0) {
+    //Order list so that earliest to leave hospital is above in message
+    for (const [key, value] of [...travelMap.entries()].sort(
+      (a, b) => a[1].timestamp - b[1].timestamp
+    )) {
+      userList.push(
+        `**[${key[0]}](https://www.torn.com/profiles.php?XID=${
+          key[1]
+        })** is ${value.status.toLowerCase()} ${
+          value.relative
+        } • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${
+          key[1]
+        }) \n`
+      );
+    }
+  }
+
+  if (userList.length === 0) {
     response.setTitle(`🔫 Okay List of ${factionName} 🔫`);
 
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
 
-      Okay List\n
-      No One`
+      **Okay List**: 0 members`
     );
+
+    return await interaction.guild.channels.cache
+      .get(faction.discordChannelId.toString())
+      .send({
+        embeds: [response],
+      });
+  }
+
+  for (let i = 0; i < userList.length; i += 20) {
+    response.setTitle(`🔫 Okay List of ${factionName} 🔫`);
+    response.setDescription(
+      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+        
+        **Okay List**: (**${userList.length} / ${
+        factionMemberList.length
+      }** members)
+        
+        **${i}-${i + 20}**
+        ${userList.slice(i, i + 20).join("")}`
+    );
+    if (i > 0) {
+      response.setTitle(`${i}-${i + 20}`);
+      response.setDescription(
+        `
+        ${userList.slice(i, i + 20).join("")}`
+      );
+    }
+
     await interaction.guild.channels.cache
       .get(faction.discordChannelId.toString())
       .send({
