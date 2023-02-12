@@ -9,7 +9,7 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
   if (travelList.length === 0) {
     const noMemberResponse = new EmbedBuilder().setColor("Red");
 
-    noMemberResponse.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
+    noMemberResponse.setTitle(`🛩 Travel List of ${factionInfo.name} 🛩`);
     noMemberResponse.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
   
@@ -28,7 +28,7 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
 
   const responseList = [];
   for (let i = 0; i < travelList.length; i += 20) {
-    const response = new EmbedBuilder().setColor("Blue");
+    const response = new EmbedBuilder().setColor("Red");
     response.setTitle(`🛩 Travel List of ${factionInfo.name} 🛩`);
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.

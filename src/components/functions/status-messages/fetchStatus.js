@@ -17,19 +17,6 @@ async function fetchStatus(interaction, server) {
   for (const faction of server.factions) {
     // Select a random ApiKey from the list
     const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
-    // remove channel messages
-    const channel = await interaction.guild.channels.cache.get(
-      faction.discordChannelId.toString()
-    );
-
-    if (channel) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const messages = await channel.messages.fetch();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      if (messages) {
-        await channel.bulkDelete(messages);
-      }
-    }
 
     // fetch faction information
     const results = await getFactionFromTornApi(
@@ -75,21 +62,33 @@ async function fetchStatus(interaction, server) {
     );
 
     // Flight status
-    await sendAttackStatusEmbed(
-      interaction,
+    const flightResponses = await sendAttackStatusEmbed(
       membersListNew,
-      faction,
       factionInfo
     );
 
     // Retalliation status
-    await sendRetalliationStatusEmbed(
-      interaction,
-      membersListOld,
-      membersListNew,
-      faction,
-      factionInfo
+    // await sendRetalliationStatusEmbed(
+    //   interaction,
+    //   membersListOld,
+    //   membersListNew,
+    //   faction,
+    //   factionInfo
+    // );
+
+    // remove channel messages
+    const channel = await interaction.guild.channels.cache.get(
+      faction.discordChannelId.toString()
     );
+
+    if (channel) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const messages = await channel.messages.fetch();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (messages) {
+        await channel.bulkDelete(messages);
+      }
+    }
 
     for (const response of hospResponses) {
       await interaction.guild.channels.cache
@@ -100,6 +99,13 @@ async function fetchStatus(interaction, server) {
     }
 
     for (const response of travelResponses) {
+      await interaction.guild.channels.cache
+        .get(faction.discordChannelId.toString())
+        .send({
+          embeds: [response],
+        });
+    }
+    for (const response of flightResponses) {
       await interaction.guild.channels.cache
         .get(faction.discordChannelId.toString())
         .send({
