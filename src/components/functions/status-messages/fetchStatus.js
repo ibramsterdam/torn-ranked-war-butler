@@ -68,13 +68,11 @@ async function fetchStatus(interaction, server) {
     );
 
     // Retalliation status
-    // await sendRetalliationStatusEmbed(
-    //   interaction,
-    //   membersListOld,
-    //   membersListNew,
-    //   faction,
-    //   factionInfo
-    // );
+    const retalliationResponse = await sendRetalliationStatusEmbed(
+      membersListOld,
+      membersListNew,
+      factionInfo
+    );
 
     // remove channel messages
     const channel = await interaction.guild.channels.cache.get(
@@ -106,6 +104,13 @@ async function fetchStatus(interaction, server) {
         });
     }
     for (const response of flightResponses) {
+      await interaction.guild.channels.cache
+        .get(faction.discordChannelId.toString())
+        .send({
+          embeds: [response],
+        });
+    }
+    for (const response of retalliationResponse) {
       await interaction.guild.channels.cache
         .get(faction.discordChannelId.toString())
         .send({

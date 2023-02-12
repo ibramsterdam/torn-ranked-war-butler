@@ -15,6 +15,6 @@ module.exports = {
     // Run everything again at a 30 second interval
     setInterval(async () => {
       fetchStatus(interaction, server);
-    }, 30000);
+    }, 20000);
   },
 };
