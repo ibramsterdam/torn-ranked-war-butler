@@ -16,6 +16,15 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  lastActionStatus    String?
+  lastActionRelative  String?
+  lastActionTimestamp BigInt?
+
+  statusDescription String?
+  statusDetails     String?
+  statusState       String?
+  statusUntil       BigInt?
 }
 
 model DiscordServer {
