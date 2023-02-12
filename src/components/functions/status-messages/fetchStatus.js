@@ -78,7 +78,12 @@ async function fetchStatus(interaction, server) {
     );
 
     // Flight status
-    await sendAttackStatusEmbed(interaction, results, faction);
+    await sendAttackStatusEmbed(
+      interaction,
+      membersListNew,
+      faction,
+      factionInfo
+    );
 
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
