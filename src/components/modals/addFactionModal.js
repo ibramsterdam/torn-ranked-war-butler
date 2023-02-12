@@ -22,6 +22,8 @@ const { upsertUser } = require("../../functions/prisma/user");
 module.exports = {
   data: { name: "add-faction-modal" },
   async execute(interaction, client) {
+    //Reply to the discord client
+    interaction.message.delete();
     await interaction.deferReply();
 
     const factionID = interaction.fields.getTextInputValue(
@@ -121,7 +123,7 @@ module.exports = {
     );
 
     //Reply to the discord client
-    interaction.message.delete();
+    // interaction.message.delete();
 
     return await interaction.followUp({
       embeds: [embeds],

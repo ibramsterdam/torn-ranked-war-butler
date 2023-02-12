@@ -63,10 +63,8 @@ async function fetchStatus(interaction, server) {
     const factionInfo = await getFaction(prisma, faction.factionId);
 
     // Hosp status
-    await sendHospitalStatusEmbed(
-      interaction,
+    const hospResponses = await sendHospitalStatusEmbed(
       membersListNew,
-      faction,
       factionInfo
     );
 
@@ -87,13 +85,21 @@ async function fetchStatus(interaction, server) {
     );
 
     // Retalliation status
-    // await sendRetalliationStatusEmbed(
-    //   interaction,
-    //   membersListOld,
-    //   membersListNew,
-    //   faction,
-    //   factionInfo
-    // );
+    await sendRetalliationStatusEmbed(
+      interaction,
+      membersListOld,
+      membersListNew,
+      faction,
+      factionInfo
+    );
+
+    for (const response of hospResponses) {
+      await interaction.guild.channels.cache
+        .get(faction.discordChannelId.toString())
+        .send({
+          embeds: [response],
+        });
+    }
 
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }

@@ -108,9 +108,58 @@ async function getUsersByFactionId(prisma, factionId) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {Number} userId
+ */
+async function updateUserRetalliationTimer(prisma, userId) {
+  const date = new Date();
+  const fourMinutesLater = new Date(date.getTime() + 60000 * 4);
+
+  try {
+    const result = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        retalliationUntil: fourMinutesLater,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: updateUserRetalliationTimer");
+    console.log("error", error);
+  }
+}
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {Number} factionId
+
+ */
+async function getUsersThatCanBeRetalliatedFromFaction(prisma, factionId) {
+  try {
+    const result = await prisma.user.findMany({
+      where: {
+        factionId: factionId,
+        retalliationUntil: {
+          gt: new Date(),
+        },
+        statusDetails: {
+          contains: "<a href",
+        },
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: getUsersThatCanBeRetalliatedFromFaction");
+    console.log("error", error);
+  }
+}
 module.exports = {
   upsertUserAndConnectFaction,
   getUser,
   upsertUser,
   getUsersByFactionId,
+  updateUserRetalliationTimer,
+  getUsersThatCanBeRetalliatedFromFaction,
 };
