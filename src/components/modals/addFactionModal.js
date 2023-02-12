@@ -17,6 +17,7 @@ const { getFactionsEmbed } = require("../functions/factionsEmbed");
 const {
   createDiscordChannel,
 } = require("../../functions/prisma/discordChannel");
+const { upsertUser } = require("../../functions/prisma/user");
 
 module.exports = {
   data: { name: "add-faction-modal" },
@@ -53,12 +54,23 @@ module.exports = {
       return await interaction.editReply("Invalid ID");
     }
 
-    console.log(result.data.error);
     const faction = await upsertFaction(
       prisma,
       result.data.ID,
       result.data.name
     );
+
+    const memberList = Object.values(Object.values(result.data.members));
+    const memberIdList = Object.keys(result.data.members);
+
+    for (let i = 0; i < memberIdList.length; i++) {
+      await upsertUser(
+        prisma,
+        Number(memberIdList[i]),
+        memberList[i],
+        faction.id
+      );
+    }
 
     // create factionChannel
     const channel = await interaction.guild.channels.create({

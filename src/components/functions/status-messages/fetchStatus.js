@@ -13,10 +13,14 @@ async function fetchStatus(interaction, server) {
     const channel = await interaction.guild.channels.cache.get(
       faction.discordChannelId.toString()
     );
-    const messages = await channel.messages.fetch();
 
-    if (messages) {
-      await channel.bulkDelete(messages);
+    if (channel) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const messages = await channel.messages.fetch();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (messages) {
+        await channel.bulkDelete(messages);
+      }
     }
 
     // fetch faction information
