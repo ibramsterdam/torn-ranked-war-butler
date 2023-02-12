@@ -91,8 +91,26 @@ async function upsertUser(prisma, id, userData, factionId) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {Number} factionId
+ */
+async function getUsersByFactionId(prisma, factionId) {
+  try {
+    const result = await prisma.user.findMany({
+      where: {
+        factionId: factionId,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: getUsersByFactionId");
+    console.log("error", error);
+  }
+}
 module.exports = {
   upsertUserAndConnectFaction,
   getUser,
   upsertUser,
+  getUsersByFactionId,
 };

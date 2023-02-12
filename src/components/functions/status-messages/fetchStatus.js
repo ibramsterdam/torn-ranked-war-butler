@@ -4,8 +4,14 @@ const { sendHospitalStatusEmbed } = require("./hospitalStatusEmbed");
 const { sendTravelStatusEmbed } = require("./travelStatusEmbed");
 const { sendAttackStatusEmbed } = require("./attackStatusEmbed");
 const { EmbedBuilder } = require("discord.js");
+const {
+  upsertUser,
+  getUsersByFactionId,
+} = require("../../../functions/prisma/user");
 
 async function fetchStatus(interaction, server) {
+  const prisma = require("../../../index");
+
   for (const faction of server.factions) {
     // Select a random ApiKey from the list
     const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
@@ -40,8 +46,24 @@ async function fetchStatus(interaction, server) {
         });
     }
 
+    const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
+
+    const memberList = Object.values(Object.values(results.data.members));
+    const memberIdList = Object.keys(results.data.members);
+
+    for (let i = 0; i < memberIdList.length; i++) {
+      await upsertUser(
+        prisma,
+        Number(memberIdList[i]),
+        memberList[i],
+        faction.factionId
+      );
+    }
+
+    const membersListNew = await getUsersByFactionId(prisma, faction.factionId);
+
     // Hosp status
-    await sendHospitalStatusEmbed(interaction, results, faction);
+    await sendHospitalStatusEmbed(interaction, membersListNew, faction);
 
     // Okay status
     await sendTravelStatusEmbed(interaction, results, faction);

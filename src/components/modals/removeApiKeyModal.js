@@ -45,7 +45,7 @@ module.exports = {
       );
     }
 
-    const apiKey = await deleteApiKeyOfUser(prisma, user.id);
+    await deleteApiKeyOfUser(prisma, user.id);
     const users = await getApiKeysThatAreUsedOnDiscordServer(prisma, guildID);
     const server = await getDiscordServer(prisma, guildID);
 
