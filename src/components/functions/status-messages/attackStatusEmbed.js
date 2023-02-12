@@ -7,7 +7,7 @@ async function sendAttackStatusEmbed(
   factionInfo
 ) {
   let attackMessageList = [];
-  const response = new EmbedBuilder().setColor("Aqua");
+  const response = new EmbedBuilder().setColor("Green");
   const sortedAttackList = membersListNew
     .filter((member) => member.statusState === "Okay")
     .sort(

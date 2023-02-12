@@ -7,7 +7,7 @@ async function sendTravelStatusEmbed(
   factionInfo
 ) {
   let travelMessageList = [];
-  const response = new EmbedBuilder().setColor("Aqua");
+  const response = new EmbedBuilder().setColor("Red");
   const travelList = membersListNew.filter(
     (member) => member.statusState === "Traveling"
   );

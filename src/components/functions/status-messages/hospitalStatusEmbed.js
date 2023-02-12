@@ -7,7 +7,7 @@ async function sendHospitalStatusEmbed(
   factionInfo
 ) {
   let hospitalMessageList = [];
-  const response = new EmbedBuilder().setColor("Aqua");
+  const response = new EmbedBuilder().setColor("Blue");
   const sortedHospitalList = membersListNew
     .filter((member) => member.statusState === "Hospital")
     .sort((a, b) => Number(a.statusUntil) - Number(b.statusUntil));
