@@ -25,6 +25,8 @@ model User {
   statusDetails     String?
   statusState       String?
   statusUntil       BigInt?
+
+  retalliationUntil DateTime?
 }
 
 model DiscordServer {

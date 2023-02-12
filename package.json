@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ibramsterdam/torn-ranked-war-butler#readme",
   "dependencies": {
-    "@prisma/client": "^4.9.0",
+    "@prisma/client": "^4.10.1",
     "ascii-table": "^0.0.9",
     "axios": "^1.2.3",
     "discord.js": "^14.7.1",
@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "eslint": "^8.32.0",
-    "prisma": "^4.9.0"
+    "prisma": "^4.10.1"
   }
 }

@@ -9,6 +9,7 @@ const {
   getUsersByFactionId,
 } = require("../../../functions/prisma/user");
 const { getFaction } = require("../../../functions/prisma/faction");
+const { sendRetalliationStatusEmbed } = require("./retalliationStatusEmbed");
 
 async function fetchStatus(interaction, server) {
   const prisma = require("../../../index");
@@ -49,7 +50,7 @@ async function fetchStatus(interaction, server) {
 
     const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
 
-    for (let i = 0; i < results.data.members.length; i++) {
+    for (let i = 0; i < Object.keys(results.data.members).length; i++) {
       await upsertUser(
         prisma,
         Number(Object.keys(results.data.members)[i]),
@@ -84,6 +85,15 @@ async function fetchStatus(interaction, server) {
       faction,
       factionInfo
     );
+
+    // Retalliation status
+    // await sendRetalliationStatusEmbed(
+    //   interaction,
+    //   membersListOld,
+    //   membersListNew,
+    //   faction,
+    //   factionInfo
+    // );
 
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
