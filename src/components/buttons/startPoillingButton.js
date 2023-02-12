@@ -12,9 +12,9 @@ module.exports = {
 
     fetchStatus(interaction, server);
 
-    // Run everything again at a 20 second interval
+    // Run everything again at a 30 second interval
     setInterval(async () => {
       fetchStatus(interaction, server);
-    }, 20000);
+    }, 30000);
   },
 };

@@ -49,14 +49,11 @@ async function fetchStatus(interaction, server) {
 
     const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
 
-    const memberList = Object.values(Object.values(results.data.members));
-    const memberIdList = Object.keys(results.data.members);
-
-    for (let i = 0; i < memberIdList.length; i++) {
+    for (let i = 0; i < results.data.members.length; i++) {
       await upsertUser(
         prisma,
-        Number(memberIdList[i]),
-        memberList[i],
+        Number(Object.keys(results.data.members)[i]),
+        Object.values(Object.values(results.data.members))[i],
         faction.factionId
       );
     }
@@ -73,7 +70,12 @@ async function fetchStatus(interaction, server) {
     );
 
     // Okay status
-    await sendTravelStatusEmbed(interaction, results, faction);
+    await sendTravelStatusEmbed(
+      interaction,
+      membersListNew,
+      faction,
+      factionInfo
+    );
 
     // Flight status
     await sendAttackStatusEmbed(interaction, results, faction);
