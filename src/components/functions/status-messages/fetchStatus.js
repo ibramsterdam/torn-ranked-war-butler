@@ -68,11 +68,9 @@ async function fetchStatus(interaction, server) {
       factionInfo
     );
 
-    // Okay status
-    await sendTravelStatusEmbed(
-      interaction,
+    // Travel status
+    const travelResponses = await sendTravelStatusEmbed(
       membersListNew,
-      faction,
       factionInfo
     );
 
@@ -94,6 +92,14 @@ async function fetchStatus(interaction, server) {
     );
 
     for (const response of hospResponses) {
+      await interaction.guild.channels.cache
+        .get(faction.discordChannelId.toString())
+        .send({
+          embeds: [response],
+        });
+    }
+
+    for (const response of travelResponses) {
       await interaction.guild.channels.cache
         .get(faction.discordChannelId.toString())
         .send({

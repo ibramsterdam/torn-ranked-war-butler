@@ -1,30 +1,22 @@
 const { EmbedBuilder } = require("discord.js");
 
-async function sendTravelStatusEmbed(
-  interaction,
-  membersListNew,
-  faction,
-  factionInfo
-) {
+async function sendTravelStatusEmbed(membersListNew, factionInfo) {
   let travelMessageList = [];
-  const response = new EmbedBuilder().setColor("Red");
   const travelList = membersListNew.filter(
     (member) => member.statusState === "Traveling"
   );
 
   if (travelList.length === 0) {
-    response.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
-    response.setDescription(
+    const noMemberResponse = new EmbedBuilder().setColor("Red");
+
+    noMemberResponse.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
+    noMemberResponse.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
   
         **Travel List**: 0 members`
     );
 
-    return await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [response],
-      });
+    return [noMemberResponse];
   }
 
   // Create the message list
@@ -34,7 +26,9 @@ async function sendTravelStatusEmbed(
     );
   });
 
+  const responseList = [];
   for (let i = 0; i < travelList.length; i += 20) {
+    const response = new EmbedBuilder().setColor("Blue");
     response.setTitle(`🛩 Travel List of ${factionInfo.name} 🛩`);
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
@@ -53,12 +47,11 @@ async function sendTravelStatusEmbed(
         ${travelMessageList.slice(i, i + 20).join("")}`
       );
     }
-    await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [response],
-      });
+
+    responseList.push(response);
   }
+
+  return responseList;
 }
 
 module.exports = { sendTravelStatusEmbed };
