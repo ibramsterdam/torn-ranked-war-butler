@@ -8,6 +8,7 @@ const {
   upsertUser,
   getUsersByFactionId,
 } = require("../../../functions/prisma/user");
+const { getFaction } = require("../../../functions/prisma/faction");
 
 async function fetchStatus(interaction, server) {
   const prisma = require("../../../index");
@@ -61,9 +62,15 @@ async function fetchStatus(interaction, server) {
     }
 
     const membersListNew = await getUsersByFactionId(prisma, faction.factionId);
+    const factionInfo = await getFaction(prisma, faction.factionId);
 
     // Hosp status
-    await sendHospitalStatusEmbed(interaction, membersListNew, faction);
+    await sendHospitalStatusEmbed(
+      interaction,
+      membersListNew,
+      faction,
+      factionInfo
+    );
 
     // Okay status
     await sendTravelStatusEmbed(interaction, results, faction);

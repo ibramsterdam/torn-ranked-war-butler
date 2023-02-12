@@ -1,6 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 
-async function sendHospitalStatusEmbed(interaction, membersListNew, faction) {
+async function sendHospitalStatusEmbed(
+  interaction,
+  membersListNew,
+  faction,
+  factionInfo
+) {
   let hospitalMessageList = [];
   const response = new EmbedBuilder().setColor("Aqua");
   const sortedHospitalList = membersListNew
@@ -8,7 +13,7 @@ async function sendHospitalStatusEmbed(interaction, membersListNew, faction) {
     .sort((a, b) => Number(a.statusUntil) - Number(b.statusUntil));
 
   if (sortedHospitalList.length === 0) {
-    response.setTitle(`🏥 Hospital List of ${faction.name} 🏥`);
+    response.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
   
@@ -31,7 +36,7 @@ async function sendHospitalStatusEmbed(interaction, membersListNew, faction) {
 
   // Generate messages
   for (let i = 0; i < hospitalMessageList.length; i += 20) {
-    response.setTitle(`🏥 Hospital List of ${faction.name} 🏥`);
+    response.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
 
