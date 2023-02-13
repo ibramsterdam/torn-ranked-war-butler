@@ -26,7 +26,7 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
   });
 
   const responseList = [];
-  for (let i = 0; i < hospitalMessageList.length; i += 20) {
+  for (let i = 0; i < hospitalMessageList.length; i += 21) {
     const response = new EmbedBuilder().setColor("Blue");
     response.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
     response.setDescription(
@@ -36,12 +36,12 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
         membersListNew.length
       }** members in hospital)
   
-          **${i}-${i + 20}**
+          **${i}-${i + 20} members**
           ${hospitalMessageList.slice(i, i + 20).join("")}`
     );
 
     if (i > 0) {
-      response.setTitle(`${i}-${i + 20}`);
+      response.setTitle(`${i}-${i + 20} members`);
       response.setDescription(
         `
         ${hospitalMessageList.slice(i, i + 20).join("")}`

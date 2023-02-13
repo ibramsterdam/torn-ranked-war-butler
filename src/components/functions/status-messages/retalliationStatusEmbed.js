@@ -71,7 +71,6 @@ async function sendRetalliationStatusEmbed(
     const name = member.statusDetails.match(regexName)[1];
     const attackID = member.statusDetails.match(regexID)[1];
 
-    console.log(member.retalliationUntil.valueOf());
     retalliationMessageList.push(
       `**[${member.name}](https://www.torn.com/profiles.php?XID=${
         member.id
@@ -85,7 +84,7 @@ async function sendRetalliationStatusEmbed(
 
   const responseList = [];
 
-  for (let i = 0; i < sortedRetalliationList.length; i += 20) {
+  for (let i = 0; i < sortedRetalliationList.length; i += 21) {
     const response = new EmbedBuilder().setColor("Yellow");
 
     response.setTitle(`🥷  Retalliation List of ${factionInfo.name} 🥷 `);
@@ -96,11 +95,11 @@ async function sendRetalliationStatusEmbed(
         membersListNew.length
       })** members
         
-        **${i}-${i + 20}**
+        **${i}-${i + 20} members**
         ${retalliationMessageList.slice(i, i + 20).join("")}`
     );
     if (i > 0) {
-      response.setTitle(`${i}-${i + 20}`);
+      response.setTitle(`${i}-${i + 20} members`);
       response.setDescription(
         `
         ${retalliationMessageList.slice(i, i + 20).join("")}`

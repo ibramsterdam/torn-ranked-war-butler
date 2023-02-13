@@ -62,7 +62,7 @@ async function fetchStatus(interaction, server) {
     );
 
     // Flight status
-    const flightResponses = await sendAttackStatusEmbed(
+    const attackResponses = await sendAttackStatusEmbed(
       membersListNew,
       factionInfo
     );
@@ -103,7 +103,7 @@ async function fetchStatus(interaction, server) {
           embeds: [response],
         });
     }
-    for (const response of flightResponses) {
+    for (const response of attackResponses) {
       await interaction.guild.channels.cache
         .get(faction.discordChannelId.toString())
         .send({

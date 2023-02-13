@@ -27,7 +27,7 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
   });
 
   const responseList = [];
-  for (let i = 0; i < travelList.length; i += 20) {
+  for (let i = 0; i < travelList.length; i += 21) {
     const response = new EmbedBuilder().setColor("Red");
     response.setTitle(`🛩 Travel List of ${factionInfo.name} 🛩`);
     response.setDescription(
@@ -37,11 +37,11 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
         membersListNew.length
       }** members in hospital)
         
-        **${i}-${i + 20}**
+        **${i}-${i + 20} members**
         ${travelMessageList.slice(i, i + 20).join("")}`
     );
     if (i > 0) {
-      response.setTitle(`${i}-${i + 20}`);
+      response.setTitle(`${i}-${i + 20} members`);
       response.setDescription(
         `
         ${travelMessageList.slice(i, i + 20).join("")}`
