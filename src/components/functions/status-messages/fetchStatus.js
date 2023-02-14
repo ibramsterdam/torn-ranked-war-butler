@@ -46,31 +46,31 @@ async function fetchStatus(interaction, server) {
       );
     }
 
-    const membersListNew = await getUsersByFactionId(prisma, faction.factionId);
+    const membersList = await getUsersByFactionId(prisma, faction.factionId);
     const factionInfo = await getFaction(prisma, faction.factionId);
 
     // Hosp status
     const hospResponses = await sendHospitalStatusEmbed(
-      membersListNew,
+      membersList,
       factionInfo
     );
 
     // Travel status
     const travelResponses = await sendTravelStatusEmbed(
-      membersListNew,
+      membersList,
       factionInfo
     );
 
     // Flight status
     const attackResponses = await sendAttackStatusEmbed(
-      membersListNew,
+      membersList,
       factionInfo
     );
 
     // Retalliation status
     const retalliationResponse = await sendRetalliationStatusEmbed(
       membersListOld,
-      membersListNew,
+      membersList,
       factionInfo
     );
 

@@ -141,7 +141,23 @@ async function getApiKeyByValue(prisma, key) {
     });
     return result;
   } catch (error) {
-    console.log("Failure: getApiKey");
+    console.log("Failure: getApiKeyByValue");
+    console.log("error", error);
+  }
+}
+/**
+ *  @param {PrismaClient} prisma
+ */
+async function getAllApiKeys(prisma) {
+  try {
+    const result = await prisma.apiKey.findMany({
+      select: {
+        value: true,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: getAllApiKeys");
     console.log("error", error);
   }
 }
@@ -154,4 +170,5 @@ module.exports = {
   deleteApiKeyOfUser,
   getApiKeysThatAreUsedOnDiscordServer,
   getApiKeyByValue,
+  getAllApiKeys,
 };

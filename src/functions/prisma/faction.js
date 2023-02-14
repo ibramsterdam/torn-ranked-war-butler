@@ -31,8 +31,21 @@ async function getFaction(prisma, id) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ */
+async function getAllFactions(prisma) {
+  try {
+    const result = await prisma.faction.findMany({});
+    return result;
+  } catch (error) {
+    console.log("Failure: getAllFactions");
+    console.log("error", error);
+  }
+}
 
 module.exports = {
   upsertFaction,
   getFaction,
+  getAllFactions,
 };

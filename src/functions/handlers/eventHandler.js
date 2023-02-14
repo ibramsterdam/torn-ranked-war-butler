@@ -14,11 +14,11 @@ async function handleEvents(client) {
     client.events.set(event.name, execute);
 
     if (event.rest) {
-      if (event.once)
+      if (event.once) {
         client.rest.once(event.name, (...args) =>
           event.execute(...args, client)
         );
-      else
+      } else
         client.rest.on(event.name, (...args) => event.execute(...args, client));
     } else if (event.custom) event.execute(client);
     else {
