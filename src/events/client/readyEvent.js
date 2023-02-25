@@ -24,8 +24,6 @@ module.exports = {
     // await guild.channels.delete();
 
     handleCommands(client).then(() => {
-      // removeUserRelationWithFaction(prisma, 37498);
-
       console.log("\nThe bot has booted up!");
     });
   },

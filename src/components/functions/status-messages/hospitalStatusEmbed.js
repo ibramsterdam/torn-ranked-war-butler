@@ -6,18 +6,6 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
     .filter((member) => member.statusState === "Hospital")
     .sort((a, b) => Number(a.statusUntil) - Number(b.statusUntil));
 
-  if (sortedHospitalList.length === 0) {
-    const noMemberResponse = new EmbedBuilder().setColor("Blue");
-    noMemberResponse.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
-    noMemberResponse.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-  
-        **Hospital List**: 0 members`
-    );
-
-    return [noMemberResponse];
-  }
-
   // Create the message list
   sortedHospitalList.forEach((member) => {
     hospitalMessageList.push(
@@ -31,7 +19,7 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
     const list = hospitalMessageList.slice(i, i + 20).join("");
     response.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
     response.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+      `List was updated <t:${Math.round(Date.now() / 1000)}:R>.
   
           **Hospital List**: (**${hospitalMessageList.length} / ${
         membersListNew.length

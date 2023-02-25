@@ -169,7 +169,6 @@ async function removeUserRelationWithFaction(prisma, factionId) {
         factionId: 0,
       },
     });
-    console.log(result);
     return result;
   } catch (error) {
     console.log("Failure: removeUserRelationWithFaction");

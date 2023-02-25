@@ -8,19 +8,6 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
       (a, b) => Number(a.lastActionTimestamp) - Number(b.lastActionTimestamp)
     );
 
-  if (sortedAttackList.length === 0) {
-    const noMemberResponse = new EmbedBuilder().setColor("Green");
-
-    noMemberResponse.setTitle(`🔫  Attack List of ${factionInfo.name} 🔫 `);
-    noMemberResponse.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-  
-        **Attack List**: 0 members`
-    );
-
-    return [noMemberResponse];
-  }
-
   // Create the message list
   sortedAttackList.forEach((member) => {
     attackMessageList.push(
@@ -40,7 +27,7 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
     const list = attackMessageList.slice(i, i + 20).join("");
     response.setTitle(`🔫  Attack List of ${factionInfo.name} 🔫 `);
     response.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+      `List was updated <t:${Math.round(Date.now() / 1000)}:R>.
         
         **Attack List**: (**${attackMessageList.length} / ${
         membersListNew.length

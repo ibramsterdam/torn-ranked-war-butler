@@ -11,15 +11,13 @@ const {
 const { getFaction } = require("../../../functions/prisma/faction");
 const { sendRetalliationStatusEmbed } = require("./retalliationStatusEmbed");
 
-async function fetchStatus(interaction, server) {
-  const prisma = require("../../../index");
-
-  for (const faction of server.factions) {
-    const result = await generateMessages(interaction, faction, server, prisma);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-  }
-}
-async function generateMessages(interaction, faction, server, prisma) {
+async function updateMessages(
+  interaction,
+  faction,
+  server,
+  prisma,
+  oldMessages
+) {
   // Select a random ApiKey from the list
   const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
 
@@ -71,49 +69,15 @@ async function generateMessages(interaction, faction, server, prisma) {
     factionInfo
   );
 
-  // remove channel messages
-  const channel = await interaction.guild.channels.cache.get(
-    faction.discordChannelId.toString()
-  );
-
-  if (channel) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const messages = await channel.messages.fetch();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    if (messages) {
-      await channel.bulkDelete(messages);
-    }
+  let index = 0;
+  for (const response of [
+    ...hospResponses,
+    ...travelResponses,
+    ...attackResponses,
+    ...retalliationResponse,
+  ]) {
+    await oldMessages[index].edit({ embeds: [response] });
+    index++;
   }
-
-  for (const response of hospResponses) {
-    await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [response],
-      });
-  }
-
-  for (const response of travelResponses) {
-    await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [response],
-      });
-  }
-  for (const response of attackResponses) {
-    await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [response],
-      });
-  }
-  for (const response of retalliationResponse) {
-    await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [response],
-      });
-  }
-  return factionInfo;
 }
-module.exports = { fetchStatus };
+module.exports = { updateMessages };

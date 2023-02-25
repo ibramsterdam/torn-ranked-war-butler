@@ -1,5 +1,7 @@
 const { getDiscordServer } = require("../../functions/prisma/discord");
-const { fetchStatus } = require("../functions/status-messages/fetchStatus");
+const {
+  generateMessages,
+} = require("../functions/status-messages/generateMessages");
 
 module.exports = {
   developer: false,
@@ -10,11 +12,8 @@ module.exports = {
     const prisma = require("../../index");
     const server = await getDiscordServer(prisma, guildID);
 
-    fetchStatus(interaction, server);
-
-    // Run everything again at a 30 second interval
-    setInterval(async () => {
-      fetchStatus(interaction, server);
-    }, 30000);
+    for (const faction of server.factions) {
+      await generateMessages(interaction, faction, server, prisma);
+    }
   },
 };

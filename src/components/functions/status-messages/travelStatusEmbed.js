@@ -6,19 +6,6 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
     (member) => member.statusState === "Traveling"
   );
 
-  if (travelList.length === 0) {
-    const noMemberResponse = new EmbedBuilder().setColor("Red");
-
-    noMemberResponse.setTitle(`🛩 Travel List of ${factionInfo.name} 🛩`);
-    noMemberResponse.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-  
-        **Travel List**: 0 members`
-    );
-
-    return [noMemberResponse];
-  }
-
   // Create the message list
   travelList.forEach((member) => {
     travelMessageList.push(
@@ -32,7 +19,7 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
     const list = travelMessageList.slice(i, i + 20).join("");
     response.setTitle(`🛩 Travel List of ${factionInfo.name} 🛩`);
     response.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+      `List was updated <t:${Math.round(Date.now() / 1000)}:R>.
         
         **Travel List**: (**${travelMessageList.length} / ${
         membersListNew.length

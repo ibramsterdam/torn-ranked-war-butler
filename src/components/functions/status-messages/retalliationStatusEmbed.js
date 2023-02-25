@@ -5,7 +5,7 @@ const {
 } = require("../../../functions/prisma/user");
 
 function getNewMembersInHospital(list1, list2) {
-  return list2.filter((obj2) => {
+  return list2?.filter((obj2) => {
     return !list1.some((obj1) => {
       return obj1.id === obj2.id;
     });
@@ -18,10 +18,10 @@ async function sendRetalliationStatusEmbed(
   factionInfo
 ) {
   const prisma = require("../../../index");
-  const filteredMembersListOld = membersListOld.filter(
+  const filteredMembersListOld = membersListOld?.filter(
     (member) => member.statusState === "Hospital"
   );
-  const filteredMembersListNew = membersListNew.filter(
+  const filteredMembersListNew = membersListNew?.filter(
     (member) => member.statusState === "Hospital"
   );
   //  check if there are new retallliations (compare old to new)
@@ -45,21 +45,6 @@ async function sendRetalliationStatusEmbed(
   const sortedRetalliationList = users.filter(
     (member) => member.retalliationUntil > new Date()
   );
-
-  if (sortedRetalliationList.length === 0) {
-    const noMemberResponse = new EmbedBuilder().setColor("Yellow");
-
-    noMemberResponse.setTitle(
-      `🥷  Retalliation List of ${factionInfo.name} 🥷 `
-    );
-    noMemberResponse.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
-  
-        **Retalliation List**: 0 members`
-    );
-
-    return [noMemberResponse];
-  }
 
   // Create the message list
   sortedRetalliationList.forEach((member) => {
@@ -90,7 +75,7 @@ async function sendRetalliationStatusEmbed(
 
     response.setTitle(`🥷  Retalliation List of ${factionInfo.name} 🥷 `);
     response.setDescription(
-      `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
+      `List was updated <t:${Math.round(Date.now() / 1000)}:R>.
         
         **Retalliation List**: (**${retalliationMessageList.length} / ${
         membersListNew.length

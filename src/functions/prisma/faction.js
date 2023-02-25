@@ -19,6 +19,10 @@ async function upsertFaction(prisma, id, factionName) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {number} id
+ */
 async function getFaction(prisma, id) {
   try {
     const result = await prisma.faction.findUnique({
