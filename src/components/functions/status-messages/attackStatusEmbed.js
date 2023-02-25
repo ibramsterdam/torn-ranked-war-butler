@@ -35,9 +35,9 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
   });
 
   const responseList = [];
-  for (let i = 0; i < sortedAttackList.length; i += 21) {
+  for (let i = 0; i < membersListNew.length; i += 21) {
     const response = new EmbedBuilder().setColor("Green");
-
+    const list = attackMessageList.slice(i, i + 20).join("");
     response.setTitle(`🔫  Attack List of ${factionInfo.name} 🔫 `);
     response.setDescription(
       `List was requested <t:${Math.round(Date.now() / 1000)}:R>.
@@ -47,13 +47,14 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
       }** members in hospital)
         
         **${i}-${i + 20} members**
-        ${attackMessageList.slice(i, i + 20).join("")}`
+        ${list}`
     );
     if (i > 0) {
+      if (i > 80) i = 80;
       response.setTitle(`${i}-${i + 20} members`);
       response.setDescription(
         `
-        ${attackMessageList.slice(i, i + 20).join("")}`
+        ${list}`
       );
     }
     responseList.push(response);

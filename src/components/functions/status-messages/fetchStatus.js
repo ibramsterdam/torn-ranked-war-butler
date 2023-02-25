@@ -25,6 +25,7 @@ async function fetchStatus(interaction, server) {
     );
 
     if (results.data.error) {
+      console.log(results.data.error);
       const err = new EmbedBuilder()
         .setColor("Aqua")
         .setTitle(`No faction found :(`);
