@@ -155,6 +155,27 @@ async function getUsersThatCanBeRetalliatedFromFaction(prisma, factionId) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {number} factionId
+ */
+async function removeUserRelationWithFaction(prisma, factionId) {
+  try {
+    const result = await prisma.user.updateMany({
+      where: {
+        factionId: factionId,
+      },
+      data: {
+        factionId: 0,
+      },
+    });
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log("Failure: removeUserRelationWithFaction");
+    console.log("error", error);
+  }
+}
 module.exports = {
   upsertUserAndConnectFaction,
   getUser,
@@ -162,4 +183,5 @@ module.exports = {
   getUsersByFactionId,
   updateUserRetalliationTimer,
   getUsersThatCanBeRetalliatedFromFaction,
+  removeUserRelationWithFaction,
 };

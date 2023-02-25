@@ -1,5 +1,9 @@
 const { ActivityType, Client } = require("discord.js");
+const prisma = require("../..");
 const { handleCommands } = require("../../functions/handlers/commandHandler");
+const {
+  removeUserRelationWithFaction,
+} = require("../../functions/prisma/user");
 require("dotenv").config();
 
 module.exports = {
@@ -15,12 +19,13 @@ module.exports = {
         type: ActivityType.Playing,
       }
     );
-
     // Deletion of channels on prod
     // const guild = await client.guilds.fetch();
     // await guild.channels.delete();
 
     handleCommands(client).then(() => {
+      // removeUserRelationWithFaction(prisma, 37498);
+
       console.log("\nThe bot has booted up!");
     });
   },

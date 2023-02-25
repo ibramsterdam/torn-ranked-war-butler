@@ -17,7 +17,10 @@ const { getFactionsEmbed } = require("../functions/factionsEmbed");
 const {
   createDiscordChannel,
 } = require("../../functions/prisma/discordChannel");
-const { upsertUser } = require("../../functions/prisma/user");
+const {
+  upsertUser,
+  removeUserRelationWithFaction,
+} = require("../../functions/prisma/user");
 
 module.exports = {
   data: { name: "add-faction-modal" },
@@ -64,6 +67,7 @@ module.exports = {
 
     const memberList = Object.values(Object.values(result.data.members));
     const memberIdList = Object.keys(result.data.members);
+    await removeUserRelationWithFaction(prisma, Number(factionID));
 
     for (let i = 0; i < memberIdList.length; i++) {
       await upsertUser(

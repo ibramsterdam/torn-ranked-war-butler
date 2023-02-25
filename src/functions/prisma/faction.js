@@ -1,3 +1,4 @@
+const { PrismaClient } = require("@prisma/client");
 async function upsertFaction(prisma, id, factionName) {
   try {
     const result = await prisma.faction.upsert({
