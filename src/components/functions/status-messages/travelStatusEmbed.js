@@ -9,7 +9,7 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
   // Create the message list
   travelList.forEach((member) => {
     travelMessageList.push(
-      `**[${member.name}](https://www.torn.com/profiles.php?XID=${member.id})** is ${member.statusDescription}• [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${member.id}) \n`
+      `**[${member.name}](${member.profileLink})** is ${member.statusDescription}• [Attack!](${member.attackLink}) \n`
     );
   });
 

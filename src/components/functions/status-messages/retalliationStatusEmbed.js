@@ -57,12 +57,12 @@ async function sendRetalliationStatusEmbed(
     const attackID = member.statusDetails.match(regexID)[1];
 
     retalliationMessageList.push(
-      `**[${member.name}](https://www.torn.com/profiles.php?XID=${
-        member.id
+      `**[${member.name}](${
+        member.profileLink
       })** is hospitalized by [${name}](${link})
       Retalliation timer ends: <t:${Math.round(
         member.retalliationUntil.valueOf() / 1000
-      )}:R> • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${attackID})\n
+      )}:R> • [Attack!](${member.attackLink})\n
       `
     );
   });

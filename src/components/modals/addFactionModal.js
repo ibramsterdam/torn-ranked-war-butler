@@ -21,6 +21,10 @@ const {
   upsertUser,
   removeUserRelationWithFaction,
 } = require("../../functions/prisma/user");
+const {
+  getShortUrlAttackLink,
+  getShortUrlProfileLink,
+} = require("../../util/urlShortenerUtil");
 
 module.exports = {
   data: { name: "add-faction-modal" },
@@ -70,11 +74,16 @@ module.exports = {
     await removeUserRelationWithFaction(prisma, Number(factionID));
 
     for (let i = 0; i < memberIdList.length; i++) {
+      const attackLink = await getShortUrlAttackLink(Number(memberIdList[i]));
+      const profileLink = await getShortUrlProfileLink(Number(memberIdList[i]));
+
       await upsertUser(
         prisma,
         Number(memberIdList[i]),
         memberList[i],
-        faction.id
+        faction.id,
+        profileLink.data.data.shortUrl,
+        attackLink.data.data.shortUrl
       );
     }
 

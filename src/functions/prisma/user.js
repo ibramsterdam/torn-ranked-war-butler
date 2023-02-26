@@ -54,8 +54,17 @@ async function getUser(prisma, id) {
  *  @param {BigInt} id
  *  @param {Object} userData
  *  @param {Number} factionId
+ *  @param {String} profileLink
+ *  @param {String} attackLink
  */
-async function upsertUser(prisma, id, userData, factionId) {
+async function upsertUser(
+  prisma,
+  id,
+  userData,
+  factionId,
+  profileLink,
+  attackLink
+) {
   try {
     const result = await prisma.user.upsert({
       where: {
@@ -71,6 +80,8 @@ async function upsertUser(prisma, id, userData, factionId) {
         statusDetails: userData.status.details,
         statusState: userData.status.state,
         statusUntil: BigInt(userData.status.until),
+        profileLink: profileLink,
+        attackLink: attackLink,
       },
       create: {
         id: id,
@@ -83,6 +94,8 @@ async function upsertUser(prisma, id, userData, factionId) {
         statusDetails: userData.status.details,
         statusState: userData.status.state,
         statusUntil: BigInt(userData.status.until),
+        profileLink: profileLink,
+        attackLink: attackLink,
       },
     });
     return result;

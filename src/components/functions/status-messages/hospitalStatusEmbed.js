@@ -9,7 +9,7 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
   // Create the message list
   sortedHospitalList.forEach((member) => {
     hospitalMessageList.push(
-      `**[${member.name}](https://www.torn.com/profiles.php?XID=${member.id})** is leaving hospital <t:${member.statusUntil}:R> • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${member.id}) \n`
+      `**[${member.name}](${member.profileLink})** leaves the hospital <t:${member.statusUntil}:R> • [Attack!](${member.attackLink}) \n`
     );
   });
 

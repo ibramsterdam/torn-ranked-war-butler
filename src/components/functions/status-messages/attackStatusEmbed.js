@@ -11,13 +11,11 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
   // Create the message list
   sortedAttackList.forEach((member) => {
     attackMessageList.push(
-      `**[${member.name}](https://www.torn.com/profiles.php?XID=${
-        member.id
+      `**[${member.name}](${
+        member.profileLink
       })** is ${member.lastActionStatus.toLowerCase()} ${
         member.lastActionRelative
-      } • [Attack!](https://www.torn.com/loader2.php?sid=getInAttack&user2ID=${
-        member.id
-      }) \n`
+      } • [Attack!](${member.attackLink}) \n`
     );
   });
 

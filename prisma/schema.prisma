@@ -26,6 +26,8 @@ model User {
   statusState       String?
   statusUntil       BigInt?
 
+  profileLink       String?
+  attackLink        String?
   retalliationUntil DateTime?
 }
 
