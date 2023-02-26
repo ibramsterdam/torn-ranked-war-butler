@@ -78,10 +78,14 @@ async function generateMessages(interaction, faction, server, prisma) {
     ...attackResponses,
     ...retalliationResponse,
   ]) {
-    const message = await factionChannel.send({
-      embeds: [response],
-    });
-    messageArray.push(message);
+    try {
+      const message = await factionChannel.send({
+        embeds: [response],
+      });
+      messageArray.push(message);
+    } catch (error) {
+      console.log("generateMessages", error);
+    }
   }
 
   setInterval(async () => {
