@@ -23,15 +23,7 @@ async function generateMessages(interaction, faction, server, prisma) {
   );
 
   if (results.data.error) {
-    console.log(results.data.error);
-    const err = new EmbedBuilder()
-      .setColor("Aqua")
-      .setTitle(`No faction found :(`);
-    return await interaction.guild.channels.cache
-      .get(faction.discordChannelId.toString())
-      .send({
-        embeds: [err],
-      });
+    return console.log(results.data.error);
   }
 
   const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
