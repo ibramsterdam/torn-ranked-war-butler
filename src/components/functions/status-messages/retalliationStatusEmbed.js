@@ -69,9 +69,9 @@ async function sendRetalliationStatusEmbed(
 
   const responseList = [];
 
-  for (let i = 0; i < membersListNew.length; i += 21) {
+  for (let i = 0; i < membersListNew.length; i += 25) {
     const response = new EmbedBuilder().setColor("Yellow");
-    const list = retalliationMessageList.slice(i, i + 20).join("");
+    const list = retalliationMessageList.slice(i, i + 25).join("");
 
     response.setTitle(`🥷  Retalliation List of ${factionInfo.name} 🥷 `);
     response.setDescription(
@@ -81,12 +81,12 @@ async function sendRetalliationStatusEmbed(
         membersListNew.length
       })** members
         
-        **${i}-${i + 20} members**
+        **${i}-${i + 25} members**
         ${list}`
     );
     if (i > 0) {
       if (i > 80) i = 80;
-      response.setTitle(`${i}-${i + 20} members`);
+      response.setTitle(`${i + 1}-${i + 25} members`);
       response.setDescription(
         `
         ${list}`

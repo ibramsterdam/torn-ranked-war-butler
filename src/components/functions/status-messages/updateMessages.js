@@ -68,7 +68,11 @@ async function updateMessages(
     ...attackResponses,
     ...retalliationResponse,
   ]) {
-    await oldMessages[index].edit({ embeds: [response] });
+    if (!oldMessages[index]) {
+      console.log("error while trying to update messages");
+    } else {
+      await oldMessages[index].edit({ embeds: [response] });
+    }
     index++;
   }
 }

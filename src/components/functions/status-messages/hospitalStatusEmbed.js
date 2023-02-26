@@ -14,9 +14,9 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
   });
 
   const responseList = [];
-  for (let i = 0; i < membersListNew.length; i += 21) {
+  for (let i = 0; i < membersListNew.length; i += 25) {
     const response = new EmbedBuilder().setColor("Blue");
-    const list = hospitalMessageList.slice(i, i + 20).join("");
+    const list = hospitalMessageList.slice(i, i + 25).join("");
     response.setTitle(`🏥 Hospital List of ${factionInfo.name} 🏥`);
     response.setDescription(
       `List was updated <t:${Math.round(Date.now() / 1000)}:R>.
@@ -25,13 +25,13 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
         membersListNew.length
       }** members in hospital)
   
-          **${i}-${i + 20} members**
+          **${i}-${i + 25} members**
           ${list}`
     );
 
     if (i > 0) {
       if (i > 80) i = 80;
-      response.setTitle(`${i}-${i + 20} members`);
+      response.setTitle(`${i + 1}-${i + 25} members`);
       response.setDescription(
         `
         ${list}`
