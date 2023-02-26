@@ -54,6 +54,7 @@ module.exports = {
       return await interaction.editReply("Faction is already being tracked");
     }
 
+    await interaction.editReply("Calling the torn api...");
     const result = await getFactionFromTornApi(
       factionID,
       server.apiKeys[0].value
@@ -63,6 +64,7 @@ module.exports = {
       return await interaction.editReply("Invalid ID");
     }
 
+    await interaction.editReply("Updating the butler database...");
     const faction = await upsertFaction(
       prisma,
       result.data.ID,
@@ -74,6 +76,11 @@ module.exports = {
     await removeUserRelationWithFaction(prisma, Number(factionID));
 
     for (let i = 0; i < memberIdList.length; i++) {
+      if (i % 5 === 0) {
+        await interaction.editReply(
+          `Inserted **${i} / ${memberIdList.length}** users in database...`
+        );
+      }
       const attackLink = await getShortUrlAttackLink(Number(memberIdList[i]));
       const profileLink = await getShortUrlProfileLink(Number(memberIdList[i]));
 
@@ -87,6 +94,7 @@ module.exports = {
       );
     }
 
+    await interaction.editReply("Creating a channel in discord...");
     // create factionChannel
     const channel = await interaction.guild.channels.create({
       name: `${faction.name}-${faction.id}`,
@@ -101,6 +109,8 @@ module.exports = {
       server.discordCategory.id,
       server.id
     );
+
+    await interaction.editReply("Connecting faction to discord channel...");
     await createFactionOnDiscordServerConnection(
       prisma,
       server.id,
@@ -114,6 +124,7 @@ module.exports = {
     );
 
     server = await getDiscordServer(prisma, guildID);
+    await interaction.editReply("Done!");
     // create ui
     const embeds = await getFactionsEmbed(factions);
     const buttons = await getDashboardButtons(
@@ -135,6 +146,7 @@ module.exports = {
         .setDisabled(factions.length === 0)
     );
 
+    await interaction.deleteReply();
     //Reply to the discord client
     // interaction.message.delete();
 

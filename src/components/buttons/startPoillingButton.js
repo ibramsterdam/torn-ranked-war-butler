@@ -8,6 +8,8 @@ module.exports = {
   data: { name: "dashboard-start-polling" },
   async execute(interaction, client) {
     await interaction.reply("Started Polling");
+    setTimeout(async () => await interaction.deleteReply(), 5000);
+
     const guildID = BigInt(interaction.guildId);
     const prisma = require("../../index");
     const server = await getDiscordServer(prisma, guildID);
