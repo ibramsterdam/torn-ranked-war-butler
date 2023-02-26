@@ -3,15 +3,15 @@ const { getUserFromTornApiById } = require("../util/tornApiUtil");
 const { getBrainSurgeonApiKeys } = require("./prisma/apiKey");
 const { getAllUsers, updateUserPersonalStats } = require("./prisma/user");
 
-const updateUsers = async (tornId) => {
-  const t0 = performance.now();
+const updateUsers = async () => {
+  const startTime = performance.now();
   const prisma = require("../index");
 
   const keys = await getBrainSurgeonApiKeys(prisma);
 
   const users = await getAllUsers(prisma);
   let index = 0;
-  for (const user of users.reverse()) {
+  for (const user of users) {
     if (index % 50 === 0)
       console.log(`Updated ${index} / ${users.length} users`);
     const randomApiKeyObject = getRandomItemFromArray(keys);
@@ -28,12 +28,12 @@ const updateUsers = async (tornId) => {
       latestUserInfo.data.age,
       latestUserInfo.data.revivable
     );
-    // await delay(5000);
+    await delay(2000);
     index++;
   }
 
-  const t1 = performance.now();
-  const time = Math.floor((t1 - t0) / 1000);
+  const endTime = performance.now();
+  const time = Math.floor((endTime - startTime) / 1000);
   console.log(`Updating users took: ${time} seconds.`);
   updateUsers();
 };
