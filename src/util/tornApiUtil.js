@@ -22,8 +22,20 @@ const getUserFromTornApi = async (apiKey) => {
     return "error";
   }
 };
+const getUserFromTornApiById = async (apiKey, tornId) => {
+  logApiCount(apiKey);
+
+  try {
+    return axios.get(
+      `https://api.torn.com/user/${tornId}?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
+    );
+  } catch (error) {
+    return "error";
+  }
+};
 
 module.exports = {
   getFactionFromTornApi,
   getUserFromTornApi,
+  getUserFromTornApiById,
 };

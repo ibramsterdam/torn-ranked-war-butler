@@ -148,6 +148,23 @@ async function getApiKeyByValue(prisma, key) {
 /**
  *  @param {PrismaClient} prisma
  */
+async function getBrainSurgeonApiKeys(prisma) {
+  try {
+    const result = await prisma.apiKey.findMany({
+      where: {
+        brainSurgeonKey: true,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: getBrainSurgeonApiKeys");
+    console.log("error", error);
+  }
+}
+
+/**
+ *  @param {PrismaClient} prisma
+ */
 async function getAllApiKeys(prisma) {
   try {
     const result = await prisma.apiKey.findMany({
@@ -171,4 +188,5 @@ module.exports = {
   getApiKeysThatAreUsedOnDiscordServer,
   getApiKeyByValue,
   getAllApiKeys,
+  getBrainSurgeonApiKeys,
 };

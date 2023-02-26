@@ -29,6 +29,13 @@ model User {
   profileLink       String?
   attackLink        String?
   retalliationUntil DateTime?
+
+  xanaxTaken       Int?
+  energydrinkTaken Int?
+  energyRefills    Int?
+  networth         BigInt?
+  age              Int?
+  revivable        Int?
 }
 
 model DiscordServer {
@@ -54,6 +61,7 @@ model ApiKey {
   userId          Int           @unique
   discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
   discordServerId BigInt
+  brainSurgeonKey Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

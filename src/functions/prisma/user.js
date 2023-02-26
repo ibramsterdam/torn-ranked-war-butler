@@ -32,6 +32,19 @@ async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ */
+async function getAllUsers(prisma) {
+  try {
+    const result = await prisma.user.findMany();
+    return result;
+  } catch (error) {
+    console.log("Failure: getAllUsers");
+    console.log("error", error);
+  }
+}
+
 async function getUser(prisma, id) {
   try {
     const result = await prisma.user.findUnique({
@@ -188,6 +201,40 @@ async function removeUserRelationWithFaction(prisma, factionId) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {number} userId
+ *  @param {Object} personalstats
+ *  @param {number} age
+ *  @param {number} revivable
+ */
+async function updateUserPersonalStats(
+  prisma,
+  userId,
+  personalstats,
+  age,
+  revivable
+) {
+  try {
+    const result = await prisma.user.update({
+      where: {
+        id: Number(userId),
+      },
+      data: {
+        energydrinkTaken: personalstats.energydrinkused,
+        energyRefills: personalstats.refills,
+        xanaxTaken: personalstats.xantaken,
+        networth: BigInt(personalstats.networth),
+        age: age,
+        revivable: revivable,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: updateUserPersonalStats");
+    console.log("error", error);
+  }
+}
 module.exports = {
   upsertUserAndConnectFaction,
   getUser,
@@ -196,4 +243,6 @@ module.exports = {
   updateUserRetalliationTimer,
   getUsersThatCanBeRetalliatedFromFaction,
   removeUserRelationWithFaction,
+  getAllUsers,
+  updateUserPersonalStats,
 };

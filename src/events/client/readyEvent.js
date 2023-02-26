@@ -4,6 +4,7 @@ const { handleCommands } = require("../../functions/handlers/commandHandler");
 const {
   removeUserRelationWithFaction,
 } = require("../../functions/prisma/user");
+const { updateUsers } = require("../../functions/updateUsers");
 require("dotenv").config();
 
 module.exports = {
@@ -23,6 +24,7 @@ module.exports = {
     // const guild = await client.guilds.fetch();
     // await guild.channels.delete();
 
+    updateUsers();
     handleCommands(client).then(() => {
       console.log("\nThe bot has booted up!");
     });

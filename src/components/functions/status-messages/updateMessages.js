@@ -71,7 +71,9 @@ async function updateMessages(
     try {
       await oldMessages[index].edit({ embeds: [response] });
     } catch (err) {
-      console.log("updateMessages", err);
+      console.log("Error in updateMessages");
+      console.log("Index error:", index);
+      console.log("oldmessagesArr", oldMessages);
     }
     index++;
   }
