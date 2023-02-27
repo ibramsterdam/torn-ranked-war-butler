@@ -20,6 +20,7 @@ const updateUsers = async () => {
       randomApiKeyObject.value,
       user.id
     );
+    console.log(latestUserInfo.data);
 
     await updateUserPersonalStats(
       prisma,
