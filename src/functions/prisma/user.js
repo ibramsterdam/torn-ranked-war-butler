@@ -215,6 +215,7 @@ async function updateUserPersonalStats(
   age,
   revivable
 ) {
+  console.log(userId);
   try {
     const result = await prisma.user.update({
       where: {
