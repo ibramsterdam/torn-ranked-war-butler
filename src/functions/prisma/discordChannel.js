@@ -30,7 +30,25 @@ async function createDiscordChannel(
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ *  @param {BigInt} channelId
+ */
+async function deleteChannel(prisma, channelId) {
+  try {
+    const result = await prisma.discordChannel.delete({
+      where: {
+        id: channelId,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: deleteChannel");
+    console.log("error", error);
+  }
+}
 
 module.exports = {
   createDiscordChannel,
+  deleteChannel,
 };

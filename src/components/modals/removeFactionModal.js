@@ -15,6 +15,7 @@ const {
   getDiscordChannelFromFactionAndDiscordServer,
 } = require("../../functions/prisma/factionsOnDiscordServer");
 const { getFactionsEmbed } = require("../functions/factionsEmbed");
+const { deleteChannel } = require("../../functions/prisma/discordChannel");
 
 module.exports = {
   data: { name: "remove-faction-modal" },
@@ -52,6 +53,7 @@ module.exports = {
         server.id,
         faction.id
       );
+    await deleteChannel(prisma, connection.discordChannelId);
 
     const channelList = await interaction.guild.channels.fetch();
     if (
