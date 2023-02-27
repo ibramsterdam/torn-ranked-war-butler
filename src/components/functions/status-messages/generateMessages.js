@@ -23,6 +23,7 @@ async function generateMessages(interaction, faction, server, prisma) {
   );
 
   if (results.data.error) {
+    console.log("Err in generateMessages while fetching from torn api");
     return console.log(results.data.error);
   }
 
@@ -84,7 +85,7 @@ async function generateMessages(interaction, faction, server, prisma) {
       });
       messageArray.push(message);
     } catch (error) {
-      console.log("generateMessages", error);
+      console.log("generateMessages try catch err");
     }
   }
 

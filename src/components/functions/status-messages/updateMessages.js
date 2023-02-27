@@ -28,6 +28,7 @@ async function updateMessages(
   );
 
   if (results.data.error) {
+    console.log("Err in updateMessages while fetching from torn api");
     return console.log(results.data.error);
   }
 
@@ -73,7 +74,7 @@ async function updateMessages(
     } catch (err) {
       console.log("Error in updateMessages");
       console.log("Index error:", index);
-      console.log("oldmessagesArr", oldMessages);
+      // console.log("oldmessagesArr", oldMessages);
     }
     index++;
   }
