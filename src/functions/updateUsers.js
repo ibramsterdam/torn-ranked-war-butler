@@ -20,17 +20,22 @@ const updateUsers = async () => {
       randomApiKeyObject.value,
       user.id
     );
-    console.log(latestUserInfo.data);
 
-    await updateUserPersonalStats(
-      prisma,
-      user.id,
-      latestUserInfo.data.personalstats,
-      latestUserInfo.data.age,
-      latestUserInfo.data.revivable
-    );
-    await delay(2000);
-    index++;
+    if (latestUserInfo.data.error) {
+      console.log("Error in updateUsers");
+      console.log(latestUserInfo.data.error);
+      await delay(2000);
+    } else {
+      await updateUserPersonalStats(
+        prisma,
+        user.id,
+        latestUserInfo.data.personalstats,
+        latestUserInfo.data.age,
+        latestUserInfo.data.revivable
+      );
+      await delay(2000);
+      index++;
+    }
   }
 
   const endTime = performance.now();
