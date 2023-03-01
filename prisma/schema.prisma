@@ -36,6 +36,14 @@ model User {
   networth         BigInt?
   age              Int?
   revivable        Int?
+
+  strength      BigInt?
+  defense       BigInt?
+  speed         BigInt?
+  dexterity     BigInt?
+  statTotal     BigInt?
+  ffBonus       Decimal?
+  spyReportDate DateTime?
 }
 
 model DiscordServer {
