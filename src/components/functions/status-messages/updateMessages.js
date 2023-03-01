@@ -10,6 +10,7 @@ const {
 } = require("../../../functions/prisma/user");
 const { getFaction } = require("../../../functions/prisma/faction");
 const { sendRetalliationStatusEmbed } = require("./retalliationStatusEmbed");
+const { sendReviveStatusEmbed } = require("./reviveStatusEmbed");
 
 async function updateMessages(
   interaction,
@@ -61,6 +62,8 @@ async function updateMessages(
     membersList,
     factionInfo
   );
+  // Revive status
+  const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
 
   let index = 0;
   for (const response of [
@@ -68,6 +71,7 @@ async function updateMessages(
     ...travelResponses,
     ...attackResponses,
     ...retalliationResponse,
+    ...reviveResponse,
   ]) {
     try {
       await oldMessages[index].edit({ embeds: [response] });

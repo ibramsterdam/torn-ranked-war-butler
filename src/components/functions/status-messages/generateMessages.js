@@ -11,6 +11,7 @@ const {
 const { getFaction } = require("../../../functions/prisma/faction");
 const { sendRetalliationStatusEmbed } = require("./retalliationStatusEmbed");
 const { updateMessages } = require("./updateMessages");
+const { sendReviveStatusEmbed } = require("./reviveStatusEmbed");
 
 async function generateMessages(interaction, faction, server, prisma) {
   // Select a random ApiKey from the list
@@ -55,7 +56,8 @@ async function generateMessages(interaction, faction, server, prisma) {
     membersList,
     factionInfo
   );
-
+  // Revive status
+  const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
   // remove channel messages
   const channel = await interaction.guild.channels.cache.get(
     faction.discordChannelId.toString()
@@ -78,6 +80,7 @@ async function generateMessages(interaction, faction, server, prisma) {
     ...travelResponses,
     ...attackResponses,
     ...retalliationResponse,
+    ...reviveResponse,
   ]) {
     try {
       const message = await factionChannel.send({
