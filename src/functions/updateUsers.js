@@ -3,13 +3,12 @@ const { getUserFromTornApiById } = require("../util/tornApiUtil");
 const { getBrainSurgeonApiKeys } = require("./prisma/apiKey");
 const { getAllUsers, updateUserPersonalStats } = require("./prisma/user");
 
-const updateUsers = async () => {
+const updateUsers = async (users) => {
   const startTime = performance.now();
   const prisma = require("../index");
 
   const keys = await getBrainSurgeonApiKeys(prisma);
 
-  const users = await getAllUsers(prisma);
   let index = 0;
   for (const user of users) {
     if (index % 50 === 0)
