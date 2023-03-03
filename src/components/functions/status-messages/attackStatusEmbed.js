@@ -11,9 +11,9 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
 
   // Create the message list
   sortedAttackList.forEach((member) => {
-    const revivable = member.revivable === 1 ? ` and **REVIVABLE**` : "";
+    const revivable = member.revivable === 1 ? `💉` : "";
     attackMessageList.push(
-      `**[${member.name}](${
+      `${revivable}**[${member.name}](${
         member.profileLink
       })** is ${member.lastActionStatus.toLowerCase()} ${
         member.lastActionRelative
@@ -22,7 +22,7 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
         member.energyRefills
       } refills, ${member.age} days old, ${calculateNetworth(
         Number(member.networth)
-      )} networth${revivable}\n`
+      )} networth\n`
     );
   });
 

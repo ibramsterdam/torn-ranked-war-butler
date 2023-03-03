@@ -9,16 +9,18 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
 
   // Create the message list
   sortedHospitalList.forEach((member) => {
-    const revivable = member.revivable === 1 ? ` and **REVIVABLE**` : "";
+    const revivable = member.revivable === 1 ? `💉` : "";
     hospitalMessageList.push(
-      `**[${member.name}](${member.profileLink})** leaves the hospital <t:${
-        member.statusUntil
-      }:R> • [Attack!](${member.attackLink})
+      `${revivable}**[${member.name}](${
+        member.profileLink
+      })** leaves the hospital <t:${member.statusUntil}:R> • [Attack!](${
+        member.attackLink
+      })
       ${member.xanaxTaken} xanax, ${member.energydrinkTaken} cans, ${
         member.energyRefills
       } refills, ${member.age} days old, ${calculateNetworth(
         Number(member.networth)
-      )} networth${revivable}\n`
+      )} networth\n`
     );
   });
 

@@ -38,7 +38,7 @@ async function sendReviveStatusEmbed(membersListNew, factionInfo) {
     response.setTitle(`💉  Hospital List of ${factionInfo.name} 💉`);
     response.setDescription(`
     List was updated <t:${Math.round(Date.now() / 1000)}:R>. \n
-    **Hospital List**: (**${reviveMessageList.length} / ${
+    **Revive List**: (**${reviveMessageList.length} / ${
       membersListNew.length
     }** are revivable)\n
     **${i}-${i + 15} members**

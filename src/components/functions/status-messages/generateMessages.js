@@ -63,17 +63,20 @@ async function generateMessages(interaction, faction, server, prisma) {
     faction.discordChannelId.toString()
   );
 
-  if (channel) {
-    const messages = await channel.messages.fetch();
-    if (messages) {
-      await channel.bulkDelete(messages);
-    }
+  if (!channel) {
+    console.log(
+      "NO channel found that matches: ",
+      faction.discordChannelId.toString()
+    );
+    return;
   }
 
+  // delete all possible messages
+  await channel.bulkDelete(100, true).then(() => {
+    console.log("Messages deleted");
+  });
+
   let messageArray = [];
-  const factionChannel = await interaction.guild.channels.cache.get(
-    faction.discordChannelId.toString()
-  );
 
   for (const response of [
     ...hospResponses,
@@ -83,7 +86,7 @@ async function generateMessages(interaction, faction, server, prisma) {
     ...reviveResponse,
   ]) {
     try {
-      const message = await factionChannel.send({
+      const message = await channel.send({
         embeds: [response],
       });
       messageArray.push(message);
