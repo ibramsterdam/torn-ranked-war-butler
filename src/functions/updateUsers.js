@@ -40,7 +40,7 @@ const updateUsers = async (users) => {
   const endTime = performance.now();
   const time = Math.floor((endTime - startTime) / 1000);
   console.log(`Updating users took: ${time} seconds.`);
-  updateUsers();
+  updateUsers(users);
 };
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
