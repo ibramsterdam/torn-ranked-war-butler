@@ -95,8 +95,6 @@ async function generateMessages(interaction, faction, server, prisma) {
     }
   }
 
-  setInterval(async () => {
-    updateMessages(interaction, faction, server, prisma, messageArray);
-  }, 10000);
+  updateMessages(interaction, faction, server, prisma, messageArray);
 }
 module.exports = { generateMessages };

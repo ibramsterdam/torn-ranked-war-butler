@@ -76,6 +76,8 @@ async function updateMessages(
   const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
 
   let index = 0;
+  let messageArray = [];
+  let error = false;
   for (const response of [
     ...hospResponses,
     ...travelResponses,
@@ -84,13 +86,18 @@ async function updateMessages(
     ...reviveResponse,
   ]) {
     try {
-      await oldMessages[index].edit({ embeds: [response] });
+      const message = await oldMessages[index].edit({ embeds: [response] });
+      messageArray.push(message);
     } catch (err) {
+      error = true;
       console.log("Error in updateMessages");
       console.log("Index error:", index);
       // console.log("oldmessagesArr", oldMessages);
     }
     index++;
   }
+  if (error) return console.log("Error and thus cancelling updates");
+  await delay(10000);
+  updateMessages(interaction, faction, server, prisma, messageArray);
 }
 module.exports = { updateMessages };
