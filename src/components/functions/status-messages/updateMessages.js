@@ -11,6 +11,7 @@ const {
 const { getFaction } = require("../../../functions/prisma/faction");
 const { sendRetalliationStatusEmbed } = require("./retalliationStatusEmbed");
 const { sendReviveStatusEmbed } = require("./reviveStatusEmbed");
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function updateMessages(
   interaction,
@@ -20,17 +21,26 @@ async function updateMessages(
   oldMessages
 ) {
   // Select a random ApiKey from the list
-  const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
+  let randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
 
   // fetch faction information
-  const results = await getFactionFromTornApi(
+  let results = await getFactionFromTornApi(
     faction.factionId,
     randomApiKeyObject.value
   );
 
-  if (results.data.error) {
-    console.log("Err in updateMessages while fetching from torn api");
-    return console.log(results.data.error);
+  while (results.data.error) {
+    console.log(
+      "Err in updateMessages while fetching from torn api",
+      results.data.error
+    );
+    console.log("Retrying...");
+    await delay(2000);
+    randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
+    results = await getFactionFromTornApi(
+      faction.factionId,
+      randomApiKeyObject.value
+    );
   }
 
   const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
