@@ -35,7 +35,7 @@ async function sendReviveStatusEmbed(membersListNew, factionInfo) {
   for (let i = 0; i < membersListNew.length; i += 15) {
     const response = new EmbedBuilder().setColor("LuminousVividPink");
     const list = reviveMessageList.slice(i, i + 15).join("");
-    response.setTitle(`💉  Hospital List of ${factionInfo.name} 💉`);
+    response.setTitle(`💉 Revive List of ${factionInfo.name} 💉`);
     response.setDescription(`
     List was updated <t:${Math.round(Date.now() / 1000)}:R>. \n
     **Revive List**: (**${reviveMessageList.length} / ${
