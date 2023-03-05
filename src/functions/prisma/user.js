@@ -44,6 +44,37 @@ async function getAllUsers(prisma) {
     console.log("error", error);
   }
 }
+/**
+ *  @param {PrismaClient} prisma
+ */
+async function getAllUsersThatAreTrackedOnAServer(prisma) {
+  try {
+    const result = await prisma.factionsOnDiscordServer.findMany({
+      select: {
+        faction: {
+          select: {
+            members: true,
+            id: true,
+          },
+        },
+      },
+    });
+    const filteredArray = [];
+    const idSeen = [];
+
+    // filter out duplicates
+    result.forEach((item) => {
+      if (!idSeen.includes(item.faction.id)) {
+        filteredArray.push(item.faction.members);
+        idSeen.push(item.faction.id);
+      }
+    });
+    return filteredArray.flat();
+  } catch (error) {
+    console.log("Failure: getAllUsersThatAreTrackedOnAServer");
+    console.log("error", error);
+  }
+}
 
 async function getUser(prisma, id) {
   try {
@@ -245,4 +276,5 @@ module.exports = {
   removeUserRelationWithFaction,
   getAllUsers,
   updateUserPersonalStats,
+  getAllUsersThatAreTrackedOnAServer,
 };

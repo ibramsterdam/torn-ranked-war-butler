@@ -1,7 +1,7 @@
 const { getRandomItemFromArray } = require("../util/randomItemFromArray");
 const { getUserFromTornApiById } = require("../util/tornApiUtil");
 const { getBrainSurgeonApiKeys } = require("./prisma/apiKey");
-const { getAllUsers, updateUserPersonalStats } = require("./prisma/user");
+const { updateUserPersonalStats } = require("./prisma/user");
 
 const updateUsers = async (users) => {
   const startTime = performance.now();
@@ -11,7 +11,7 @@ const updateUsers = async (users) => {
 
   let index = 0;
   for (const user of users) {
-    if (index % 50 === 0)
+    if (index % 25 === 0)
       console.log(`Updated ${index} / ${users.length} users`);
     const randomApiKeyObject = getRandomItemFromArray(keys);
 
