@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
-const { calculateNetworth } = require("./calculateNetworth");
+const { roundBigNum } = require("./helpers");
 
 async function sendReviveStatusEmbed(membersListNew, factionInfo) {
   let reviveMessageList = [];
@@ -25,7 +25,7 @@ async function sendReviveStatusEmbed(membersListNew, factionInfo) {
       } • [Go to Hospital!](https://xa.up.railway.app/api/qvzsz)
       ${member.xanaxTaken} xanax, ${member.energydrinkTaken} cans, ${
         member.energyRefills
-      } refills, ${member.age} days old, ${calculateNetworth(
+      } refills, ${member.age} days old, ${roundBigNum(
         Number(member.networth)
       )} networth\n`
     );

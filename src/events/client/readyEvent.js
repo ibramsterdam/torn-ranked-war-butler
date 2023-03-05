@@ -24,7 +24,7 @@ module.exports = {
     // await guild.channels.delete();
 
     const users = await getAllUsers(prisma);
-    const userParts = splitArrayIntoParts(users, 8);
+    const userParts = splitArrayIntoParts(users, 6);
     userParts.forEach((part) => updateUsers(part));
 
     handleCommands(client).then(() => {

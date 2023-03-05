@@ -3,7 +3,6 @@ const { getFactionFromTornApi } = require("../../../util/tornApiUtil");
 const { sendHospitalStatusEmbed } = require("./hospitalStatusEmbed");
 const { sendTravelStatusEmbed } = require("./travelStatusEmbed");
 const { sendAttackStatusEmbed } = require("./attackStatusEmbed");
-const { EmbedBuilder } = require("discord.js");
 const {
   upsertUser,
   getUsersByFactionId,
@@ -57,7 +56,7 @@ async function generateMessages(interaction, faction, server, prisma) {
     factionInfo
   );
   // Revive status
-  const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
+  // const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
   // remove channel messages
   const channel = await interaction.guild.channels.cache.get(
     faction.discordChannelId.toString()
@@ -80,10 +79,10 @@ async function generateMessages(interaction, faction, server, prisma) {
 
   for (const response of [
     ...hospResponses,
-    ...travelResponses,
     ...attackResponses,
+    ...travelResponses,
     ...retalliationResponse,
-    ...reviveResponse,
+    // ...reviveResponse,
   ]) {
     try {
       const message = await channel.send({

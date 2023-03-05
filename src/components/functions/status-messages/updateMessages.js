@@ -73,17 +73,17 @@ async function updateMessages(
     factionInfo
   );
   // Revive status
-  const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
+  // const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
 
   let index = 0;
   let messageArray = [];
   let error = false;
   for (const response of [
     ...hospResponses,
-    ...travelResponses,
     ...attackResponses,
+    ...travelResponses,
     ...retalliationResponse,
-    ...reviveResponse,
+    // ...reviveResponse,
   ]) {
     try {
       const message = await oldMessages[index].edit({ embeds: [response] });
