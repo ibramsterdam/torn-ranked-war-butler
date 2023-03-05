@@ -23,7 +23,7 @@ module.exports = {
     );
 
     const users = await getAllUsersThatAreTrackedOnAServer(prisma);
-    const userParts = splitArrayIntoParts(users, 4);
+    const userParts = splitArrayIntoParts(users, 1);
     userParts.forEach((part) => updateUsers(part));
 
     handleCommands(client).then(() => {

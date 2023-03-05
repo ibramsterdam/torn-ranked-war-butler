@@ -11,7 +11,7 @@ const updateUsers = async (users) => {
 
   let index = 0;
   for (const user of users) {
-    if (index % 25 === 0)
+    if (index % 50 === 0)
       console.log(`Updated ${index} / ${users.length} users`);
     const randomApiKeyObject = getRandomItemFromArray(keys);
 
@@ -32,7 +32,7 @@ const updateUsers = async (users) => {
         latestUserInfo.data.age,
         latestUserInfo.data.revivable
       );
-      await delay(2000);
+      await delay(1000);
       index++;
     }
   }
