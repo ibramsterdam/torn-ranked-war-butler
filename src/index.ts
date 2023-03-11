@@ -1,10 +1,5 @@
-const {
-  Client,
-  Collection,
-  GatewayIntentBits,
-  Partials,
-} = require("discord.js");
-const { PrismaClient } = require("@prisma/client");
+import { Client, Collection, GatewayIntentBits, Partials } from "discord.js";
+import { PrismaClient } from "@prisma/client";
 const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
 require("dotenv").config();
@@ -12,7 +7,7 @@ require("dotenv").config();
 const client = new Client({
   intents: [Guilds, GuildMembers, GuildMessages],
   partials: [User, Message, GuildMember, ThreadMember],
-});
+}) as any;
 
 const { handleEvents } = require("./functions/handlers/eventHandler");
 const { handleComponent } = require("./functions/handlers/componentHandler");

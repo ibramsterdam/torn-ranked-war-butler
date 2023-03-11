@@ -148,7 +148,7 @@ async function getApiKeyByValue(prisma, key) {
 /**
  *  @param {PrismaClient} prisma
  */
-async function getBrainSurgeonApiKeys(prisma) {
+export async function getBrainSurgeonApiKeys(prisma) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {

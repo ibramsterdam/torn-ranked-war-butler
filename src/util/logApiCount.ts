@@ -13,14 +13,10 @@ setInterval(async () => {
   apiKeyCountMap.clear();
 }, ONE_MINUTE);
 
-function logApiCount(apiKey) {
+export function logApiCount(apiKey: string) {
   if (!apiKeyCountMap.has(apiKey)) apiKeyCountMap.set(apiKey, 0);
 
   let count = apiKeyCountMap.get(apiKey);
   count++;
   apiKeyCountMap.set(apiKey, count);
 }
-
-module.exports = {
-  logApiCount,
-};

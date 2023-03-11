@@ -6,7 +6,7 @@ const { PrismaClient } = require("@prisma/client");
  *  @param {String} name
  *  @param {Number} factionId
  */
-async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
+export async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
   try {
     const result = await prisma.user.upsert({
       where: {
@@ -35,7 +35,7 @@ async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
 /**
  *  @param {PrismaClient} prisma
  */
-async function getAllUsers(prisma) {
+export async function getAllUsers(prisma) {
   try {
     const result = await prisma.user.findMany();
     return result;
@@ -47,7 +47,7 @@ async function getAllUsers(prisma) {
 /**
  *  @param {PrismaClient} prisma
  */
-async function getAllUsersThatAreTrackedOnAServer(prisma) {
+export async function getAllUsersThatAreTrackedOnAServer(prisma) {
   try {
     const result = await prisma.factionsOnDiscordServer.findMany({
       select: {
@@ -76,7 +76,7 @@ async function getAllUsersThatAreTrackedOnAServer(prisma) {
   }
 }
 
-async function getUser(prisma, id) {
+export async function getUser(prisma, id) {
   try {
     const result = await prisma.user.findUnique({
       where: {

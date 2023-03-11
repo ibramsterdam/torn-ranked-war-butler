@@ -1,5 +1,6 @@
-const axios = require("axios");
-const getShortUrlAttackLink = async (tornId) => {
+import axios from "axios";
+
+export const getShortUrlAttackLink = async (tornId: number) => {
   try {
     return axios.post(`https://xa.up.railway.app/api/generate`, {
       url: `https://www.torn.com/loader2.php?sid=getInAttack&user2ID=$${tornId}`,
@@ -8,7 +9,8 @@ const getShortUrlAttackLink = async (tornId) => {
     return "error";
   }
 };
-const getShortUrlProfileLink = async (tornId) => {
+j;
+export const getShortUrlProfileLink = async (tornId: number) => {
   try {
     return axios.post(`https://xa.up.railway.app/api/generate`, {
       url: `https://www.torn.com/profiles.php?XID=${tornId}`,
@@ -17,4 +19,3 @@ const getShortUrlProfileLink = async (tornId) => {
     return "error";
   }
 };
-module.exports = { getShortUrlAttackLink, getShortUrlProfileLink };

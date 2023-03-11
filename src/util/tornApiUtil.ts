@@ -1,7 +1,10 @@
-const axios = require("axios");
-const { logApiCount } = require("./logApiCount");
+import axios from "axios";
+import { logApiCount } from "./logApiCount";
 
-const getFactionFromTornApi = async (factionID, apiKey) => {
+export const getFactionFromTornApi = async (
+  factionID: number,
+  apiKey: string
+) => {
   logApiCount(apiKey);
   try {
     return axios.get(
@@ -11,7 +14,7 @@ const getFactionFromTornApi = async (factionID, apiKey) => {
     return "error";
   }
 };
-const getUserFromTornApi = async (apiKey) => {
+export const getUserFromTornApi = async (apiKey: string) => {
   logApiCount(apiKey);
 
   try {
@@ -22,7 +25,10 @@ const getUserFromTornApi = async (apiKey) => {
     return "error";
   }
 };
-const getUserFromTornApiById = async (apiKey, tornId) => {
+export const getUserFromTornApiById = async (
+  apiKey: string,
+  tornId: number
+) => {
   logApiCount(apiKey);
 
   try {
@@ -32,10 +38,4 @@ const getUserFromTornApiById = async (apiKey, tornId) => {
   } catch (error) {
     return "error";
   }
-};
-
-module.exports = {
-  getFactionFromTornApi,
-  getUserFromTornApi,
-  getUserFromTornApiById,
 };

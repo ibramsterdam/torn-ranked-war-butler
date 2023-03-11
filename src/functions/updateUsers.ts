@@ -1,7 +1,7 @@
-const { getRandomItemFromArray } = require("../util/randomItemFromArray");
-const { getUserFromTornApiById } = require("../util/tornApiUtil");
-const { getBrainSurgeonApiKeys } = require("./prisma/apiKey");
-const { updateUserPersonalStats } = require("./prisma/user");
+import { getRandomItemFromArray } from "../util/randomItemFromArray";
+import { getUserFromTornApiById } from "../util/tornApiUtil";
+import { getBrainSurgeonApiKeys } from "./prisma/apiKey";
+import { updateUserPersonalStats } from "./prisma/user";
 
 const updateUsers = async (users) => {
   const startTime = performance.now();
