@@ -1,18 +1,11 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {BigInt} channelId
- *  @param {String} channelName
- *  @param {BigInt} categoryId
- *  @param {BigInt} serverId
- */
-async function createDiscordChannel(
-  prisma,
-  channelId,
-  channelName,
-  categoryId,
-  serverId
+export async function createDiscordChannel(
+  prisma: PrismaClient,
+  channelId: number,
+  channelName: string,
+  categoryId: number,
+  serverId: number
 ) {
   try {
     const result = await prisma.discordChannel.create({
@@ -30,11 +23,7 @@ async function createDiscordChannel(
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {BigInt} channelId
- */
-async function deleteChannel(prisma, channelId) {
+export async function deleteChannel(prisma: PrismaClient, channelId: bigint) {
   try {
     const result = await prisma.discordChannel.delete({
       where: {
@@ -47,8 +36,3 @@ async function deleteChannel(prisma, channelId) {
     console.log("error", error);
   }
 }
-
-module.exports = {
-  createDiscordChannel,
-  deleteChannel,
-};

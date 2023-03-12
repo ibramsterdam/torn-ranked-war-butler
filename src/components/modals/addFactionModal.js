@@ -7,7 +7,7 @@ const {
   ButtonStyle,
   ChannelType,
 } = require("discord.js");
-const { getDiscordServer } = require("../../functions/prisma/discord");
+const { getDiscordServer } = require("../../functions/prisma/discord.ts");
 const { upsertFaction } = require("../../functions/prisma/faction");
 const {
   createFactionOnDiscordServerConnection,

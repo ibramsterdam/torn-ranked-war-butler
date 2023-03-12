@@ -1,5 +1,10 @@
-const { PrismaClient } = require("@prisma/client");
-async function upsertFaction(prisma, id, factionName) {
+import { PrismaClient } from "@prisma/client";
+
+export async function upsertFaction(
+  prisma: PrismaClient,
+  id: number,
+  factionName: string
+) {
   try {
     const result = await prisma.faction.upsert({
       where: {
@@ -19,11 +24,7 @@ async function upsertFaction(prisma, id, factionName) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {number} id
- */
-async function getFaction(prisma, id) {
+export async function getFaction(prisma: PrismaClient, id: number) {
   try {
     const result = await prisma.faction.findUnique({
       where: {
@@ -36,10 +37,7 @@ async function getFaction(prisma, id) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- */
-async function getAllFactions(prisma) {
+export async function getAllFactions(prisma: PrismaClient) {
   try {
     const result = await prisma.faction.findMany({});
     return result;
@@ -48,9 +46,3 @@ async function getAllFactions(prisma) {
     console.log("error", error);
   }
 }
-
-module.exports = {
-  upsertFaction,
-  getFaction,
-  getAllFactions,
-};

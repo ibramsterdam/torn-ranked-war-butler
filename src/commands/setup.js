@@ -11,7 +11,7 @@ const {
 const {
   getDiscordServer,
   createDiscordServer,
-} = require("../functions/prisma/discord");
+} = require("../functions/prisma/discord.ts");
 const {
   createDiscordCategory,
 } = require("../functions/prisma/discordCategory");

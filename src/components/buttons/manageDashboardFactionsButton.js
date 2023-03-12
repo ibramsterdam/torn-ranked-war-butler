@@ -5,7 +5,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const { getDiscordServer } = require("../../functions/prisma/discord");
+const { getDiscordServer } = require("../../functions/prisma/discord.ts");
 const {
   getConnectedFactionsOnDiscordServer,
 } = require("../../functions/prisma/factionsOnDiscordServer");

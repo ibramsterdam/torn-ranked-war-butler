@@ -1,4 +1,4 @@
-const { getDiscordServer } = require("../../functions/prisma/discord");
+const { getDiscordServer } = require("../../functions/prisma/discord.ts");
 const {
   generateMessages,
 } = require("../functions/status-messages/generateMessages");

@@ -3,7 +3,7 @@ const {
   CommandInteraction,
   Client,
 } = require("discord.js");
-const { getDiscordServer } = require("../functions/prisma/discord");
+const { getDiscordServer } = require("../functions/prisma/discord.ts");
 
 module.exports = {
   developer: true,

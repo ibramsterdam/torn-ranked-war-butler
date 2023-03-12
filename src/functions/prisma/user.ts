@@ -1,12 +1,11 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} id
- *  @param {String} name
- *  @param {Number} factionId
- */
-async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
+export async function upsertUserAndConnectFaction(
+  prisma: PrismaClient,
+  id: number,
+  name: string,
+  factionId: number
+) {
   try {
     const result = await prisma.user.upsert({
       where: {
@@ -32,10 +31,8 @@ async function upsertUserAndConnectFaction(prisma, id, name, factionId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- */
-async function getAllUsers(prisma) {
+
+export async function getAllUsers(prisma: PrismaClient) {
   try {
     const result = await prisma.user.findMany();
     return result;
@@ -44,10 +41,8 @@ async function getAllUsers(prisma) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- */
-async function getAllUsersThatAreTrackedOnAServer(prisma) {
+// TODO: FIX THIS
+export async function getAllUsersThatAreTrackedOnAServer(prisma: PrismaClient) {
   try {
     const result = await prisma.factionsOnDiscordServer.findMany({
       select: {
@@ -59,12 +54,11 @@ async function getAllUsersThatAreTrackedOnAServer(prisma) {
         },
       },
     });
-
-    const filteredArray = [];
-    const idSeen = [];
+    const filteredArray = [] as any;
+    const idSeen = [] as any;
 
     // filter out duplicates
-    result.forEach((item) => {
+    result.forEach((item: any) => {
       if (!idSeen.includes(item.faction.id)) {
         filteredArray.push(item.faction.members);
         idSeen.push(item.faction.id);
@@ -77,7 +71,7 @@ async function getAllUsersThatAreTrackedOnAServer(prisma) {
   }
 }
 
-async function getUser(prisma, id) {
+export async function getUser(prisma: PrismaClient, id: number) {
   try {
     const result = await prisma.user.findUnique({
       where: {
@@ -94,21 +88,13 @@ async function getUser(prisma, id) {
   }
 }
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {BigInt} id
- *  @param {Object} userData
- *  @param {Number} factionId
- *  @param {String} profileLink
- *  @param {String} attackLink
- */
-async function upsertUser(
-  prisma,
-  id,
-  userData,
-  factionId,
-  profileLink,
-  attackLink
+export async function upsertUser(
+  prisma: PrismaClient,
+  id: number,
+  userData: any,
+  factionId: number,
+  profileLink: string,
+  attackLink: string
 ) {
   try {
     const result = await prisma.user.upsert({
@@ -149,11 +135,10 @@ async function upsertUser(
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} factionId
- */
-async function getUsersByFactionId(prisma, factionId) {
+export async function getUsersByFactionId(
+  prisma: PrismaClient,
+  factionId: number
+) {
   try {
     const result = await prisma.user.findMany({
       where: {
@@ -166,11 +151,10 @@ async function getUsersByFactionId(prisma, factionId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} userId
- */
-async function updateUserRetalliationTimer(prisma, userId) {
+export async function updateUserRetalliationTimer(
+  prisma: PrismaClient,
+  userId: number
+) {
   const date = new Date();
   const fourMinutesLater = new Date(date.getTime() + 60000 * 4);
 
@@ -189,12 +173,10 @@ async function updateUserRetalliationTimer(prisma, userId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} factionId
-
- */
-async function getUsersThatCanBeRetalliatedFromFaction(prisma, factionId) {
+export async function getUsersThatCanBeRetalliatedFromFaction(
+  prisma: PrismaClient,
+  factionId: number
+) {
   try {
     const result = await prisma.user.findMany({
       where: {
@@ -213,11 +195,10 @@ async function getUsersThatCanBeRetalliatedFromFaction(prisma, factionId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {number} factionId
- */
-async function removeUserRelationWithFaction(prisma, factionId) {
+export async function removeUserRelationWithFaction(
+  prisma: PrismaClient,
+  factionId: number
+) {
   try {
     const result = await prisma.user.updateMany({
       where: {
@@ -233,19 +214,18 @@ async function removeUserRelationWithFaction(prisma, factionId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {number} userId
- *  @param {Object} personalstats
- *  @param {number} age
- *  @param {number} revivable
- */
-async function updateUserPersonalStats(
-  prisma,
-  userId,
-  personalstats,
-  age,
-  revivable
+
+export async function updateUserPersonalStats(
+  prisma: PrismaClient,
+  userId: number,
+  personalstats: {
+    energydrinkused: number;
+    refills: number;
+    xantaken: number;
+    networth: number;
+  },
+  age: number,
+  revivable: number
 ) {
   try {
     const result = await prisma.user.update({
@@ -267,15 +247,3 @@ async function updateUserPersonalStats(
     console.log("error", error);
   }
 }
-module.exports = {
-  upsertUserAndConnectFaction,
-  getUser,
-  upsertUser,
-  getUsersByFactionId,
-  updateUserRetalliationTimer,
-  getUsersThatCanBeRetalliatedFromFaction,
-  removeUserRelationWithFaction,
-  getAllUsers,
-  updateUserPersonalStats,
-  getAllUsersThatAreTrackedOnAServer,
-};

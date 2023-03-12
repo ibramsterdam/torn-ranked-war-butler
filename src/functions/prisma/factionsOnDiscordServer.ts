@@ -1,16 +1,10 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {BigInt} serverId
- *  @param {number} factionId
- *  @param {BigInt} discordChannelId
- */
-async function createFactionOnDiscordServerConnection(
-  prisma,
-  serverId,
-  factionId,
-  discordChannelId
+export async function createFactionOnDiscordServerConnection(
+  prisma: PrismaClient,
+  serverId: number,
+  factionId: number,
+  discordChannelId: number
 ) {
   try {
     const result = await prisma.factionsOnDiscordServer.create({
@@ -26,7 +20,11 @@ async function createFactionOnDiscordServerConnection(
     console.log("error", error);
   }
 }
-async function getConnectedFactionsOnDiscordServer(prisma, discordServerId) {
+
+export async function getConnectedFactionsOnDiscordServer(
+  prisma: PrismaClient,
+  discordServerId: number
+) {
   try {
     const result = await prisma.factionsOnDiscordServer.findMany({
       where: {
@@ -43,10 +41,10 @@ async function getConnectedFactionsOnDiscordServer(prisma, discordServerId) {
     console.log("error", error);
   }
 }
-async function getConnectionBetweenFactionAndDiscordServer(
-  prisma,
-  discordServerId,
-  factionId
+export async function getConnectionBetweenFactionAndDiscordServer(
+  prisma: PrismaClient,
+  discordServerId: bigint,
+  factionId: number
 ) {
   try {
     const result = await prisma.factionsOnDiscordServer.findUnique({
@@ -64,10 +62,10 @@ async function getConnectionBetweenFactionAndDiscordServer(
     console.log("error", error);
   }
 }
-async function deleteConnectionBetweenFactionAndDiscordServer(
-  prisma,
-  discordServerId,
-  factionId
+export async function deleteConnectionBetweenFactionAndDiscordServer(
+  prisma: PrismaClient,
+  discordServerId: bigint,
+  factionId: number
 ) {
   try {
     const result = await prisma.factionsOnDiscordServer.delete({
@@ -86,15 +84,10 @@ async function deleteConnectionBetweenFactionAndDiscordServer(
   }
 }
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {BigInt} discordServerId
- *  @param {number} factionId
- */
-async function getDiscordChannelFromFactionAndDiscordServer(
-  prisma,
-  discordServerId,
-  factionId
+export async function getDiscordChannelFromFactionAndDiscordServer(
+  prisma: PrismaClient,
+  discordServerId: bigint,
+  factionId: number
 ) {
   try {
     const result = await prisma.factionsOnDiscordServer.findUnique({
@@ -112,11 +105,3 @@ async function getDiscordChannelFromFactionAndDiscordServer(
     console.log("error", error);
   }
 }
-
-module.exports = {
-  createFactionOnDiscordServerConnection,
-  getConnectedFactionsOnDiscordServer,
-  getConnectionBetweenFactionAndDiscordServer,
-  deleteConnectionBetweenFactionAndDiscordServer,
-  getDiscordChannelFromFactionAndDiscordServer,
-};

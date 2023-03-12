@@ -7,7 +7,7 @@ const {
 const {
   getUsersThatSharedTheirApiKeyOnDiscordServer,
 } = require("../../functions/prisma/apiKey");
-const { getDiscordServer } = require("../../functions/prisma/discord");
+const { getDiscordServer } = require("../../functions/prisma/discord.ts");
 const { getApiKeysEmbed } = require("../functions/apiKeysEmbed");
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 
