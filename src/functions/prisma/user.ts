@@ -135,6 +135,35 @@ export async function upsertUser(
     console.log("error", error);
   }
 }
+export async function updateUser(
+  prisma: PrismaClient,
+  id: number,
+  userData: any,
+  factionId: number
+) {
+  try {
+    const result = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        factionId: factionId,
+        name: userData.name,
+        lastActionRelative: userData.last_action.relative,
+        lastActionStatus: userData.last_action.status,
+        lastActionTimestamp: BigInt(userData.last_action.timestamp),
+        statusDescription: userData.status.description,
+        statusDetails: userData.status.details,
+        statusState: userData.status.state,
+        statusUntil: BigInt(userData.status.until),
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("Failure: updateUser");
+    console.log("error", error);
+  }
+}
 export async function getUsersByFactionId(
   prisma: PrismaClient,
   factionId: number

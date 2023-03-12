@@ -1,12 +1,13 @@
-// @ts-nocheck
-//TODO investigate this file
-const { EmbedBuilder } = require("discord.js");
-const { roundBigNum, generateHospitalMessageList } = require("./helpers");
+import { EmbedBuilder } from "discord.js";
+import { generateHospitalMessageList } from "./helpers";
 
-async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
+export async function sendHospitalStatusEmbed(
+  membersListNew: any,
+  factionInfo: any
+) {
   const sortedHospitalList = membersListNew
-    .filter((member) => member.statusState === "Hospital")
-    .sort((a, b) => Number(a.statusUntil) - Number(b.statusUntil));
+    .filter((member: any) => member.statusState === "Hospital")
+    .sort((a: any, b: any) => Number(a.statusUntil) - Number(b.statusUntil));
 
   const hospitalMessageList = generateHospitalMessageList(sortedHospitalList);
 
@@ -30,5 +31,3 @@ async function sendHospitalStatusEmbed(membersListNew, factionInfo) {
 
   return responseList;
 }
-
-module.exports = { sendHospitalStatusEmbed };

@@ -1,13 +1,15 @@
-// @ts-nocheck
-//TODO investigate this file
-const { EmbedBuilder } = require("discord.js");
-const { generateAttackMessageList } = require("./helpers");
+import { EmbedBuilder } from "discord.js";
+import { generateAttackMessageList } from "./helpers";
 
-async function sendAttackStatusEmbed(membersListNew, factionInfo) {
+export async function sendAttackStatusEmbed(
+  membersListNew: any,
+  factionInfo: any
+) {
   const sortedAttackList = membersListNew
-    .filter((member) => member.statusState === "Okay")
+    .filter((member: any) => member.statusState === "Okay")
     .sort(
-      (a, b) => Number(a.lastActionTimestamp) - Number(b.lastActionTimestamp)
+      (a: any, b: any) =>
+        Number(a.lastActionTimestamp) - Number(b.lastActionTimestamp)
     );
 
   const attackMessageList = generateAttackMessageList(sortedAttackList);
@@ -29,5 +31,3 @@ async function sendAttackStatusEmbed(membersListNew, factionInfo) {
 
   return responseList;
 }
-
-module.exports = { sendAttackStatusEmbed };

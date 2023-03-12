@@ -1,13 +1,14 @@
-// @ts-nocheck
-//TODO investigate this file
-const { EmbedBuilder } = require("discord.js");
-const { roundBigNum } = require("./helpers");
+import { EmbedBuilder } from "discord.js";
+import { roundBigNum } from "./helpers";
 
-async function sendReviveStatusEmbed(membersListNew, factionInfo) {
-  let reviveMessageList = [];
+export async function sendReviveStatusEmbed(
+  membersListNew: any,
+  factionInfo: any
+) {
+  let reviveMessageList: any = [];
   const reviveList = membersListNew
-    .filter((member) => member.revivable === 1)
-    .sort((a, b) => {
+    .filter((member: any) => member.revivable === 1)
+    .sort((a: any, b: any) => {
       if (a.statusState === "Okay" && b.statusState !== "Okay") {
         return -1; // a is Okay and b is not Okay, so a should come first
       } else if (a.statusState !== "Hospital" && b.statusState === "Hospital") {
@@ -18,7 +19,7 @@ async function sendReviveStatusEmbed(membersListNew, factionInfo) {
     });
 
   // Create the message list
-  reviveList.forEach((member) => {
+  reviveList.forEach((member: any) => {
     reviveMessageList.push(
       `**[${member.name}](${member.profileLink})** (**${
         member.statusState
@@ -59,5 +60,3 @@ async function sendReviveStatusEmbed(membersListNew, factionInfo) {
 
   return responseList;
 }
-
-module.exports = { sendReviveStatusEmbed };

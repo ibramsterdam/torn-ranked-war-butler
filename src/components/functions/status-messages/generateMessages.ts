@@ -1,25 +1,29 @@
-// @ts-nocheck
-//TODO investigate this file
-const { getRandomItemFromArray } = require("../../../util/randomItemFromArray");
-const { getFactionFromTornApi } = require("../../../util/tornApiUtil");
-const { sendHospitalStatusEmbed } = require("./hospitalStatusEmbed");
-const { sendTravelStatusEmbed } = require("./travelStatusEmbed");
-const { sendAttackStatusEmbed } = require("./attackStatusEmbed");
-const {
+import { getRandomItemFromArray } from "../../../util/randomItemFromArray";
+import { getFactionFromTornApi } from "../../../util/tornApiUtil";
+import { sendHospitalStatusEmbed } from "./hospitalStatusEmbed";
+import { sendTravelStatusEmbed } from "./travelStatusEmbed";
+import { sendAttackStatusEmbed } from "./attackStatusEmbed";
+import {
   upsertUser,
   getUsersByFactionId,
-} = require("../../../functions/prisma/user");
-const { getFaction } = require("../../../functions/prisma/faction");
-const { sendRetalliationStatusEmbed } = require("./retalliationStatusEmbed");
-const { updateMessages } = require("./updateMessages");
-const { sendReviveStatusEmbed } = require("./reviveStatusEmbed");
+  updateUser,
+} from "../../../functions/prisma/user";
+import { getFaction } from "../../../functions/prisma/faction";
+import { sendRetalliationStatusEmbed } from "./retalliationStatusEmbed";
+import { updateMessages } from "./updateMessages";
+import { PrismaClient } from "@prisma/client";
 
-async function generateMessages(interaction, faction, server, prisma) {
+export async function generateMessages(
+  interaction: any,
+  faction: any,
+  server: any,
+  prisma: PrismaClient
+) {
   // Select a random ApiKey from the list
   const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
 
   // fetch faction information
-  const results = await getFactionFromTornApi(
+  const results: any = await getFactionFromTornApi(
     faction.factionId,
     randomApiKeyObject.value
   );
@@ -32,7 +36,7 @@ async function generateMessages(interaction, faction, server, prisma) {
   const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
 
   for (let i = 0; i < Object.keys(results.data.members).length; i++) {
-    await upsertUser(
+    await updateUser(
       prisma,
       Number(Object.keys(results.data.members)[i]),
       Object.values(Object.values(results.data.members))[i],
@@ -98,4 +102,3 @@ async function generateMessages(interaction, faction, server, prisma) {
 
   updateMessages(interaction, faction, server, prisma, messageArray);
 }
-module.exports = { generateMessages };

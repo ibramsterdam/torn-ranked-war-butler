@@ -1,28 +1,23 @@
-// @ts-nocheck
-//TODO investigate this file
-const { getDashboardButtons } = require("../functions/getDashboardButtons");
-const {
+import { getDashboardButtons } from "../functions/getDashboardButtons";
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-} = require("discord.js");
-const { getDiscordServer } = require("../../functions/prisma/discord.ts");
-const {
-  getConnectedFactionsOnDiscordServer,
-} = require("../../functions/prisma/factionsOnDiscordServer");
-const { getFactionsEmbed } = require("../functions/factionsEmbed");
-
+} from "discord.js";
+import { getDiscordServer } from "../../functions/prisma/discord";
+import { getConnectedFactionsOnDiscordServer } from "../../functions/prisma/factionsOnDiscordServer";
+import { getFactionsEmbed } from "../functions/factionsEmbed";
+import { prisma } from "../../index";
 module.exports = {
   developer: false,
   data: { name: "dashboard-manage-factions" },
-  async execute(interaction, client) {
+  async execute(interaction: any, client: any) {
     interaction.message.delete();
     await interaction.deferReply();
-    const prisma = require("../../index");
     const guildID = BigInt(interaction.guildId);
 
-    const server = await getDiscordServer(prisma, guildID);
+    const server: any = await getDiscordServer(prisma, guildID);
     const factions = await getConnectedFactionsOnDiscordServer(
       prisma,
       server.id

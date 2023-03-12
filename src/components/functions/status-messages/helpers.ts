@@ -1,6 +1,4 @@
-// @ts-nocheck
-//TODO investigate this file
-function roundBigNum(num) {
+export function roundBigNum(num: any) {
   const value = Number(num);
   // Check if the number is greater than or equal to 1 billion
   if (value >= 1000000000) {
@@ -19,9 +17,9 @@ function roundBigNum(num) {
     return value.toString();
   }
 }
-function generateAttackMessageList(list) {
-  let messageList = [];
-  list.forEach((member, index) => {
+export function generateAttackMessageList(list: any) {
+  let messageList: any = [];
+  list.forEach((member: any, index: number) => {
     const revivable = member.revivable === 1 ? `💉 •` : "";
     const spyStats = member.spyReportDate
       ? `
@@ -48,9 +46,9 @@ function generateAttackMessageList(list) {
   return messageList;
 }
 
-function generateHospitalMessageList(list) {
-  let messageList = [];
-  list.forEach((member, index) => {
+export function generateHospitalMessageList(list: any) {
+  let messageList: any = [];
+  list.forEach((member: any, index: any) => {
     const revivable = member.revivable === 1 ? `💉 •` : "";
     const spyStats = member.spyReportDate
       ? `
@@ -76,9 +74,3 @@ function generateHospitalMessageList(list) {
 
   return messageList;
 }
-
-module.exports = {
-  roundBigNum,
-  generateAttackMessageList,
-  generateHospitalMessageList,
-};

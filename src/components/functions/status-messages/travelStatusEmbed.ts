@@ -1,15 +1,16 @@
-// @ts-nocheck
-//TODO investigate this file
-const { EmbedBuilder } = require("discord.js");
+import { EmbedBuilder } from "discord.js";
 
-async function sendTravelStatusEmbed(membersListNew, factionInfo) {
-  let travelMessageList = [];
+export async function sendTravelStatusEmbed(
+  membersListNew: any,
+  factionInfo: any
+) {
+  let travelMessageList: any = [];
   const travelList = membersListNew.filter(
-    (member) => member.statusState === "Traveling"
+    (member: any) => member.statusState === "Traveling"
   );
 
   // Create the message list
-  travelList.forEach((member, index) => {
+  travelList.forEach((member: any, index: number) => {
     travelMessageList.push(
       `**[${member.name}](${member.profileLink}) [${index + 1}]** is ${
         member.statusDescription
@@ -28,5 +29,3 @@ async function sendTravelStatusEmbed(membersListNew, factionInfo) {
 
   return [response];
 }
-
-module.exports = { sendTravelStatusEmbed };

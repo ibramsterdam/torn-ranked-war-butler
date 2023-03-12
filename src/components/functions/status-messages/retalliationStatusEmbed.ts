@@ -1,30 +1,28 @@
-// @ts-nocheck
-//TODO investigate this file
-const { EmbedBuilder } = require("discord.js");
-const {
+import { EmbedBuilder } from "discord.js";
+import {
   updateUserRetalliationTimer,
   getUsersThatCanBeRetalliatedFromFaction,
-} = require("../../../functions/prisma/user");
+} from "../../../functions/prisma/user";
+import { prisma } from "../../../index";
 
-function getNewMembersInHospital(list1, list2) {
-  return list2?.filter((obj2) => {
-    return !list1.some((obj1) => {
+function getNewMembersInHospital(list1: any, list2: any) {
+  return list2?.filter((obj2: any) => {
+    return !list1.some((obj1: any) => {
       return obj1.id === obj2.id;
     });
   });
 }
 
-async function sendRetalliationStatusEmbed(
-  membersListOld,
-  membersListNew,
-  factionInfo
+export async function sendRetalliationStatusEmbed(
+  membersListOld: any,
+  membersListNew: any,
+  factionInfo: any
 ) {
-  const prisma = require("../../../index");
   const filteredMembersListOld = membersListOld?.filter(
-    (member) => member.statusState === "Hospital"
+    (member: any) => member.statusState === "Hospital"
   );
   const filteredMembersListNew = membersListNew?.filter(
-    (member) => member.statusState === "Hospital"
+    (member: any) => member.statusState === "Hospital"
   );
   //  check if there are new retallliations (compare old to new)
   const newMembersInHospital = getNewMembersInHospital(
@@ -38,18 +36,18 @@ async function sendRetalliationStatusEmbed(
     await updateUserRetalliationTimer(prisma, newMembersInHospital[i].id);
   }
 
-  const users = await getUsersThatCanBeRetalliatedFromFaction(
+  const users: any = await getUsersThatCanBeRetalliatedFromFaction(
     prisma,
     factionInfo.id
   );
 
-  let retalliationMessageList = [];
+  let retalliationMessageList: any = [];
   const sortedRetalliationList = users.filter(
-    (member) => member.retalliationUntil > new Date()
+    (member: any) => member.retalliationUntil > new Date()
   );
 
   // Create the message list
-  sortedRetalliationList.forEach((member) => {
+  sortedRetalliationList.forEach((member: any) => {
     const regexLink = /href\s*=\s*"([^"]+)"/;
     const regexName = />(.*?)</;
     const regexID = /=(\d+)/;
