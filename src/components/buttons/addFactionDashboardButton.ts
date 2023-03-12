@@ -1,27 +1,25 @@
-// @ts-nocheck
-//TODO investigate this file
-const {
+import {
   ModalBuilder,
   ActionRowBuilder,
   TextInputBuilder,
   TextInputStyle,
-} = require("discord.js");
-module.exports = {
-  developer: false,
-  data: { name: "dashboard-add-faction" },
-  async execute(interaction, client) {
-    const modal = new ModalBuilder()
-      .setCustomId("add-faction-modal")
-      .setTitle("Add a Faction");
+} from "discord.js";
 
-    const textInput = new TextInputBuilder()
-      .setCustomId("add-faction-text-input")
-      .setLabel("Please paste the torn id of the faction")
-      .setRequired(true)
-      .setMaxLength(16)
-      .setStyle(TextInputStyle.Short);
+export async function execute(interaction: any, client: any) {
+  const modal: any = new ModalBuilder()
+    .setCustomId("add-faction-modal")
+    .setTitle("Add a Faction");
 
-    modal.addComponents(new ActionRowBuilder().addComponents(textInput));
-    await interaction.showModal(modal);
-  },
-};
+  const textInput = new TextInputBuilder()
+    .setCustomId("add-faction-text-input")
+    .setLabel("Please paste the torn id of the faction")
+    .setRequired(true)
+    .setMaxLength(16)
+    .setStyle(TextInputStyle.Short);
+
+  modal.addComponents(new ActionRowBuilder().addComponents(textInput));
+  await interaction.showModal(modal);
+}
+
+export const developer = false;
+export const data = { name: "dashboard-add-faction" };

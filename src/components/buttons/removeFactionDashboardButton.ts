@@ -1,28 +1,25 @@
-// @ts-nocheck
-//TODO investigate this file
-const {
+import {
   ModalBuilder,
   ActionRowBuilder,
   TextInputBuilder,
   TextInputStyle,
-} = require("discord.js");
-module.exports = {
-  developer: false,
+} from "discord.js";
 
-  data: { name: "dashboard-remove-faction" },
-  async execute(interaction, client) {
-    const modal = new ModalBuilder()
-      .setCustomId("remove-faction-modal")
-      .setTitle("Remove a faction");
+export async function execute(interaction: any, client: any) {
+  const modal: any = new ModalBuilder()
+    .setCustomId("remove-faction-modal")
+    .setTitle("Remove a faction");
 
-    const textInput = new TextInputBuilder()
-      .setCustomId("remove-faction-text-input")
-      .setLabel("Please paste the torn id of the faction")
-      .setRequired(true)
-      .setMaxLength(16)
-      .setStyle(TextInputStyle.Short);
+  const textInput = new TextInputBuilder()
+    .setCustomId("remove-faction-text-input")
+    .setLabel("Please paste the torn id of the faction")
+    .setRequired(true)
+    .setMaxLength(16)
+    .setStyle(TextInputStyle.Short);
 
-    modal.addComponents(new ActionRowBuilder().addComponents(textInput));
-    await interaction.showModal(modal);
-  },
-};
+  modal.addComponents(new ActionRowBuilder().addComponents(textInput));
+  await interaction.showModal(modal);
+}
+
+export const developer = false;
+export const data = { name: "dashboard-remove-faction" };
