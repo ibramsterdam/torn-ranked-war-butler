@@ -1,7 +1,5 @@
-// @ts-nocheck
-//TODO investigate this file
-const { EmbedBuilder } = require("discord.js");
-async function getApiKeysEmbed(users) {
+import { EmbedBuilder } from "discord.js";
+export async function getApiKeysEmbed(users: any) {
   const embed = new EmbedBuilder()
     .setColor("Aqua")
     .setTitle("Manage Api Keys")
@@ -18,7 +16,7 @@ async function getApiKeysEmbed(users) {
         `
     );
 
-  users.forEach((object) => {
+  users.forEach((object: any) => {
     embed.addFields({
       name: `${object.user.name} [${object.user.id}]`,
       value: `Profile: [Click here!](https://www.torn.com/profiles.php?XID=${object.user.id})
@@ -28,5 +26,3 @@ async function getApiKeysEmbed(users) {
 
   return embed;
 }
-
-module.exports = { getApiKeysEmbed };

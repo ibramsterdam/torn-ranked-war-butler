@@ -1,17 +1,13 @@
-// @ts-nocheck
-//TODO investigate this file
-
-const {
+import {
   SlashCommandBuilder,
   CommandInteraction,
   Client,
   EmbedBuilder,
-} = require("discord.js");
+} from "discord.js";
 
-const {
-  getDashboardButtons,
-} = require("../components/functions/getDashboardButtons");
-const { getDiscordServer } = require("../functions/prisma/discord");
+import { getDashboardButtons } from "../components/functions/getDashboardButtons";
+import { getDiscordServer } from "../functions/prisma/discord";
+import { prisma } from "../index";
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dashboard")
@@ -21,11 +17,10 @@ module.exports = {
    * @param {CommandInteraction} interaction
    * @param {Client} client
    */
-  async execute(interaction, client) {
+  async execute(interaction: any, client: any) {
     await interaction.deferReply();
 
     const guildID = BigInt(interaction.guildId);
-    const prisma = require("../index");
     const server = await getDiscordServer(prisma, guildID);
 
     if (!server) {

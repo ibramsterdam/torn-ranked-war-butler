@@ -1,24 +1,18 @@
-// @ts-nocheck
-//TODO investigate this file
-
-const {
+import {
   SlashCommandBuilder,
   CommandInteraction,
   Client,
   EmbedBuilder,
   ChannelType,
-} = require("discord.js");
-const {
-  getDashboardButtons,
-} = require("../components/functions/getDashboardButtons");
-const {
+} from "discord.js";
+import { getDashboardButtons } from "../components/functions/getDashboardButtons";
+import {
   getDiscordServer,
   createDiscordServer,
-} = require("../functions/prisma/discord");
-const {
-  createDiscordCategory,
-} = require("../functions/prisma/discordCategory");
-const { createDiscordChannel } = require("../functions/prisma/discordChannel");
+} from "../functions/prisma/discord";
+import { createDiscordCategory } from "../functions/prisma/discordCategory";
+import { createDiscordChannel } from "../functions/prisma/discordChannel";
+import { prisma } from "../index";
 
 module.exports = {
   developer: true,
@@ -30,12 +24,11 @@ module.exports = {
    * @param {CommandInteraction} interaction
    * @param {Client} client
    */
-  async execute(interaction, client) {
+  async execute(interaction: any, client: any) {
     await interaction.deferReply();
-    const prisma = require("../index");
     const guildID = BigInt(interaction.guildId);
 
-    let server = await getDiscordServer(prisma, guildID);
+    let server: any = await getDiscordServer(prisma, guildID);
     if (server) {
       return interaction.followUp(
         `You have already setup the butler in the past and no longer can use this command. Please contact the developer if you want to setup the butler once more`

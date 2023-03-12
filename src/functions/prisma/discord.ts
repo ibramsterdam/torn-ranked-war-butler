@@ -4,7 +4,7 @@ export async function getDiscordServer(prisma: PrismaClient, id: bigint) {
   try {
     const result = await prisma.discordServer.findUnique({
       where: {
-        id: BigInt(id),
+        id: id,
       },
       include: {
         apiKeys: true,
@@ -22,7 +22,7 @@ export async function getDiscordServer(prisma: PrismaClient, id: bigint) {
 
 export async function createDiscordServer(
   prisma: PrismaClient,
-  serverId: number,
+  serverId: bigint,
   name: string
 ) {
   try {

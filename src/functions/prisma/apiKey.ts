@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 export async function getUsersThatSharedTheirApiKeyOnDiscordServer(
   prisma: PrismaClient,
-  id: number
+  id: bigint
 ) {
   try {
     const result = await prisma.apiKey.findMany({

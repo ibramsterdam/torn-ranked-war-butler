@@ -2,7 +2,7 @@
 //TODO investigate this file
 const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 
-async function getDashboardButtons(
+export async function getDashboardButtons(
   menuType,
   isNotWhitelisted,
   hasNoApiKey,
@@ -28,5 +28,3 @@ async function getDashboardButtons(
       .setDisabled(hasNoFactions || isNotWhitelisted)
   );
 }
-
-module.exports = { getDashboardButtons };

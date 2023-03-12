@@ -1,33 +1,29 @@
-// @ts-nocheck
-//TODO investigate this file
-const {
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-} = require("discord.js");
-const {
-  getUsersThatSharedTheirApiKeyOnDiscordServer,
-} = require("../../functions/prisma/apiKey");
-const { getDiscordServer } = require("../../functions/prisma/discord.ts");
-const { getApiKeysEmbed } = require("../functions/apiKeysEmbed");
-const { getDashboardButtons } = require("../functions/getDashboardButtons");
+} from "discord.js";
+import { getUsersThatSharedTheirApiKeyOnDiscordServer } from "../../functions/prisma/apiKey";
+import { getDiscordServer } from "../../functions/prisma/discord";
+import { getApiKeysEmbed } from "../functions/apiKeysEmbed";
+import { getDashboardButtons } from "../functions/getDashboardButtons";
+import { prisma } from "../../index";
 
 module.exports = {
   developer: false,
 
   data: { name: "dashboard-manage-api-keys" },
-  async execute(interaction, client) {
+  async execute(interaction: any, client: any) {
     await interaction.deferReply();
     await interaction.message.delete();
 
     const guildID = BigInt(interaction.guildId);
-    const prisma = require("../../index");
     const users = await getUsersThatSharedTheirApiKeyOnDiscordServer(
       prisma,
       guildID
     );
-    const server = await getDiscordServer(prisma, guildID);
+    const server: any = await getDiscordServer(prisma, guildID);
 
     const embeds = await getApiKeysEmbed(users);
     const buttons = await getDashboardButtons(
