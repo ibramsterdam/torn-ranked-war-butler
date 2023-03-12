@@ -59,6 +59,7 @@ async function getAllUsersThatAreTrackedOnAServer(prisma) {
         },
       },
     });
+
     const filteredArray = [];
     const idSeen = [];
 

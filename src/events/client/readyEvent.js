@@ -1,5 +1,5 @@
 const { ActivityType, Client } = require("discord.js");
-const prisma = require("../..");
+// const prisma = require("../../index");
 const { handleCommands } = require("../../functions/handlers/commandHandler");
 const {
   getAllUsers,
@@ -7,6 +7,10 @@ const {
 } = require("../../functions/prisma/user");
 const { updateUsers } = require("../../functions/updateUsers");
 require("dotenv").config();
+
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 module.exports = {
   name: "ready",
@@ -24,7 +28,7 @@ module.exports = {
 
     const users = await getAllUsersThatAreTrackedOnAServer(prisma);
     const userParts = splitArrayIntoParts(users, 1);
-    userParts.forEach((part) => updateUsers(part));
+    // userParts.forEach((part) => updateUsers(part));
 
     handleCommands(client).then(() => {
       console.log("\nThe bot has booted up!");

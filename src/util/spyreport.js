@@ -1,15 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 const fs = require("fs");
 const csv = require("csv-parser");
-const {
-  getRandomItemFromArray,
-} = require("../../src/util/randomItemFromArray");
-const { getBrainSurgeonApiKeys } = require("../../src/functions/prisma/apiKey");
-const { getUserFromTornApiById } = require("../../src/util/tornApiUtil");
+const { getRandomItemFromArray } = require("./randomItemFromArray");
+const { getBrainSurgeonApiKeys } = require("../functions/prisma/apiKey");
+const { getUserFromTornApiById } = require("./tornApiUtil");
 const {
   getShortUrlAttackLink,
   getShortUrlProfileLink,
-} = require("../../src/util/urlShortenerUtil");
+} = require("./urlShortenerUtil");
 const csvFilePath = "/Users/bram/Developer/torn-ranked-war-butler/spies.csv";
 
 /**
@@ -37,7 +35,7 @@ async function query() {
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function updateUser(list) {
-  const prisma = require("../../src/index");
+  const prisma = require("../index");
   const keys = await getBrainSurgeonApiKeys(prisma);
   let count = 0;
   for (const user of list) {
