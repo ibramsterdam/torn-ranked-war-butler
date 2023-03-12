@@ -101,6 +101,11 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "files": ["src/index.ts"],
-  "include": ["./**/*.ts", "./**/*.js", "src/functions/prisma/discord.ts"],
+  "include": [
+    "./**/*.ts",
+    "./**/*.js",
+    "src/functions/prisma/discord.ts",
+    "src/events/client/readyEvent.s"
+  ],
   "exclude": ["node_modules", "dist"]
 }
