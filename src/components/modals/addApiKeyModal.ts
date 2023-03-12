@@ -1,12 +1,6 @@
 import { getUserFromTornApi } from "../../util/tornApiUtil";
 import { getDashboardButtons } from "../functions/getDashboardButtons";
-
-import {
-  ButtonBuilder,
-  ActionRowBuilder,
-  EmbedBuilder,
-  ButtonStyle,
-} from "discord.js";
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
 import { getDiscordServer } from "../../functions/prisma/discord";
 import { upsertFaction } from "../../functions/prisma/faction";
 import {
@@ -33,7 +27,6 @@ export async function execute(interaction: any, client: any) {
   }
 
   const guildID = BigInt(interaction.guildId);
-  console.log(guildID, prisma);
   let server: any = await getDiscordServer(prisma, guildID);
 
   // validate if the key is not already in use on the server

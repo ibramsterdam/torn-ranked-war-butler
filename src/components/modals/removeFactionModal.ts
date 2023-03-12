@@ -1,18 +1,12 @@
 import { getDashboardButtons } from "../functions/getDashboardButtons";
 
-import {
-  ButtonBuilder,
-  ActionRowBuilder,
-  EmbedBuilder,
-  ButtonStyle,
-} from "discord.js";
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
 import { getDiscordServer } from "../../functions/prisma/discord";
 import { getFaction } from "../../functions/prisma/faction";
 import {
   getConnectedFactionsOnDiscordServer,
   getConnectionBetweenFactionAndDiscordServer,
   deleteConnectionBetweenFactionAndDiscordServer,
-  getDiscordChannelFromFactionAndDiscordServer,
 } from "../../functions/prisma/factionsOnDiscordServer";
 import { getFactionsEmbed } from "../functions/factionsEmbed";
 import { deleteChannel } from "../../functions/prisma/discordChannel";
