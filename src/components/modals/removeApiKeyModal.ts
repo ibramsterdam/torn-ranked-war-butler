@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 const { getUser } = require("../../functions/prisma/user");
 

@@ -1,8 +1,9 @@
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} id
- */
-async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, id) {
+import { Prisma, PrismaClient } from "@prisma/client";
+
+export async function getUsersThatSharedTheirApiKeyOnDiscordServer(
+  prisma: PrismaClient,
+  id: number
+) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {
@@ -24,13 +25,12 @@ async function getUsersThatSharedTheirApiKeyOnDiscordServer(prisma, id) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {String} key
- *  @param {Number} serverId
- *  @param {Number} userId
- */
-async function createApiKey(prisma, key, serverId, userId) {
+export async function createApiKey(
+  prisma: PrismaClient,
+  key: string,
+  serverId: number,
+  userId: number
+) {
   try {
     const result = await prisma.apiKey.create({
       data: {
@@ -45,11 +45,10 @@ async function createApiKey(prisma, key, serverId, userId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} id
- */
-async function getFirstConnectedApiKeyDiscordServer(prisma, id) {
+export async function getFirstConnectedApiKeyDiscordServer(
+  prisma: PrismaClient,
+  id: number
+) {
   try {
     const result = await prisma.apiKey.findFirst({
       where: {
@@ -64,13 +63,8 @@ async function getFirstConnectedApiKeyDiscordServer(prisma, id) {
     console.log("error", error);
   }
 }
-const { PrismaClient } = require("@prisma/client");
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {String} userId
- */
-async function getApiKeyFromUser(prisma, userId) {
+export async function getApiKeyFromUser(prisma: PrismaClient, userId: number) {
   try {
     const result = await prisma.apiKey.findUnique({
       where: {
@@ -83,11 +77,7 @@ async function getApiKeyFromUser(prisma, userId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} userId
- */
-async function deleteApiKeyOfUser(prisma, userId) {
+export async function deleteApiKeyOfUser(prisma: PrismaClient, userId: number) {
   try {
     const result = await prisma.apiKey.delete({
       where: {
@@ -100,11 +90,10 @@ async function deleteApiKeyOfUser(prisma, userId) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- *  @param {Number} id
- */
-async function getApiKeysThatAreUsedOnDiscordServer(prisma, id) {
+export async function getApiKeysThatAreUsedOnDiscordServer(
+  prisma: PrismaClient,
+  id: number
+) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {
@@ -128,11 +117,7 @@ async function getApiKeysThatAreUsedOnDiscordServer(prisma, id) {
   }
 }
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {String} key
- */
-async function getApiKeyByValue(prisma, key) {
+export async function getApiKeyByValue(prisma: PrismaClient, key: string) {
   try {
     const result = await prisma.apiKey.findUnique({
       where: {
@@ -145,10 +130,8 @@ async function getApiKeyByValue(prisma, key) {
     console.log("error", error);
   }
 }
-/**
- *  @param {PrismaClient} prisma
- */
-export async function getBrainSurgeonApiKeys(prisma) {
+
+export async function getBrainSurgeonApiKeys(prisma: PrismaClient) {
   try {
     const result = await prisma.apiKey.findMany({
       where: {
@@ -162,10 +145,7 @@ export async function getBrainSurgeonApiKeys(prisma) {
   }
 }
 
-/**
- *  @param {PrismaClient} prisma
- */
-async function getAllApiKeys(prisma) {
+export async function getAllApiKeys(prisma: PrismaClient) {
   try {
     const result = await prisma.apiKey.findMany({
       select: {
@@ -178,15 +158,3 @@ async function getAllApiKeys(prisma) {
     console.log("error", error);
   }
 }
-
-module.exports = {
-  getUsersThatSharedTheirApiKeyOnDiscordServer,
-  createApiKey,
-  getFirstConnectedApiKeyDiscordServer,
-  getApiKeyFromUser,
-  deleteApiKeyOfUser,
-  getApiKeysThatAreUsedOnDiscordServer,
-  getApiKeyByValue,
-  getAllApiKeys,
-  getBrainSurgeonApiKeys,
-};

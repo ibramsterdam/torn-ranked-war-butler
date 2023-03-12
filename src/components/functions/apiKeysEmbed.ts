@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 const { EmbedBuilder } = require("discord.js");
 async function getApiKeysEmbed(users) {
   const embed = new EmbedBuilder()

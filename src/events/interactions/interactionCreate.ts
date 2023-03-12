@@ -1,16 +1,14 @@
-const {
+// @ts-nocheck
+
+import {
   ChatInputCommandInteraction,
   Client,
   InteractionType,
-} = require("discord.js");
+} from "discord.js";
 
 module.exports = {
   name: "interactionCreate",
-  /**
-   *  @param {ChatInputCommandInteraction} interaction
-   *  @param {Client} client
-   */
-  async execute(interaction, client) {
+  async execute(interaction: ChatInputCommandInteraction, client: Client) {
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) {

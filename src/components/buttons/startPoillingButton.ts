@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 const { getDiscordServer } = require("../../functions/prisma/discord");
 const {
   generateMessages,

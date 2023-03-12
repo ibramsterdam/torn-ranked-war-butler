@@ -3,7 +3,7 @@ import { getUserFromTornApiById } from "../util/tornApiUtil";
 import { getBrainSurgeonApiKeys } from "./prisma/apiKey";
 import { updateUserPersonalStats } from "./prisma/user";
 
-const updateUsers = async (users) => {
+export const updateUsers = async (users: any) => {
   const startTime = performance.now();
   const prisma = require("../index");
 
@@ -15,7 +15,7 @@ const updateUsers = async (users) => {
       console.log(`Updated ${index} / ${users.length} users`);
     const randomApiKeyObject = getRandomItemFromArray(keys);
 
-    const latestUserInfo = await getUserFromTornApiById(
+    const latestUserInfo: any = await getUserFromTornApiById(
       randomApiKeyObject.value,
       user.id
     );
@@ -43,6 +43,4 @@ const updateUsers = async (users) => {
   updateUsers(users);
 };
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-module.exports = { updateUsers };
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));

@@ -1,25 +1,28 @@
-const { getDashboardButtons } = require("../functions/getDashboardButtons");
+// @ts-nocheck
+//TODO investigate this file
 
-const {
+import { getDashboardButtons } from "../functions/getDashboardButtons";
+import {
   ButtonBuilder,
   ActionRowBuilder,
   EmbedBuilder,
+  // @ts-ignore
   ButtonStyle,
-} = require("discord.js");
-const { getDiscordServer } = require("../../functions/prisma/discord");
-const { getFaction } = require("../../functions/prisma/faction");
-const {
+} from "discord.js";
+import { getDiscordServer } from "../../functions/prisma/discord";
+import { getFaction } from "../../functions/prisma/faction";
+import {
   getConnectedFactionsOnDiscordServer,
   getConnectionBetweenFactionAndDiscordServer,
   deleteConnectionBetweenFactionAndDiscordServer,
   getDiscordChannelFromFactionAndDiscordServer,
-} = require("../../functions/prisma/factionsOnDiscordServer");
-const { getFactionsEmbed } = require("../functions/factionsEmbed");
-const { deleteChannel } = require("../../functions/prisma/discordChannel");
+} from "../../functions/prisma/factionsOnDiscordServer";
+import { getFactionsEmbed } from "../functions/factionsEmbed";
+import { deleteChannel } from "../../functions/prisma/discordChannel";
 
 module.exports = {
   data: { name: "remove-faction-modal" },
-  async execute(interaction, client) {
+  async execute(interaction: any, client: any) {
     await interaction.deferReply();
     const factionId = interaction.fields.getTextInputValue(
       "remove-faction-text-input"
@@ -38,7 +41,9 @@ module.exports = {
     const faction = await getFaction(prisma, Number(factionId));
     const connection = await getConnectionBetweenFactionAndDiscordServer(
       prisma,
+      // @ts-ignore
       server.id,
+      // @ts-ignore
       faction.id
     );
 
@@ -50,7 +55,9 @@ module.exports = {
     const deletedConnection =
       await deleteConnectionBetweenFactionAndDiscordServer(
         prisma,
+        // @ts-ignore
         server.id,
+        // @ts-ignore
         faction.id
       );
     await deleteChannel(prisma, connection.discordChannelId);
@@ -58,12 +65,12 @@ module.exports = {
     const channelList = await interaction.guild.channels.fetch();
     if (
       channelList.find(
-        (channel) =>
-          channel.id === deletedConnection.discordChannelId.toString()
+        (channel: any) =>
+          channel.id === deletedConnection?.discordChannelId.toString()
       )
     ) {
       await interaction.guild.channels.delete(
-        deletedConnection.discordChannelId.toString()
+        deletedConnection?.discordChannelId.toString()
       );
     }
 

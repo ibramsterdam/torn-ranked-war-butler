@@ -1,4 +1,10 @@
-import { Client, Collection, GatewayIntentBits, Partials } from "discord.js";
+import {
+  Client,
+  Collection,
+  //@ts-ignore
+  GatewayIntentBits,
+  Partials,
+} from "discord.js";
 import { PrismaClient } from "@prisma/client";
 const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
@@ -19,9 +25,8 @@ client.buttons = new Collection();
 client.selectMenus = new Collection();
 client.modals = new Collection();
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 handleEvents(client);
 handleComponent(client);
 
 client.login(client.config.token);
-module.exports = prisma;

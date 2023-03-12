@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 const { getRandomItemFromArray } = require("../../../util/randomItemFromArray");
 const { getFactionFromTornApi } = require("../../../util/tornApiUtil");
 const { sendHospitalStatusEmbed } = require("./hospitalStatusEmbed");

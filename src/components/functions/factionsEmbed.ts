@@ -1,5 +1,5 @@
-const { EmbedBuilder } = require("discord.js");
-async function getFactionsEmbed(factions) {
+import { EmbedBuilder } from "discord.js";
+export async function getFactionsEmbed(factions: any) {
   const embed = new EmbedBuilder()
     .setColor("DarkAqua")
     .setTitle("Manage Factions")
@@ -21,7 +21,7 @@ async function getFactionsEmbed(factions) {
       }
     );
 
-  factions.forEach((object) => {
+  factions.forEach((object: any) => {
     embed.addFields({
       name: `${object.faction.name} [${object.faction.id}]`,
       value: `Profile: [Click here!](https://www.torn.com/factions.php?step=profile&ID=${object.faction.id})`,
@@ -30,5 +30,3 @@ async function getFactionsEmbed(factions) {
 
   return embed;
 }
-
-module.exports = { getFactionsEmbed };

@@ -1,20 +1,16 @@
-const { ActivityType, Client } = require("discord.js");
-const prisma = require("../..");
-const { handleCommands } = require("../../functions/handlers/commandHandler");
-const {
-  getAllUsers,
-  getAllUsersThatAreTrackedOnAServer,
-} = require("../../functions/prisma/user");
-const { updateUsers } = require("../../functions/updateUsers");
+// @ts-nocheck
+
+import { ActivityType, Client } from "discord.js";
+import prisma from "../../index";
+import { handleCommands } from "../../functions/handlers/commandHandler";
+import { getAllUsersThatAreTrackedOnAServer } from "../../functions/prisma/user";
+import { updateUsers } from "../../functions/updateUsers";
 require("dotenv").config();
 
 module.exports = {
   name: "ready",
   once: true,
-  /**
-   *  @param {Client} client
-   */
-  async execute(client) {
+  async execute(client: CLient) {
     client.user.setActivity(
       `Torn with ${client.guilds.cache.size + 1} torn guilds`,
       {

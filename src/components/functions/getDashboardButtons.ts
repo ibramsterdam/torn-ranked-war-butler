@@ -1,10 +1,11 @@
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+// @ts-ignore
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
 
-async function getDashboardButtons(
-  menuType,
-  isNotWhitelisted,
-  hasNoApiKey,
-  hasNoFactions
+export async function getDashboardButtons(
+  menuType: any,
+  isNotWhitelisted: boolean,
+  hasNoApiKey: boolean,
+  hasNoFactions: boolean
 ) {
   return new ActionRowBuilder().addComponents(
     new ButtonBuilder()
@@ -26,5 +27,3 @@ async function getDashboardButtons(
       .setDisabled(hasNoFactions || isNotWhitelisted)
   );
 }
-
-module.exports = { getDashboardButtons };

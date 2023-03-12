@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 const { getFactionFromTornApi } = require("../../util/tornApiUtil");
 const { getDashboardButtons } = require("../functions/getDashboardButtons");
 

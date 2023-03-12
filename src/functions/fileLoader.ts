@@ -1,14 +1,12 @@
-const { glob } = require("glob");
+import { glob } from "glob";
 const { promisify } = require("util");
 const proGlob = promisify(glob);
 
-async function loadFiles(dirName) {
+export async function loadFiles(dirName: string) {
   const Files = await proGlob(
     `${process.cwd().replace(/\\/g, "/")}/src/${dirName}/**/*.js`
   );
 
-  Files.forEach((file) => delete require.cache[require.resolve(file)]);
+  Files.forEach((file: any) => delete require.cache[require.resolve(file)]);
   return Files;
 }
-
-module.exports = { loadFiles };

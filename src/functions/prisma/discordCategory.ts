@@ -1,15 +1,10 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-/**
- *  @param {PrismaClient} prisma
- *  @param {BigInt} categoryId
- *  @param {String} categoryName
- */
-async function createDiscordCategory(
-  prisma,
-  categoryId,
-  categoryName,
-  serverId
+export async function createDiscordCategory(
+  prisma: PrismaClient,
+  categoryId: number,
+  categoryName: string,
+  serverId: number
 ) {
   try {
     const result = await prisma.discordCategory.create({
@@ -25,7 +20,3 @@ async function createDiscordCategory(
     console.log("error", error);
   }
 }
-
-module.exports = {
-  createDiscordCategory,
-};

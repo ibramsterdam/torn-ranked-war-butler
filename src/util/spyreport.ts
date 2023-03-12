@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 const { PrismaClient } = require("@prisma/client");
 const fs = require("fs");
 const csv = require("csv-parser");

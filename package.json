@@ -2,11 +2,11 @@
   "name": "rankedwarbutler",
   "version": "1.0.0",
   "description": "Torn Discord bot that assists in ranked wars",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js"
+    "start": "ts-node ./src/index.ts",
+    "dev": "nodemon ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/ibramsterdam/torn-ranked-war-butler#readme",
   "dependencies": {
     "@prisma/client": "^4.10.1",
+    "@types/glob": "^8.1.0",
     "ascii-table": "^0.0.9",
     "axios": "^1.2.3",
     "csv-parser": "^3.0.0",

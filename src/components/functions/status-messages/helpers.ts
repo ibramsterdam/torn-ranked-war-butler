@@ -1,3 +1,6 @@
+// @ts-nocheck
+//TODO investigate this file
+
 function roundBigNum(num) {
   const value = Number(num);
   // Check if the number is greater than or equal to 1 billion
