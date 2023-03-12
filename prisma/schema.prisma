@@ -79,7 +79,7 @@ model DiscordCategory {
   id              BigInt           @id
   name            String
   discordChannel  DiscordChannel[]
-  discordServer   DiscordServer    @relation(fields: [discordServerId], references: [id])
+  discordServer   DiscordServer    @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
   discordServerId BigInt           @unique
 }
 
@@ -90,7 +90,7 @@ model DiscordChannel {
   discordCategory   DiscordCategory @relation(fields: [discordCategoryId], references: [id])
   discordCategoryId BigInt
 
-  DiscordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
+  DiscordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
   discordServerId BigInt
 
   faction   Faction? @relation(fields: [factionId], references: [id])
