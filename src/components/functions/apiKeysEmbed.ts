@@ -1,4 +1,5 @@
 import { EmbedBuilder } from "discord.js";
+
 export async function getApiKeysEmbed(users: any) {
   const embed = new EmbedBuilder()
     .setColor("Aqua")

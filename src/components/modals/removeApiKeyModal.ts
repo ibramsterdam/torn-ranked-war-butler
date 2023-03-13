@@ -10,7 +10,6 @@ import { getDiscordServer } from "../../functions/prisma/discord";
 import { getApiKeysEmbed } from "../functions/apiKeysEmbed";
 import { prisma } from "../../index";
 
-export const data = { name: "remove-api-key-modal" };
 export async function execute(interaction: any, client: any) {
   await interaction.deferReply();
   const tornIdOfUser = interaction.fields.getTextInputValue(
@@ -54,7 +53,7 @@ export async function execute(interaction: any, client: any) {
   const manageApiKeysButtons = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("dashboard-add-api-key")
-      .setLabel("Set Api Key")
+      .setLabel("Add Api Key")
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(server.apiKeys.length >= server.apiKeyAmount),
     new ButtonBuilder()
@@ -72,3 +71,6 @@ export async function execute(interaction: any, client: any) {
     components: [buttons, manageApiKeysButtons],
   });
 }
+
+export const data = { name: "remove-api-key-modal" };
+export const developer = false;

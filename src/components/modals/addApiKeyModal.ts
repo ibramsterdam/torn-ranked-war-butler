@@ -15,7 +15,6 @@ import {
 import { getApiKeysEmbed } from "../functions/apiKeysEmbed";
 import { prisma } from "../../index";
 
-export const data = { name: "add-api-key-modal" };
 export async function execute(interaction: any, client: any) {
   await interaction.deferReply();
   const apiKey = interaction.fields.getTextInputValue("add-api-key-text-input");
@@ -101,3 +100,6 @@ export async function execute(interaction: any, client: any) {
     components: [buttons, manageApiKeysButtons],
   });
 }
+
+export const data = { name: "add-api-key-modal" };
+export const developer = false;

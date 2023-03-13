@@ -1,5 +1,4 @@
 import { getDashboardButtons } from "../functions/getDashboardButtons";
-
 import { ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
 import { getDiscordServer } from "../../functions/prisma/discord";
 import { getFaction } from "../../functions/prisma/faction";
@@ -11,7 +10,7 @@ import {
 import { getFactionsEmbed } from "../functions/factionsEmbed";
 import { deleteChannel } from "../../functions/prisma/discordChannel";
 import { prisma } from "../../index";
-export const data = { name: "remove-faction-modal" };
+
 export async function execute(interaction: any, client: any) {
   await interaction.deferReply();
   const factionId = interaction.fields.getTextInputValue(
@@ -97,3 +96,6 @@ export async function execute(interaction: any, client: any) {
     components: [buttons, manageApiKeysButtons],
   });
 }
+
+export const data = { name: "remove-faction-modal" };
+export const developer = false;

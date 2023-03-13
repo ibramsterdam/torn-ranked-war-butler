@@ -1,6 +1,5 @@
 import { getFactionFromTornApi } from "../../util/tornApiUtil";
 import { getDashboardButtons } from "../functions/getDashboardButtons";
-
 import {
   ButtonBuilder,
   ActionRowBuilder,
@@ -25,7 +24,6 @@ import {
 } from "../../util/urlShortenerUtil";
 import { prisma } from "../../index";
 
-export const data = { name: "add-faction-modal" };
 export async function execute(interaction: any, client: any) {
   //Reply to the discord client
   interaction.message.delete();
@@ -156,3 +154,6 @@ export async function execute(interaction: any, client: any) {
     components: [buttons, manageApiKeysButtons],
   });
 }
+
+export const data = { name: "add-faction-modal" };
+export const developer = false;

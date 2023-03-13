@@ -1,9 +1,4 @@
-import {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-} from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { getUsersThatSharedTheirApiKeyOnDiscordServer } from "../../functions/prisma/apiKey";
 import { getDiscordServer } from "../../functions/prisma/discord";
 import { getApiKeysEmbed } from "../functions/apiKeysEmbed";
@@ -49,5 +44,5 @@ export async function execute(interaction: any, client: any) {
   });
 }
 
-export const developer = false;
 export const data = { name: "dashboard-manage-api-keys" };
+export const developer = false;

@@ -5,7 +5,6 @@ import {
   TextInputStyle,
 } from "discord.js";
 
-export const data = { name: "dashboard-add-api-key" };
 export async function execute(interaction: any, client: any) {
   const modal: any = new ModalBuilder()
     .setCustomId("add-api-key-modal")
@@ -22,3 +21,6 @@ export async function execute(interaction: any, client: any) {
   modal.addComponents(new ActionRowBuilder().addComponents(textInput));
   await interaction.showModal(modal);
 }
+
+export const data = { name: "dashboard-add-api-key" };
+export const developer = false;

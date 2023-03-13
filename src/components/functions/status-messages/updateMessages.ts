@@ -4,7 +4,6 @@ import { sendHospitalStatusEmbed } from "./hospitalStatusEmbed";
 import { sendTravelStatusEmbed } from "./travelStatusEmbed";
 import { sendAttackStatusEmbed } from "./attackStatusEmbed";
 import {
-  upsertUser,
   getUsersByFactionId,
   updateUser,
 } from "../../../functions/prisma/user";

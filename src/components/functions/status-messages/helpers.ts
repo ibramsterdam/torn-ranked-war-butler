@@ -17,6 +17,7 @@ export function roundBigNum(num: any) {
     return value.toString();
   }
 }
+
 export function generateAttackMessageList(list: any) {
   let messageList: any = [];
   list.forEach((member: any, index: number) => {

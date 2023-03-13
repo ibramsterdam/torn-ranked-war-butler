@@ -81,7 +81,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     })
     .setTimestamp();
 
-  const buttons = await getDashboardButtons(
+  const buttons: any = await getDashboardButtons(
     "noMenuType",
     !server.isWhitelisted,
     server.apiKeys.length === 0,

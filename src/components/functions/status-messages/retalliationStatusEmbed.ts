@@ -77,5 +77,3 @@ export async function sendRetalliationStatusEmbed(
 
   return [response];
 }
-
-module.exports = { sendRetalliationStatusEmbed };

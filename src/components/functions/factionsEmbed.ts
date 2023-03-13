@@ -1,4 +1,5 @@
 import { EmbedBuilder } from "discord.js";
+
 export async function getFactionsEmbed(factions: any) {
   const embed = new EmbedBuilder()
     .setColor("DarkAqua")

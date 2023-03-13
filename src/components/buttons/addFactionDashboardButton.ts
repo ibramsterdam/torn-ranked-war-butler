@@ -21,5 +21,5 @@ export async function execute(interaction: any, client: any) {
   await interaction.showModal(modal);
 }
 
-export const developer = false;
 export const data = { name: "dashboard-add-faction" };
+export const developer = false;
