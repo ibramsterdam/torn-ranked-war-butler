@@ -1,44 +1,33 @@
-// @ts-nocheck
-//TODO investigate this file
-const { ActivityType, Client } = require("discord.js");
-// const prisma = require("../../index");
-const { handleCommands } = require("../../functions/handlers/commandHandler");
-const {
+import { ActivityType, Client } from "discord.js";
+import { handleCommands } from "../../functions/handlers/commandHandler";
+import {
   getAllUsers,
   getAllUsersThatAreTrackedOnAServer,
-} = require("../../functions/prisma/user");
-const { updateUsers } = require("../../functions/updateUsers");
-require("dotenv").config();
+} from "../../functions/prisma/user";
+import { updateUsers } from "../../functions/updateUsers";
+import { prisma } from "../../index";
 
-const { PrismaClient } = require("@prisma/client");
+export async function execute(client: any) {
+  client.user.setActivity(
+    `Torn with ${client.guilds.cache.size + 1} torn guilds`,
+    {
+      type: ActivityType.Playing,
+    }
+  );
 
-const prisma = new PrismaClient();
+  const users = await getAllUsersThatAreTrackedOnAServer(prisma);
+  const userParts = splitArrayIntoParts(users, 1);
+  // userParts.forEach((part) => updateUsers(part));
 
-module.exports = {
-  name: "ready",
-  once: true,
-  /**
-   *  @param {Client} client
-   */
-  async execute(client) {
-    client.user.setActivity(
-      `Torn with ${client.guilds.cache.size + 1} torn guilds`,
-      {
-        type: ActivityType.Playing,
-      }
-    );
+  handleCommands(client).then(() => {
+    console.log("\nThe bot has booted up!");
+  });
+}
 
-    const users = await getAllUsersThatAreTrackedOnAServer(prisma);
-    const userParts = splitArrayIntoParts(users, 1);
-    // userParts.forEach((part) => updateUsers(part));
+export const name = "ready";
+export const once = true;
 
-    handleCommands(client).then(() => {
-      console.log("\nThe bot has booted up!");
-    });
-  },
-};
-
-function splitArrayIntoParts(arr, numParts) {
+function splitArrayIntoParts(arr: any, numParts: any) {
   const len = arr.length;
   const partSize = Math.ceil(len / numParts);
 

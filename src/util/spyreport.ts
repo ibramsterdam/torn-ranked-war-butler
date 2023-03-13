@@ -1,16 +1,14 @@
-// @ts-nocheck
-//TODO investigate this file
-
-const { PrismaClient } = require("@prisma/client");
-const fs = require("fs");
-const csv = require("csv-parser");
-const { getRandomItemFromArray } = require("./randomItemFromArray");
-const { getBrainSurgeonApiKeys } = require("../functions/prisma/apiKey");
-const { getUserFromTornApiById } = require("./tornApiUtil");
-const {
+import { PrismaClient } from "@prisma/client";
+import fs from "fs";
+import { getRandomItemFromArray } from "./randomItemFromArray";
+import csv from "csv-parser";
+import { getBrainSurgeonApiKeys } from "../functions/prisma/apiKey";
+import { getUserFromTornApiById } from "./tornApiUtil";
+import {
   getShortUrlAttackLink,
   getShortUrlProfileLink,
-} = require("./urlShortenerUtil");
+} from "./urlShortenerUtil";
+
 const csvFilePath = "/Users/bram/Developer/torn-ranked-war-butler/spies.csv";
 
 /**
@@ -22,7 +20,7 @@ const csvFilePath = "/Users/bram/Developer/torn-ranked-war-butler/spies.csv";
 query();
 
 async function query() {
-  const dataArray = [];
+  const dataArray: any = [];
 
   fs.createReadStream(csvFilePath)
     .pipe(csv())
@@ -35,9 +33,9 @@ async function query() {
       console.log("CSV file successfully processed");
     });
 }
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-async function updateUser(list) {
+async function updateUser(list: any) {
   const prisma = require("../index");
   const keys = await getBrainSurgeonApiKeys(prisma);
   let count = 0;
@@ -46,15 +44,15 @@ async function updateUser(list) {
 
     try {
       const randomApiKeyObject = getRandomItemFromArray(keys);
-      const id = getNumber(user.Name);
+      const id: any = getNumber(user.Name);
       const [day, month, year] = user["Last Update"].split("/").map(Number); // Split the date string into an array of day, month and year values
       const date = new Date(year + 2000, month - 1, day); // Create a new Date object using the year, month and day values
-      const userFromTorn = await getUserFromTornApiById(
+      const userFromTorn: any = await getUserFromTornApiById(
         randomApiKeyObject.value,
         id
       );
-      const attackLink = await getShortUrlAttackLink(id);
-      const profileLink = await getShortUrlProfileLink(id);
+      const attackLink: any = await getShortUrlAttackLink(id);
+      const profileLink: any = await getShortUrlProfileLink(id);
 
       // upserting the faction
       await prisma.faction.upsert({
@@ -113,7 +111,7 @@ async function updateUser(list) {
   }
 }
 
-function getNumber(str) {
+function getNumber(str: any) {
   const match = str.match(/\[(\d+)\]/);
   if (match) {
     return parseInt(match[1]);

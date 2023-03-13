@@ -1,80 +1,69 @@
-// @ts-nocheck
-//TODO investigate this file
-const {
-  ChatInputCommandInteraction,
-  Client,
-  InteractionType,
-} = require("discord.js");
+import { InteractionType } from "discord.js";
 
-module.exports = {
-  name: "interactionCreate",
-  /**
-   *  @param {ChatInputCommandInteraction} interaction
-   *  @param {Client} client
-   */
-  async execute(interaction, client) {
-    if (interaction.isChatInputCommand()) {
-      const command = client.commands.get(interaction.commandName);
-      if (!command) {
-        return interaction.reply({
-          content: "This command is outdated.",
-          ephemeral: true,
-        });
-      }
-      if (command.developer && interaction.user.id !== "125402917678219264")
-        return interaction.reply({
-          content: "This command is only available to the developer",
-          ephemeral: true,
-        });
-
-      command.execute(interaction, client);
+export async function execute(interaction: any, client: any) {
+  if (interaction.isChatInputCommand()) {
+    const command = client.commands.get(interaction.commandName);
+    if (!command) {
+      return interaction.reply({
+        content: "This command is outdated.",
+        ephemeral: true,
+      });
     }
+    if (command.developer && interaction.user.id !== "125402917678219264")
+      return interaction.reply({
+        content: "This command is only available to the developer",
+        ephemeral: true,
+      });
 
-    if (interaction.isButton()) {
-      const { buttons } = client;
-      const { customId } = interaction;
-      const button = buttons.get(customId);
+    command.execute(interaction, client);
+  }
 
-      if (button.developer && interaction.user.id !== "125402917678219264")
-        return interaction.reply({
-          content:
-            "This command is under development and thus only available to the developer",
-          ephemeral: true,
-        });
+  if (interaction.isButton()) {
+    const { buttons } = client;
+    const { customId } = interaction;
+    const button = buttons.get(customId);
 
-      if (!button) return new Error("There is no code for this button");
+    if (button.developer && interaction.user.id !== "125402917678219264")
+      return interaction.reply({
+        content:
+          "This command is under development and thus only available to the developer",
+        ephemeral: true,
+      });
 
-      try {
-        await button.execute(interaction, client);
-      } catch (err) {
-        console.error(err);
-      }
+    if (!button) return new Error("There is no code for this button");
+
+    try {
+      await button.execute(interaction, client);
+    } catch (err) {
+      console.error(err);
     }
-    if (interaction.isStringSelectMenu()) {
-      const { selectMenus } = client;
-      const { customId } = interaction;
-      const menu = selectMenus.get(customId);
+  }
+  if (interaction.isStringSelectMenu()) {
+    const { selectMenus } = client;
+    const { customId } = interaction;
+    const menu = selectMenus.get(customId);
 
-      if (!menu) return new Error("There is no code for this menu");
+    if (!menu) return new Error("There is no code for this menu");
 
-      try {
-        await menu.execute(interaction, client);
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      await menu.execute(interaction, client);
+    } catch (err) {
+      console.error(err);
     }
-    if (interaction.type == InteractionType.ModalSubmit) {
-      const { modals } = client;
-      const { customId } = interaction;
-      const modal = modals.get(customId);
+  }
+  if (interaction.type == InteractionType.ModalSubmit) {
+    const { modals } = client;
+    const { customId } = interaction;
+    const modal = modals.get(customId);
 
-      if (!modal) return new Error("There is no code for this modal");
+    if (!modal) return new Error("There is no code for this modal");
 
-      try {
-        await modal.execute(interaction, client);
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      await modal.execute(interaction, client);
+    } catch (err) {
+      console.error(err);
     }
-  },
-};
+  }
+}
+
+export const name = "interactionCreate";
