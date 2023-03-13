@@ -14,10 +14,6 @@ import { createDiscordCategory } from "../functions/prisma/discordCategory";
 import { createDiscordChannel } from "../functions/prisma/discordChannel";
 import { prisma } from "../index";
 
-export const developer = true;
-export const data = new SlashCommandBuilder()
-  .setName("setup")
-  .setDescription("Create the space for the butler to work in");
 export async function execute(interaction: any, client: any) {
   await interaction.deferReply();
   const guildID = BigInt(interaction.guildId);
@@ -97,3 +93,8 @@ export async function execute(interaction: any, client: any) {
 
   return interaction.followUp("Setup Successfull");
 }
+
+export const developer = true;
+export const data = new SlashCommandBuilder()
+  .setName("setup")
+  .setDescription("Create the space for the butler to work in");

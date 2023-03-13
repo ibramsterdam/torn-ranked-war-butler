@@ -67,3 +67,4 @@ export async function execute(interaction: any, client: any) {
 }
 
 export const name = "interactionCreate";
+export const once = false;
