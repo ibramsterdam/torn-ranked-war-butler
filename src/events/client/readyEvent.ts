@@ -16,8 +16,8 @@ export async function execute(client: any) {
   );
 
   const users = await getAllUsersThatAreTrackedOnAServer(prisma);
-  const userParts = splitArrayIntoParts(users, 1);
-  // userParts.forEach((part) => updateUsers(part));
+  const userParts = splitArrayIntoParts(users, 3);
+  userParts.forEach((part) => updateUsers(part));
 
   handleCommands(client).then(() => {
     console.log("\nThe bot has booted up!");
