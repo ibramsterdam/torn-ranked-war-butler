@@ -14,7 +14,12 @@ import { createDiscordCategory } from "../functions/prisma/discordCategory";
 import { createDiscordChannel } from "../functions/prisma/discordChannel";
 import { prisma } from "../index";
 
-export async function execute(interaction: any, client: any) {
+export async function execute(interaction: CommandInteraction, client: Client) {
+  if (!interaction.guildId || !interaction.guild) {
+    console.log("Error in setup because guild or guildID is missing");
+    return;
+  }
+
   await interaction.deferReply();
   const guildID = BigInt(interaction.guildId);
 
@@ -38,12 +43,17 @@ export async function execute(interaction: any, client: any) {
   });
 
   // create in db
-  await createDiscordCategory(prisma, category.id, category.name, server.id);
+  await createDiscordCategory(
+    prisma,
+    Number(category.id),
+    category.name,
+    server.id
+  );
   await createDiscordChannel(
     prisma,
-    channel.id,
+    Number(channel.id),
     channel.name,
-    category.id,
+    Number(category.id),
     server.id
   );
 
@@ -85,7 +95,6 @@ export async function execute(interaction: any, client: any) {
     server.factions.length === 0
   );
 
-  //Reply to the discord client
   await channel.send({
     embeds: [embeds],
     components: [buttons],

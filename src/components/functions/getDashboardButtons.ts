@@ -1,4 +1,10 @@
-import { ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  APIActionRowComponent,
+  APIMessageActionRowComponent,
+} from "discord.js";
 
 export async function getDashboardButtons(
   menuType: any,
@@ -24,5 +30,5 @@ export async function getDashboardButtons(
       .setLabel("Get me that faction info!")
       .setStyle(ButtonStyle.Danger)
       .setDisabled(hasNoFactions || isNotWhitelisted)
-  );
+  ) as any;
 }

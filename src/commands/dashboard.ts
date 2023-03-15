@@ -3,6 +3,11 @@ import {
   CommandInteraction,
   Client,
   EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  APIActionRowComponent,
+  APIMessageActionRowComponent,
+  TextChannel,
 } from "discord.js";
 
 import { getDashboardButtons } from "../components/functions/getDashboardButtons";
@@ -46,8 +51,8 @@ export async function execute(interaction: CommandInteraction, client: Client) {
   const messages = await interaction.channel.messages.fetch();
   const key = messages.entries().next().value[0];
   messages.delete(key);
-  // @ts-ignore
-  interaction.channel.bulkDelete(messages);
+
+  (interaction.channel as TextChannel).bulkDelete(messages);
 
   const embeds = new EmbedBuilder()
     .setTitle("Ranked War Butler")
@@ -81,16 +86,16 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     })
     .setTimestamp();
 
-  const buttons: any = await getDashboardButtons(
+  const buttons = await getDashboardButtons(
     "noMenuType",
     !server.isWhitelisted,
     server.apiKeys.length === 0,
     server.factions.length === 0
   );
 
-  //Reply to the discord client
   return await interaction.followUp({
     embeds: [embeds],
+    // @ts-ignore
     components: [buttons],
   });
 }
