@@ -12,7 +12,6 @@ import { sendRetalliationStatusEmbed } from "./retalliationStatusEmbed";
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export async function updateMessages(
-  interaction: any,
   faction: any,
   server: any,
   prisma: any,
@@ -96,5 +95,5 @@ export async function updateMessages(
   }
   if (error) return console.log("Error and thus cancelling updates");
   await delay(10000);
-  updateMessages(interaction, faction, server, prisma, messageArray);
+  updateMessages(faction, server, prisma, messageArray);
 }

@@ -100,5 +100,5 @@ export async function generateMessages(
     }
   }
 
-  updateMessages(interaction, faction, server, prisma, messageArray);
+  updateMessages(faction, server, prisma, messageArray);
 }

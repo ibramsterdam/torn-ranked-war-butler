@@ -3,10 +3,14 @@ import {
   ActionRowBuilder,
   TextInputBuilder,
   TextInputStyle,
+  CommandInteraction,
+  Client,
+  APITextInputComponent,
+  APIActionRowComponent,
 } from "discord.js";
 
-export async function execute(interaction: any, client: any) {
-  const modal: any = new ModalBuilder()
+export async function execute(interaction: CommandInteraction, client: Client) {
+  const modal = new ModalBuilder()
     .setCustomId("add-api-key-modal")
     .setTitle("Paste your api key");
 
@@ -18,6 +22,7 @@ export async function execute(interaction: any, client: any) {
     .setMinLength(16)
     .setStyle(TextInputStyle.Short);
 
+  // @ts-ignore
   modal.addComponents(new ActionRowBuilder().addComponents(textInput));
   await interaction.showModal(modal);
 }

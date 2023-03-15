@@ -1,2 +1,3 @@
-export * as readyEvent from "./client/readyEvent";
-export * as interactionCreate from "./interactions/interactionCreate";
+export * as clientReady from "./clientReady";
+export * as updateUsers from "./updateUsers";
+export * as interactionCreate from "./interactionCreate";

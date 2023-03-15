@@ -9,7 +9,11 @@ export async function handleEvents(client: any) {
     client.events.set(event.name, execute);
 
     if (event.once) {
-      client.once(event.name, (...args: any) => event.execute(client));
+      if (event.now) {
+        event.execute();
+      } else {
+        client.once(event.name, (...args: any) => event.execute(client));
+      }
     } else {
       //@ts-ignore
       client.on(event.name, (...args: any) => event.execute(...args, client));
