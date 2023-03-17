@@ -67,7 +67,7 @@ model ApiKey {
   accessLevel     String        @default("Public")
   user            User          @relation(fields: [userId], references: [id])
   userId          Int           @unique
-  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
+  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
   discordServerId BigInt
   brainSurgeonKey Boolean       @default(false)
 
@@ -109,7 +109,7 @@ model Faction {
 }
 
 model FactionsOnDiscordServer {
-  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id])
+  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
   discordServerId BigInt
   faction         Faction?      @relation(fields: [factionId], references: [id])
   factionId       Int

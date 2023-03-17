@@ -4,13 +4,13 @@ export async function createFactionOnDiscordServerConnection(
   prisma: PrismaClient,
   serverId: number,
   factionId: number,
-  discordChannelId: number
+  discordChannelId: bigint
 ) {
   try {
     const result = await prisma.factionsOnDiscordServer.create({
       data: {
         discordServerId: BigInt(serverId),
-        discordChannelId: BigInt(discordChannelId),
+        discordChannelId: discordChannelId,
         factionId: factionId,
       },
     });

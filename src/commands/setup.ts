@@ -51,7 +51,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
   );
   await createDiscordChannel(
     prisma,
-    Number(channel.id),
+    BigInt(channel.id),
     channel.name,
     Number(category.id),
     server.id

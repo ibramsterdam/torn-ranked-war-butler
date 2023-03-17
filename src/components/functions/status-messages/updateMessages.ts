@@ -12,7 +12,7 @@ import { sendRetalliationStatusEmbed } from "./retalliationStatusEmbed";
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export async function updateMessages(
-  faction: any,
+  factionId: number,
   server: any,
   prisma: any,
   oldMessages: any
@@ -22,7 +22,7 @@ export async function updateMessages(
 
   // fetch faction information
   let results: any = await getFactionFromTornApi(
-    faction.factionId,
+    factionId,
     randomApiKeyObject.value
   );
 
@@ -34,25 +34,22 @@ export async function updateMessages(
     console.log("Retrying...");
     await delay(2000);
     randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
-    results = await getFactionFromTornApi(
-      faction.factionId,
-      randomApiKeyObject.value
-    );
+    results = await getFactionFromTornApi(factionId, randomApiKeyObject.value);
   }
 
-  const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
+  const membersListOld = await getUsersByFactionId(prisma, factionId);
 
   for (let i = 0; i < Object.keys(results.data.members).length; i++) {
     await updateUser(
       prisma,
       Number(Object.keys(results.data.members)[i]),
       Object.values(Object.values(results.data.members))[i],
-      faction.factionId
+      factionId
     );
   }
 
-  const membersList = await getUsersByFactionId(prisma, faction.factionId);
-  const factionInfo = await getFaction(prisma, faction.factionId);
+  const membersList = await getUsersByFactionId(prisma, factionId);
+  const factionInfo = await getFaction(prisma, factionId);
 
   // Hosp status
   const hospResponses = await sendHospitalStatusEmbed(membersList, factionInfo);
@@ -87,13 +84,11 @@ export async function updateMessages(
       messageArray.push(message);
     } catch (err) {
       error = true;
-      console.log("Error in updateMessages");
-      console.log("Index error:", index);
-      // console.log("oldmessagesArr", oldMessages);
     }
     index++;
   }
-  if (error) return console.log("Error and thus cancelling updates");
+  if (error)
+    return console.log("Error in updateMessages and thus cancelling updates");
   await delay(10000);
-  updateMessages(faction, server, prisma, messageArray);
+  updateMessages(factionId, server, prisma, messageArray);
 }

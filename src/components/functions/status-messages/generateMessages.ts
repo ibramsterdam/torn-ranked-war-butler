@@ -12,10 +12,11 @@ import { getFaction } from "../../../functions/prisma/faction";
 import { sendRetalliationStatusEmbed } from "./retalliationStatusEmbed";
 import { updateMessages } from "./updateMessages";
 import { PrismaClient } from "@prisma/client";
+import { TextChannel } from "discord.js";
 
 export async function generateMessages(
-  interaction: any,
-  faction: any,
+  channel: TextChannel,
+  factionId: number,
   server: any,
   prisma: PrismaClient
 ) {
@@ -24,7 +25,7 @@ export async function generateMessages(
 
   // fetch faction information
   const results: any = await getFactionFromTornApi(
-    faction.factionId,
+    factionId,
     randomApiKeyObject.value
   );
 
@@ -33,19 +34,19 @@ export async function generateMessages(
     return console.log(results.data.error);
   }
 
-  const membersListOld = await getUsersByFactionId(prisma, faction.factionId);
+  const membersListOld = await getUsersByFactionId(prisma, factionId);
 
   for (let i = 0; i < Object.keys(results.data.members).length; i++) {
     await updateUser(
       prisma,
       Number(Object.keys(results.data.members)[i]),
       Object.values(Object.values(results.data.members))[i],
-      faction.factionId
+      factionId
     );
   }
 
-  const membersList = await getUsersByFactionId(prisma, faction.factionId);
-  const factionInfo = await getFaction(prisma, faction.factionId);
+  const membersList = await getUsersByFactionId(prisma, factionId);
+  const factionInfo = await getFaction(prisma, factionId);
 
   // Hosp status
   const hospResponses = await sendHospitalStatusEmbed(membersList, factionInfo);
@@ -64,21 +65,15 @@ export async function generateMessages(
   // Revive status
   // const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
   // remove channel messages
-  const channel = await interaction.guild.channels.cache.get(
-    faction.discordChannelId.toString()
-  );
-
-  if (!channel) {
-    console.log(
-      "NO channel found that matches: ",
-      faction.discordChannelId.toString()
-    );
-    return;
-  }
 
   // delete all possible messages
   await channel.bulkDelete(100, true).then(() => {
-    console.log("Messages deleted");
+    console.log(
+      "Messages deleted from channel:",
+      channel.name,
+      " of guild: ",
+      channel.guild.name
+    );
   });
 
   let messageArray = [];
@@ -100,5 +95,5 @@ export async function generateMessages(
     }
   }
 
-  updateMessages(faction, server, prisma, messageArray);
+  updateMessages(factionId, server, prisma, messageArray);
 }

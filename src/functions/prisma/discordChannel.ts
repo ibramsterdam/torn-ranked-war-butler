@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 export async function createDiscordChannel(
   prisma: PrismaClient,
-  channelId: number,
+  channelId: bigint,
   channelName: string,
   categoryId: number,
   serverId: number
@@ -10,7 +10,7 @@ export async function createDiscordChannel(
   try {
     const result = await prisma.discordChannel.create({
       data: {
-        id: BigInt(channelId),
+        id: channelId,
         name: channelName,
         discordCategoryId: BigInt(categoryId),
         discordServerId: BigInt(serverId),

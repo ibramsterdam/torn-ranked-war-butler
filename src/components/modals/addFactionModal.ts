@@ -5,6 +5,7 @@ import {
   ActionRowBuilder,
   ButtonStyle,
   ChannelType,
+  ModalSubmitInteraction,
 } from "discord.js";
 import { getDiscordServer } from "../../functions/prisma/discord";
 import { upsertFaction } from "../../functions/prisma/faction";
@@ -23,8 +24,16 @@ import {
   getShortUrlProfileLink,
 } from "../../util/urlShortenerUtil";
 import { prisma } from "../../index";
+import { generateMessages } from "../functions/status-messages/generateMessages";
 
-export async function execute(interaction: any, client: any) {
+export async function execute(
+  interaction: ModalSubmitInteraction,
+  client: any
+) {
+  if (!interaction.message || !interaction.guildId || !interaction.guild) {
+    return;
+  }
+
   //Reply to the discord client
   interaction.message.delete();
   await interaction.deferReply();
@@ -51,7 +60,7 @@ export async function execute(interaction: any, client: any) {
 
   await interaction.editReply("Calling the torn api...");
   const result: any = await getFactionFromTornApi(
-    factionID,
+    Number(factionID),
     server.apiKeys[0].value
   );
 
@@ -60,11 +69,12 @@ export async function execute(interaction: any, client: any) {
   }
 
   await interaction.editReply("Updating the butler database...");
-  const faction: any = await upsertFaction(
-    prisma,
-    result.data.ID,
-    result.data.name
-  );
+  const faction = await upsertFaction(prisma, result.data.ID, result.data.name);
+
+  if (!faction) {
+    console.log("ERROR IN ADDFACTIONMODAL");
+    return;
+  }
 
   const memberList = Object.values(Object.values(result.data.members));
   const memberIdList = Object.keys(result.data.members);
@@ -103,7 +113,7 @@ export async function execute(interaction: any, client: any) {
 
   await createDiscordChannel(
     prisma,
-    channel.id,
+    BigInt(channel.id),
     channel.name,
     server.discordCategory.id,
     server.id
@@ -114,7 +124,7 @@ export async function execute(interaction: any, client: any) {
     prisma,
     server.id,
     faction.id,
-    channel.id
+    BigInt(channel.id)
   );
 
   const factions: any = await getConnectedFactionsOnDiscordServer(
@@ -146,13 +156,12 @@ export async function execute(interaction: any, client: any) {
   );
 
   await interaction.deleteReply();
-  //Reply to the discord client
-  // interaction.message.delete();
 
-  return await interaction.followUp({
+  await interaction.followUp({
     embeds: [embeds],
     components: [buttons, manageApiKeysButtons],
   });
+  return await generateMessages(channel, faction.id, server, prisma);
 }
 
 export const data = { name: "add-faction-modal" };
