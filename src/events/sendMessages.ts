@@ -14,16 +14,13 @@ export async function execute(client: Client) {
           prisma,
           BigInt(guild.id)
         );
+        const server = await getDiscordServer(prisma, BigInt(guild.id));
+
         if (trackedChannels) {
           for (const trackedChannel of trackedChannels) {
             guild.channels.cache.forEach(async (channel) => {
               if (trackedChannel.discordChannelId.toString() === channel.id) {
                 if (channel instanceof TextChannel && trackedChannel.faction) {
-                  const server = await getDiscordServer(
-                    prisma,
-                    BigInt(guild.id)
-                  );
-
                   if (server && server.apiKeys.length > 0) {
                     generateMessages(
                       channel,
