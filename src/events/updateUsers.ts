@@ -4,9 +4,12 @@ import { getRandomItemFromArray } from "../util/randomItemFromArray";
 import { getUserFromTornApiById } from "../util/tornApiUtil";
 import { getBrainSurgeonApiKeys } from "../functions/prisma/apiKey";
 import { updateUserPersonalStats } from "../functions/prisma/user";
+import { Client } from "discord.js";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-export async function execute() {
-  while (true) {
+export async function execute(client: Client) {
+  while (process.env.IS_PROD === "true") {
     const users = await getAllUsersThatAreTrackedOnAServer(prisma);
     const userParts = splitArrayIntoParts(users, 3);
 

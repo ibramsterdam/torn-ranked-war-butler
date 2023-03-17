@@ -23,7 +23,7 @@ export async function createFactionOnDiscordServerConnection(
 
 export async function getConnectedFactionsOnDiscordServer(
   prisma: PrismaClient,
-  discordServerId: number
+  discordServerId: bigint
 ) {
   try {
     const result = await prisma.factionsOnDiscordServer.findMany({
@@ -32,6 +32,8 @@ export async function getConnectedFactionsOnDiscordServer(
       },
       select: {
         faction: true,
+        discordChannelId: true,
+        discordServerId: true,
       },
     });
 

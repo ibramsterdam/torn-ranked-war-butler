@@ -42,3 +42,17 @@ export async function createDiscordServer(
     console.log("error", error);
   }
 }
+export async function getAllServers(prisma: PrismaClient) {
+  try {
+    const result = await prisma.discordServer.findMany({
+      include: {
+        discordChannel: true,
+      },
+    });
+
+    return result;
+  } catch (error) {
+    console.log("Failure: getAllServers");
+    console.log("error", error);
+  }
+}

@@ -10,7 +10,7 @@ export async function handleEvents(client: any) {
 
     if (event.once) {
       if (event.now) {
-        event.execute();
+        event.execute(client);
       } else {
         client.once(event.name, (...args: any) => event.execute(client));
       }
