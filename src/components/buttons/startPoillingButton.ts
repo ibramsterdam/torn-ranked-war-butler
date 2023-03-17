@@ -12,7 +12,10 @@ export async function execute(interaction: CommandInteraction, client: Client) {
   const guildID = BigInt(interaction.guildId);
   const server = await getDiscordServer(prisma, guildID);
 
-  if (!server || !server.factions) return;
+  if (!server || !server.factions || server.apiKeys.length === 0) {
+    console.log("Error in startpolling");
+    return;
+  }
 
   for (const faction of server.factions) {
     const channel = client.channels.cache

@@ -24,12 +24,14 @@ export async function execute(client: Client) {
                     BigInt(guild.id)
                   );
 
-                  generateMessages(
-                    channel,
-                    trackedChannel.faction?.id,
-                    server,
-                    prisma
-                  );
+                  if (server && server.apiKeys.length > 0) {
+                    generateMessages(
+                      channel,
+                      trackedChannel.faction.id,
+                      server,
+                      prisma
+                    );
+                  }
                 }
               }
             });
