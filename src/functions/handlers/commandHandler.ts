@@ -1,6 +1,9 @@
+import { Client, Collection } from "discord.js";
 import * as botCommands from "../../commands";
 
-export async function handleCommands(client: any) {
+export async function handleCommands(
+  client: Record<"commands", Collection<unknown, unknown>> & Client
+) {
   await client.commands.clear();
   let commandsArray: any = [];
 
@@ -9,7 +12,7 @@ export async function handleCommands(client: any) {
     commandsArray.push(command.data.toJSON());
   }
 
-  client.application.commands.set(commandsArray);
+  if (client.application) client.application.commands.set(commandsArray);
 
   console.log("Commands Loaded");
 }
