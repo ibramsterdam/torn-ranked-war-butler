@@ -8,42 +8,36 @@ datasource db {
 }
 
 model User {
-  id        Int      @id
-  name      String?
-  apiKey    ApiKey?
-  faction   Faction? @relation(fields: [factionId], references: [id])
-  factionId Int?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  lastActionStatus    String?
+  id                  Int       @id
+  name                String?
+  factionId           Int?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   lastActionRelative  String?
+  lastActionStatus    String?
   lastActionTimestamp BigInt?
-
-  statusDescription String?
-  statusDetails     String?
-  statusState       String?
-  statusUntil       BigInt?
-
-  profileLink       String?
-  attackLink        String?
-  retalliationUntil DateTime?
-
-  xanaxTaken       Int?
-  energydrinkTaken Int?
-  energyRefills    Int?
-  networth         BigInt?
-  age              Int?
-  revivable        Int?
-
-  strength      BigInt?
-  defense       BigInt?
-  speed         BigInt?
-  dexterity     BigInt?
-  statTotal     BigInt?
-  ffBonus       Decimal?
-  spyReportDate DateTime?
+  statusDescription   String?
+  statusDetails       String?
+  statusState         String?
+  statusUntil         BigInt?
+  retalliationUntil   DateTime?
+  attackLink          String?
+  profileLink         String?
+  age                 Int?
+  energydrinkTaken    Int?
+  networth            BigInt?
+  xanaxTaken          Int?
+  energyRefills       Int?
+  revivable           Int?
+  defense             BigInt?
+  dexterity           BigInt?
+  ffBonus             Decimal?
+  speed               BigInt?
+  spyReportDate       DateTime?
+  statTotal           BigInt?
+  strength            BigInt?
+  apiKey              ApiKey?
+  faction             Faction?  @relation(fields: [factionId], references: [id])
 }
 
 model DiscordServer {
@@ -52,73 +46,64 @@ model DiscordServer {
   isWhitelisted   Boolean                   @default(false)
   factionAmount   Int                       @default(1)
   apiKeyAmount    Int                       @default(1)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
   apiKeys         ApiKey[]
-  factions        FactionsOnDiscordServer[]
   discordCategory DiscordCategory?
   discordChannel  DiscordChannel[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  factions        FactionsOnDiscordServer[]
 }
 
 model ApiKey {
   id              Int           @id @default(autoincrement())
   value           String        @unique
   accessLevel     String        @default("Public")
-  user            User          @relation(fields: [userId], references: [id])
   userId          Int           @unique
-  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
   discordServerId BigInt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   brainSurgeonKey Boolean       @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
+  user            User          @relation(fields: [userId], references: [id])
 }
 
 model DiscordCategory {
   id              BigInt           @id
   name            String
-  discordChannel  DiscordChannel[]
-  discordServer   DiscordServer    @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
   discordServerId BigInt           @unique
+  discordServer   DiscordServer    @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
+  discordChannel  DiscordChannel[]
 }
 
 model DiscordChannel {
-  id   BigInt @id
-  name String
-
-  discordCategory   DiscordCategory @relation(fields: [discordCategoryId], references: [id])
-  discordCategoryId BigInt
-
-  DiscordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
-  discordServerId BigInt
-
-  faction   Faction? @relation(fields: [factionId], references: [id])
-  factionId Int?
-
-  factionsOnDiscordServer FactionsOnDiscordServer[]
+  id                      BigInt                   @id
+  name                    String
+  discordCategoryId       BigInt
+  discordServerId         BigInt
+  factionId               Int?
+  discordCategory         DiscordCategory          @relation(fields: [discordCategoryId], references: [id])
+  DiscordServer           DiscordServer            @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
+  faction                 Faction?                 @relation(fields: [factionId], references: [id])
+  factionsOnDiscordServer FactionsOnDiscordServer?
 }
 
 model Faction {
-  id   Int    @id
-  name String
-
-  members        User[]
-  discordServers FactionsOnDiscordServer[]
+  id             Int                       @id
+  name           String
   DiscordChannel DiscordChannel[]
+  discordServers FactionsOnDiscordServer[]
+  members        User[]
 }
 
 model FactionsOnDiscordServer {
-  discordServer   DiscordServer @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
-  discordServerId BigInt
-  faction         Faction?      @relation(fields: [factionId], references: [id])
-  factionId       Int
-
-  discordChannel   DiscordChannel @relation(fields: [discordChannelId], references: [id])
+  discordServerId  BigInt
+  factionId        Int
   discordChannelId BigInt         @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  discordChannel   DiscordChannel @relation(fields: [discordChannelId], references: [id])
+  discordServer    DiscordServer  @relation(fields: [discordServerId], references: [id], onDelete: Cascade)
+  faction          Faction        @relation(fields: [factionId], references: [id])
 
   @@id([factionId, discordServerId])
 }

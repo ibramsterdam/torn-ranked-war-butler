@@ -7,3 +7,5 @@ match.json
 /prisma/dev.db
 /prisma/dev.db-journal
 /dist
+latest.dump
+latest_insert.sql
