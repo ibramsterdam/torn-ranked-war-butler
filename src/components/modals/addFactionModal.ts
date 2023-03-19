@@ -111,6 +111,12 @@ export async function execute(
     parent: server.discordCategory.id.toString(),
   });
 
+  if (!channel) {
+    console.log("Error in generateMessages");
+    return await interaction.editReply(
+      "Error in creating a channel, try again and if this persists contact the developer"
+    );
+  }
   await createDiscordChannel(
     prisma,
     BigInt(channel.id),
@@ -161,6 +167,7 @@ export async function execute(
     embeds: [embeds],
     components: [buttons, manageApiKeysButtons],
   });
+
   return await generateMessages(channel, faction.id, server, prisma);
 }
 
