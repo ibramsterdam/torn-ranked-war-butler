@@ -1,4 +1,7 @@
-import { getFactionFromTornApi } from "../../util/tornApiUtil";
+import {
+  getFactionFromTornApi,
+  getUserFromTornApiById,
+} from "../../util/tornApiUtil";
 import { getDashboardButtons } from "../functions/getDashboardButtons";
 import {
   ButtonBuilder,
@@ -18,6 +21,7 @@ import { createDiscordChannel } from "../../functions/prisma/discordChannel";
 import {
   upsertUser,
   removeUserRelationWithFaction,
+  updateUserPersonalStats,
 } from "../../functions/prisma/user";
 import {
   getShortUrlAttackLink,
@@ -25,6 +29,8 @@ import {
 } from "../../util/urlShortenerUtil";
 import { prisma } from "../../index";
 import { generateMessages } from "../functions/status-messages/generateMessages";
+import { getBrainSurgeonApiKeys } from "../../functions/prisma/apiKey";
+import { getRandomItemFromArray } from "../../util/randomItemFromArray";
 
 export async function execute(
   interaction: ModalSubmitInteraction,
@@ -79,6 +85,7 @@ export async function execute(
   const memberList = Object.values(Object.values(result.data.members));
   const memberIdList = Object.keys(result.data.members);
   await removeUserRelationWithFaction(prisma, Number(factionID));
+  const userList = [];
 
   for (let i = 0; i < memberIdList.length; i++) {
     if (i % 5 === 0) {
@@ -93,6 +100,8 @@ export async function execute(
       Number(memberIdList[i])
     );
 
+    userList.push({ id: memberIdList[i] });
+
     await upsertUser(
       prisma,
       Number(memberIdList[i]),
@@ -102,7 +111,6 @@ export async function execute(
       attackLink.data.data.shortUrl
     );
   }
-
   await interaction.editReply("Creating a channel in discord...");
   // create factionChannel
   const channel = await interaction.guild.channels.create({
@@ -139,7 +147,6 @@ export async function execute(
   );
 
   server = await getDiscordServer(prisma, guildID);
-  await interaction.editReply("Done!");
   // create ui
   const embeds = await getFactionsEmbed(factions);
   const buttons = await getDashboardButtons(
@@ -161,6 +168,34 @@ export async function execute(
       .setDisabled(factions.length === 0)
   );
 
+  const keys = await getBrainSurgeonApiKeys(prisma);
+  let i = 0;
+  for (const user of userList) {
+    if (i % 5 === 0) {
+      await interaction.editReply(
+        `Updated **${i} / ${memberIdList.length}** users with their personalstats...`
+      );
+    }
+    i++;
+    const randomApiKeyObject = getRandomItemFromArray(keys);
+    const latestUserInfo: any = await getUserFromTornApiById(
+      randomApiKeyObject.value,
+      Number(user.id)
+    );
+
+    if (latestUserInfo.data.error) {
+      console.log("Error in while fetching a user while adding a faction");
+    } else {
+      await updateUserPersonalStats(
+        prisma,
+        Number(user.id),
+        latestUserInfo.data.personalstats,
+        latestUserInfo.data.age,
+        latestUserInfo.data.revivable
+      );
+    }
+  }
+  await interaction.editReply("Done!");
   await interaction.deleteReply();
 
   await interaction.followUp({

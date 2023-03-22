@@ -24,11 +24,11 @@ export async function getDashboardButtons(
       .setStyle(
         menuType === "factions" ? ButtonStyle.Success : ButtonStyle.Primary
       )
-      .setDisabled(menuType === "factions" || isNotWhitelisted || hasNoApiKey),
-    new ButtonBuilder()
-      .setCustomId("dashboard-start-polling")
-      .setLabel("Get me that faction info!")
-      .setStyle(ButtonStyle.Danger)
-      .setDisabled(hasNoFactions || isNotWhitelisted)
+      .setDisabled(menuType === "factions" || isNotWhitelisted || hasNoApiKey)
+    // new ButtonBuilder()
+    //   .setCustomId("dashboard-start-polling")
+    //   .setLabel("Get me that faction info!")
+    //   .setStyle(ButtonStyle.Danger)
+    //   .setDisabled(hasNoFactions || isNotWhitelisted)
   ) as any;
 }
