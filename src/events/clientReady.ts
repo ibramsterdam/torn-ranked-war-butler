@@ -1,4 +1,4 @@
-import { ActivityType, Client } from "discord.js";
+import { ActivityType } from "discord.js";
 import { handleCommands } from "../functions/handlers/commandHandler";
 
 export async function execute(client: any) {

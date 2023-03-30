@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TornMember } from "../models";
 import { logApiCount } from "./logApiCount";
 
 export const getFactionFromTornApi = async (
@@ -37,5 +38,23 @@ export const getUserFromTornApiById = async (
     );
   } catch (error) {
     return "error";
+  }
+};
+export const getUserFromTornApiById2 = async (
+  apiKey: string,
+  tornId: number
+) => {
+  logApiCount(apiKey);
+
+  try {
+    const result = await axios.get(
+      `https://api.torn.com/user/${tornId}?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
+    );
+    if (result.data) {
+      return result.data as TornMember;
+    }
+    return null;
+  } catch (error) {
+    console.log("error in getUserFromTornApiById2");
   }
 };
