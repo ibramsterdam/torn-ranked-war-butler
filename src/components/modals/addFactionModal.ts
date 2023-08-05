@@ -107,8 +107,8 @@ export async function execute(
       Number(memberIdList[i]),
       memberList[i],
       faction.id,
-      profileLink.data.data.shortUrl,
-      attackLink.data.data.shortUrl
+      profileLink.data.url.short_url,
+      attackLink.data.url.short_url
     );
   }
   await interaction.editReply("Creating a channel in discord...");

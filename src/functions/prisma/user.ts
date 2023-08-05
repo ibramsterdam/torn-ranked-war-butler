@@ -161,11 +161,12 @@ export async function updateUser(
     return result;
   } catch (error) {
     console.log("Failure: updateUser");
-    console.log({
-      id: id,
-      factionId: factionId,
-      userData: userData,
-    });
+    // console.log("ERR", error)
+    // console.log({
+    //   id: id,
+    //   factionId: factionId,
+    //   userData: userData,
+    // });
   }
 }
 export async function getUsersByFactionId(

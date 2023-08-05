@@ -86,8 +86,8 @@ async function updateUser(list: any) {
           factionId: userFromTorn.data.faction.faction_id,
           age: userFromTorn.data.age,
           revivable: userFromTorn.data.revivable,
-          attackLink: attackLink.data.data.shortUrl,
-          profileLink: profileLink.data.data.shortUrl,
+          attackLink: attackLink.data.url.short_url,
+          profileLink: profileLink.data.url.short_url,
 
           energydrinkTaken: userFromTorn.data.personalstats.energydrinkused,
           energyRefills: userFromTorn.data.personalstats.refills,
