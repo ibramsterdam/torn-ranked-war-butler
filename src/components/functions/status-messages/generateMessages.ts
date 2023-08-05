@@ -4,7 +4,6 @@ import { sendHospitalStatusEmbed } from "./hospitalStatusEmbed";
 import { sendTravelStatusEmbed } from "./travelStatusEmbed";
 import { sendAttackStatusEmbed } from "./attackStatusEmbed";
 import {
-  upsertUser,
   getUsersByFactionId,
   updateUser,
 } from "../../../functions/prisma/user";
@@ -24,23 +23,22 @@ export async function generateMessages(
   const randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
 
   // fetch faction information
-  const results: any = await getFactionFromTornApi(
+  const faction = await getFactionFromTornApi(
     factionId,
     randomApiKeyObject.value
   );
 
-  if (results.data.error) {
-    console.log("Err in generateMessages while fetching from torn api");
-    return console.log(results.data.error);
+  if (!faction) {
+    return console.log("Err in generateMessages while fetching from torn api");
   }
 
   const membersListOld = await getUsersByFactionId(prisma, factionId);
 
-  for (let i = 0; i < Object.keys(results.data.members).length; i++) {
+  for (let i = 0; i < Object.keys(faction.members).length; i++) {
     await updateUser(
       prisma,
-      Number(Object.keys(results.data.members)[i]),
-      Object.values(Object.values(results.data.members))[i],
+      Number(Object.keys(faction.members)[i]),
+      Object.values(Object.values(faction.members))[i],
       factionId
     );
   }

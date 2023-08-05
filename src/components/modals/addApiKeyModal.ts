@@ -17,7 +17,7 @@ import { prisma } from "../../index";
 
 export async function execute(interaction: any, client: any) {
   await interaction.deferReply();
-  const apiKey = interaction.fields.getTextInputValue("add-api-key-text-input");
+  const apiKey = interaction.fields.getTextInputValue("add-api-key-text-input") as string;
 
   // validate if apikey returns a user
   const result: any = await getUserFromTornApi(apiKey);

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { TornMember } from "../models";
 import { logApiCount } from "./logApiCount";
+import { Faction } from "../models/tornApi";
 
 export const getFactionFromTornApi = async (
   factionID: number,
@@ -8,11 +9,17 @@ export const getFactionFromTornApi = async (
 ) => {
   logApiCount(apiKey);
   try {
-    return axios.get(
+    const result = await axios.get(
       `https://api.torn.com/faction/${factionID}?selections=&key=${apiKey}`
     );
+
+    if (result.data) {
+      return result.data as Faction;
+    }
+    return null;
   } catch (error) {
-    return "error";
+    console.log("failure: getFactionFromTornApi");
+    return null;
   }
 };
 export const getUserFromTornApi = async (apiKey: string) => {

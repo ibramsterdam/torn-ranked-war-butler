@@ -65,25 +65,29 @@ export async function execute(
   }
 
   await interaction.editReply("Calling the torn api...");
-  const result: any = await getFactionFromTornApi(
+  const factionFromApi = await getFactionFromTornApi(
     Number(factionID),
     server.apiKeys[0].value
   );
 
-  if (result.data.error) {
+  if (!factionFromApi) {
     return await interaction.editReply("Invalid ID");
   }
 
   await interaction.editReply("Updating the butler database...");
-  const faction = await upsertFaction(prisma, result.data.ID, result.data.name);
+  const faction = await upsertFaction(
+    prisma,
+    factionFromApi.ID,
+    factionFromApi.name
+  );
 
   if (!faction) {
     console.log("ERROR IN ADDFACTIONMODAL");
     return;
   }
 
-  const memberList = Object.values(Object.values(result.data.members));
-  const memberIdList = Object.keys(result.data.members);
+  const memberList = Object.values(Object.values(factionFromApi.members));
+  const memberIdList = Object.keys(factionFromApi.members);
   await removeUserRelationWithFaction(prisma, Number(factionID));
   const userList = [];
 

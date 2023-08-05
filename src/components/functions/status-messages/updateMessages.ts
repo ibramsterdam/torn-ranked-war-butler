@@ -21,29 +21,26 @@ export async function updateMessages(
   let randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
 
   // fetch faction information
-  let results: any = await getFactionFromTornApi(
+  let faction = await getFactionFromTornApi(
     factionId,
     randomApiKeyObject.value
   );
 
-  while (results.data.error) {
-    console.log(
-      "Err in updateMessages while fetching from torn api",
-      results.data.error
-    );
+  while (!faction) {
+    console.log("Err in updateMessages while fetching from torn api");
     console.log("Retrying...");
     await delay(2000);
     randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
-    results = await getFactionFromTornApi(factionId, randomApiKeyObject.value);
+    faction = await getFactionFromTornApi(factionId, randomApiKeyObject.value);
   }
 
   const membersListOld = await getUsersByFactionId(prisma, factionId);
 
-  for (let i = 0; i < Object.keys(results.data.members).length; i++) {
+  for (let i = 0; i < Object.keys(faction.members).length; i++) {
     await updateUser(
       prisma,
-      Number(Object.keys(results.data.members)[i]),
-      Object.values(Object.values(results.data.members))[i],
+      Number(Object.keys(faction.members)[i]),
+      Object.values(Object.values(faction.members))[i],
       factionId
     );
   }
