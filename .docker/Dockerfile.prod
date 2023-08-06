@@ -1,0 +1,8 @@
+FROM node:latest as base
+
+RUN apt-get update && apt install -y vim
+WORKDIR /myapp
+COPY . /myapp
+RUN npm install && npm run build
+
+CMD ["npm", "run", "start"]

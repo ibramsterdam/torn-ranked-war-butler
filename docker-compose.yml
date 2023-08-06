@@ -1,0 +1,12 @@
+# When updating this file, manually update on server
+version: "3.8"
+services:
+  web:
+    container_name: torn-ranked-war-butler
+    image: ghcr.io/ibramsterdam/torn-ranked-war-butler:latest
+    # uncomment for local debug
+    # build:
+    # dockerfile: .docker/Dockerfile.prod
+    restart: unless-stopped
+    env_file:
+      - .env
