@@ -13,6 +13,10 @@ export const getFactionFromTornApi = async (
       `https://api.torn.com/faction/${factionID}?selections=&key=${apiKey}`
     );
 
+    if (result.data.error) {
+      console.log(result.data.error, "with apiKey: ", apiKey);
+      return null;
+    }
     if (result.data) {
       return result.data as Faction;
     }

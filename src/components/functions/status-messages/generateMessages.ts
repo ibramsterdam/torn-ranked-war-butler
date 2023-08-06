@@ -33,7 +33,7 @@ export async function generateMessages(
   }
 
   const membersListOld = await getUsersByFactionId(prisma, factionId);
-
+  console.log("before err", faction.name);
   for (let i = 0; i < Object.keys(faction.members).length; i++) {
     await updateUser(
       prisma,
@@ -66,12 +66,12 @@ export async function generateMessages(
 
   // delete all possible messages
   await channel.bulkDelete(100, true).then(() => {
-    console.log(
-      "Messages deleted from channel:",
-      channel.name,
-      " of guild: ",
-      channel.guild.name
-    );
+    // console.log(
+    //   "Messages deleted from channel:",
+    //   channel.name,
+    //   " of guild: ",
+    //   channel.guild.name
+    // );
   });
 
   let messageArray = [];

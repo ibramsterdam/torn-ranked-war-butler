@@ -36,7 +36,7 @@ export async function execute(interaction: CommandInteraction, client: Client) {
     if (!channel) return;
     // delete all possible messages
     await (channel as TextChannel).bulkDelete(100, true).then(() => {
-      console.log("Messages deleted of", faction.discordChannelId.toString());
+      // console.log("Messages deleted of", faction.discordChannelId.toString());
     });
   }
 }
