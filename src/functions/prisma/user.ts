@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { Member } from "../../models/tornApi";
 
 export async function upsertUserAndConnectFaction(
   prisma: PrismaClient,
@@ -135,40 +136,46 @@ export async function upsertUser(
     console.log("error", error);
   }
 }
-export async function updateUser(
+export async function upsertUserNoLink(
   prisma: PrismaClient,
-  id: number,
-  userData: any,
+  member: Member,
   factionId: number
 ) {
   try {
-    const result = await prisma.user.update({
+    const result = await prisma.user.upsert({
       where: {
-        id: id,
+        id: member.id,
       },
-      data: {
+      update: {
         factionId: factionId,
-        name: userData.name,
-        lastActionRelative: userData.last_action.relative,
-        lastActionStatus: userData.last_action.status,
-        lastActionTimestamp: BigInt(userData.last_action.timestamp),
-        statusDescription: userData.status.description,
-        statusDetails: userData.status.details,
-        statusState: userData.status.state,
-        statusUntil: BigInt(userData.status.until),
+        name: member.name,
+        lastActionRelative: member.last_action.relative,
+        lastActionStatus: member.last_action.status,
+        lastActionTimestamp: BigInt(member.last_action.timestamp),
+        statusDescription: member.status.description,
+        statusDetails: member.status.details,
+        statusState: member.status.state,
+        statusUntil: BigInt(member.status.until),
+      },
+      create: {
+        id: member.id,
+        factionId: factionId,
+        name: member.name,
+        lastActionRelative: member.last_action.relative,
+        lastActionStatus: member.last_action.status,
+        lastActionTimestamp: BigInt(member.last_action.timestamp),
+        statusDescription: member.status.description,
+        statusDetails: member.status.details,
+        statusState: member.status.state,
+        statusUntil: BigInt(member.status.until),
       },
     });
     return result;
   } catch (error) {
-    console.log("Failure: updateUser");
-    // console.log("ERR", error)
-    // console.log({
-    //   id: id,
-    //   factionId: factionId,
-    //   userData: userData,
-    // });
+    console.log("Failure: upsertUserNoLink");
   }
 }
+
 export async function getUsersByFactionId(
   prisma: PrismaClient,
   factionId: number
@@ -182,7 +189,7 @@ export async function getUsersByFactionId(
     return result;
   } catch (error) {
     console.log("Failure: getUsersByFactionId");
-    console.log("error", error);
+    return [];
   }
 }
 export async function updateUserRetalliationTimer(

@@ -5,7 +5,7 @@ import { sendTravelStatusEmbed } from "./travelStatusEmbed";
 import { sendAttackStatusEmbed } from "./attackStatusEmbed";
 import {
   getUsersByFactionId,
-  updateUser,
+  upsertUserNoLink,
 } from "../../../functions/prisma/user";
 import { getFaction } from "../../../functions/prisma/faction";
 import { sendRetalliationStatusEmbed } from "./retalliationStatusEmbed";
@@ -17,47 +17,33 @@ export async function updateMessages(
   prisma: any,
   oldMessages: any
 ) {
-  // Select a random ApiKey from the list
-  let randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
-
-  // fetch faction information
   let faction = await getFactionFromTornApi(
     factionId,
-    randomApiKeyObject.value
+    getRandomItemFromArray(server.apiKeys).value
   );
 
   while (!faction) {
     console.log("Err in updateMessages while fetching from torn api");
     console.log("Retrying...");
     await delay(2000);
-    randomApiKeyObject = getRandomItemFromArray(server.apiKeys);
-    faction = await getFactionFromTornApi(factionId, randomApiKeyObject.value);
+    faction = await getFactionFromTornApi(
+      factionId,
+      getRandomItemFromArray(server.apiKeys).value
+    );
   }
 
   const membersListOld = await getUsersByFactionId(prisma, factionId);
 
-  for (let i = 0; i < Object.keys(faction.members).length; i++) {
-    await updateUser(
-      prisma,
-      Number(Object.keys(faction.members)[i]),
-      Object.values(Object.values(faction.members))[i],
-      factionId
-    );
+  for (let i = 0; i < faction.members.length; i++) {
+    await upsertUserNoLink(prisma, faction.members[i], factionId);
   }
 
   const membersList = await getUsersByFactionId(prisma, factionId);
   const factionInfo = await getFaction(prisma, factionId);
 
-  // Hosp status
   const hospResponses = await sendHospitalStatusEmbed(membersList, factionInfo);
-
-  // Travel status
   const travelResponses = await sendTravelStatusEmbed(membersList, factionInfo);
-
-  // Flight status
   const attackResponses = await sendAttackStatusEmbed(membersList, factionInfo);
-
-  // Retalliation status
   const retalliationResponse = await sendRetalliationStatusEmbed(
     membersListOld,
     membersList,

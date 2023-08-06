@@ -19,27 +19,7 @@ export interface Faction {
     position: number;
     wins: number;
   };
-  members: Record<
-    string,
-    {
-      name: string;
-      level: number;
-      days_in_faction: number;
-      last_action: {
-        status: string;
-        timestamp: number;
-        relative: string;
-      };
-      status: {
-        description: string;
-        details: string;
-        state: string;
-        color: string;
-        until: number;
-      };
-      position: string;
-    }
-  >;
+  members: Member[];
   territory_wars: {
     territory: string;
     assaulting_faction: number;
@@ -49,4 +29,24 @@ export interface Faction {
     start_time: number;
     end_time: number;
   }[];
+}
+
+export interface Member {
+  id: number;
+  name: string;
+  level: number;
+  days_in_faction: number;
+  last_action: {
+    status: string;
+    timestamp: number;
+    relative: string;
+  };
+  status: {
+    description: string;
+    details: string;
+    state: string;
+    color: string;
+    until: number;
+  };
+  position: string;
 }

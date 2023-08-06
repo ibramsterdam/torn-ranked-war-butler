@@ -18,6 +18,15 @@ export const getFactionFromTornApi = async (
       return null;
     }
     if (result.data) {
+      // transform so it matches model
+      result.data.members = Object.entries(result.data.members).map(
+        ([id, member]: [string, any]) => {
+          return {
+            id: Number(id),
+            ...member,
+          };
+        }
+      );
       return result.data as Faction;
     }
     return null;

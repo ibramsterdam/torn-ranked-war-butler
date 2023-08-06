@@ -5,7 +5,7 @@ import { sendTravelStatusEmbed } from "./travelStatusEmbed";
 import { sendAttackStatusEmbed } from "./attackStatusEmbed";
 import {
   getUsersByFactionId,
-  updateUser,
+  upsertUserNoLink,
 } from "../../../functions/prisma/user";
 import { getFaction } from "../../../functions/prisma/faction";
 import { sendRetalliationStatusEmbed } from "./retalliationStatusEmbed";
@@ -33,28 +33,17 @@ export async function generateMessages(
   }
 
   const membersListOld = await getUsersByFactionId(prisma, factionId);
-  console.log("before err", faction.name);
-  for (let i = 0; i < Object.keys(faction.members).length; i++) {
-    await updateUser(
-      prisma,
-      Number(Object.keys(faction.members)[i]),
-      Object.values(Object.values(faction.members))[i],
-      factionId
-    );
+
+  for (let i = 0; i < faction.members.length; i++) {
+    await upsertUserNoLink(prisma, faction.members[i], factionId);
   }
 
   const membersList = await getUsersByFactionId(prisma, factionId);
   const factionInfo = await getFaction(prisma, factionId);
 
-  // Hosp status
   const hospResponses = await sendHospitalStatusEmbed(membersList, factionInfo);
-
-  // Travel status
   const travelResponses = await sendTravelStatusEmbed(membersList, factionInfo);
-
-  // Flight status
   const attackResponses = await sendAttackStatusEmbed(membersList, factionInfo);
-  // Retalliation status
   const retalliationResponse = await sendRetalliationStatusEmbed(
     membersListOld,
     membersList,
@@ -64,16 +53,7 @@ export async function generateMessages(
   // const reviveResponse = await sendReviveStatusEmbed(membersList, factionInfo);
   // remove channel messages
 
-  // delete all possible messages
-  await channel.bulkDelete(100, true).then(() => {
-    // console.log(
-    //   "Messages deleted from channel:",
-    //   channel.name,
-    //   " of guild: ",
-    //   channel.guild.name
-    // );
-  });
-
+  await channel.bulkDelete(100, true).then(() => {});
   let messageArray = [];
 
   for (const response of [
