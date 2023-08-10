@@ -9,7 +9,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export async function execute(client: Client) {
-  while (process.env.IS_PROD === "false") {
+  while (process.env.IS_PROD === "true") {
     const users = await getAllUsersThatAreTrackedOnAServer(prisma);
     const userParts = splitArrayIntoParts(users, 3);
 
