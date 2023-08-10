@@ -86,30 +86,24 @@ export async function execute(
     return;
   }
 
-  const memberList = Object.values(Object.values(factionFromApi.members));
-  const memberIdList = Object.keys(factionFromApi.members);
   await removeUserRelationWithFaction(prisma, Number(factionID));
-  const userList = [];
 
-  for (let i = 0; i < memberIdList.length; i++) {
+  for (let i = 0; i < factionFromApi.members.length; i++) {
     if (i % 5 === 0) {
       await interaction.editReply(
-        `Inserted **${i} / ${memberIdList.length}** users in database...`
+        `Inserted **${i} / ${factionFromApi.members.length}** users in database...`
       );
     }
     const attackLink: any = await getShortUrlAttackLink(
-      Number(memberIdList[i])
+      factionFromApi.members[i].id
     );
     const profileLink: any = await getShortUrlProfileLink(
-      Number(memberIdList[i])
+      factionFromApi.members[i].id
     );
-
-    userList.push({ id: memberIdList[i] });
 
     await upsertUser(
       prisma,
-      Number(memberIdList[i]),
-      memberList[i],
+      factionFromApi.members[i],
       faction.id,
       profileLink.data.url.short_url,
       attackLink.data.url.short_url
@@ -174,10 +168,10 @@ export async function execute(
 
   const keys = await getBrainSurgeonApiKeys(prisma);
   let i = 0;
-  for (const user of userList) {
+  for (const user of factionFromApi.members) {
     if (i % 5 === 0) {
       await interaction.editReply(
-        `Updated **${i} / ${memberIdList.length}** users with their personalstats...`
+        `Updated **${i} / ${factionFromApi.members.length}** users with their personalstats...`
       );
     }
     i++;
