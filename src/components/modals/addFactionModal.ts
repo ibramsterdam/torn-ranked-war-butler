@@ -105,8 +105,8 @@ export async function execute(
       prisma,
       factionFromApi.members[i],
       faction.id,
-      profileLink.data.url.short_url,
-      attackLink.data.url.short_url
+      profileLink.data.data.shortUrl,
+      attackLink.data.data.shortUrl
     );
   }
   await interaction.editReply("Creating a channel in discord...");

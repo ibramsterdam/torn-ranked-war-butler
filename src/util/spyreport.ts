@@ -8,8 +8,9 @@ import {
   getShortUrlAttackLink,
   getShortUrlProfileLink,
 } from "./urlShortenerUtil";
+import { prisma } from "..";
 
-const csvFilePath = "/Users/bram/Developer/torn-ranked-war-butler/spies.csv";
+const csvFilePath = "/home/bram/Personal/torn-ranked-war-butler/spies.csv";
 
 /**
  * 1. get csv
@@ -17,9 +18,8 @@ const csvFilePath = "/Users/bram/Developer/torn-ranked-war-butler/spies.csv";
  * 3. todo -> make script run in multiple threads
  */
 
-query();
-
-async function query() {
+export async function nowQuery() {
+  console.log("Called");
   const dataArray: any = [];
 
   fs.createReadStream(csvFilePath)
@@ -36,7 +36,6 @@ async function query() {
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 async function updateUser(list: any) {
-  const prisma = require("../index");
   const keys = await getBrainSurgeonApiKeys(prisma);
   let count = 0;
   for (const user of list) {
@@ -45,12 +44,14 @@ async function updateUser(list: any) {
     try {
       const randomApiKeyObject = getRandomItemFromArray(keys);
       const id: any = getNumber(user.Name);
-      const [day, month, year] = user["Last Update"].split("/").map(Number); // Split the date string into an array of day, month and year values
+      const [day, month, year] = user["Last Update"].split("-").map(Number); // Split the date string into an array of day, month and year values
+      console.log(day, month, year, user["Last Update"]);
       const date = new Date(year + 2000, month - 1, day); // Create a new Date object using the year, month and day values
       const userFromTorn: any = await getUserFromTornApiById(
         randomApiKeyObject.value,
         id
       );
+      console.log(date);
       const attackLink: any = await getShortUrlAttackLink(id);
       const profileLink: any = await getShortUrlProfileLink(id);
 
@@ -86,8 +87,8 @@ async function updateUser(list: any) {
           factionId: userFromTorn.data.faction.faction_id,
           age: userFromTorn.data.age,
           revivable: userFromTorn.data.revivable,
-          attackLink: attackLink.data.url.short_url,
-          profileLink: profileLink.data.url.short_url,
+          attackLink: attackLink.data.shortUrl,
+          profileLink: profileLink.data.shortUrl,
 
           energydrinkTaken: userFromTorn.data.personalstats.energydrinkused,
           energyRefills: userFromTorn.data.personalstats.refills,
