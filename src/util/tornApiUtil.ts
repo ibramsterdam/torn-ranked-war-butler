@@ -43,6 +43,8 @@ export const getUserFromTornApi = async (apiKey: string) => {
       `https://api.torn.com/user/?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
     );
   } catch (error) {
+    console.error("failure: getUserFromTornApi");
+
     return "error";
   }
 };
@@ -57,6 +59,8 @@ export const getUserFromTornApiById = async (
       `https://api.torn.com/user/${tornId}?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
     );
   } catch (error) {
+    console.error("failure: getUserFromTornApiById");
+
     return "error";
   }
 };

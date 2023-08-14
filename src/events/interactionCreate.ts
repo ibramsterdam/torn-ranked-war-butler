@@ -35,7 +35,7 @@ export async function execute(interaction: any, client: any) {
     try {
       await button.execute(interaction, client);
     } catch (err) {
-      console.error(err);
+      console.error("failure: interactionCreate.ts");
     }
   }
   if (interaction.isStringSelectMenu()) {
@@ -48,7 +48,7 @@ export async function execute(interaction: any, client: any) {
     try {
       await menu.execute(interaction, client);
     } catch (err) {
-      console.error(err);
+      console.error("failure: interactionCreate.ts");
     }
   }
   if (interaction.type == InteractionType.ModalSubmit) {
@@ -61,7 +61,7 @@ export async function execute(interaction: any, client: any) {
     try {
       await modal.execute(interaction, client);
     } catch (err) {
-      console.error(err);
+      console.error("failure: interactionCreate.ts");
     }
   }
 }

@@ -29,7 +29,6 @@ export async function upsertUserAndConnectFaction(
     return result;
   } catch (error) {
     console.log("Failure: upsertUserAndConnectFaction");
-    console.log("error", error);
   }
 }
 
@@ -39,7 +38,6 @@ export async function getAllUsers(prisma: PrismaClient) {
     return result;
   } catch (error) {
     console.log("Failure: getAllUsers");
-    console.log("error", error);
   }
 }
 // TODO: FIX THIS
@@ -68,7 +66,6 @@ export async function getAllUsersThatAreTrackedOnAServer(prisma: PrismaClient) {
     return filteredArray.flat();
   } catch (error) {
     console.log("Failure: getAllUsersThatAreTrackedOnAServer");
-    console.log("error", error);
   }
 }
 
@@ -85,7 +82,6 @@ export async function getUser(prisma: PrismaClient, id: number) {
     return result;
   } catch (error) {
     console.log("Failure: getUser");
-    console.log("error", error);
   }
 }
 
@@ -132,7 +128,6 @@ export async function upsertUser(
     return result;
   } catch (error) {
     console.log("Failure: upsertUser");
-    console.log("error", error);
   }
 }
 export async function upsertUserNoLink(
@@ -210,7 +205,6 @@ export async function updateUserRetalliationTimer(
     return result;
   } catch (error) {
     console.log("Failure: updateUserRetalliationTimer");
-    console.log("error", error);
   }
 }
 export async function getUsersThatCanBeRetalliatedFromFaction(
@@ -232,7 +226,6 @@ export async function getUsersThatCanBeRetalliatedFromFaction(
     return result;
   } catch (error) {
     console.log("Failure: getUsersThatCanBeRetalliatedFromFaction");
-    console.log("error", error);
   }
 }
 export async function removeUserRelationWithFaction(
@@ -251,7 +244,6 @@ export async function removeUserRelationWithFaction(
     return result;
   } catch (error) {
     console.log("Failure: removeUserRelationWithFaction");
-    console.log("error", error);
   }
 }
 
@@ -284,6 +276,5 @@ export async function updateUserPersonalStats(
     return result;
   } catch (error) {
     console.log("Failure: updateUserPersonalStats");
-    console.log("error", error);
   }
 }

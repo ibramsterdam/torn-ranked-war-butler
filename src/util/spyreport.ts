@@ -107,7 +107,7 @@ async function updateUser(list: any) {
 
       count++;
     } catch (error) {
-      console.log(error);
+      console.error("failure: spyreport.ts");
     }
   }
 }

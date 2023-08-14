@@ -22,7 +22,6 @@ export async function getUsersThatSharedTheirApiKeyOnDiscordServer(
     return result;
   } catch (error) {
     console.log("Failure: getUsersThatSharedTheirApiKeyOnDiscordServer");
-    console.log("error", error);
   }
 }
 export async function createApiKey(
@@ -42,7 +41,6 @@ export async function createApiKey(
     return result;
   } catch (error) {
     console.log("Failure: createApiKey");
-    console.log("error", error);
   }
 }
 export async function getFirstConnectedApiKeyDiscordServer(
@@ -60,7 +58,6 @@ export async function getFirstConnectedApiKeyDiscordServer(
     return result;
   } catch (error) {
     console.log("Failure: getFirstConnectedApiKeyDiscordServer");
-    console.log("error", error);
   }
 }
 
@@ -74,7 +71,6 @@ export async function getApiKeyFromUser(prisma: PrismaClient, userId: number) {
     return result;
   } catch (error) {
     console.log("Failure: getApiKey");
-    console.log("error", error);
   }
 }
 export async function deleteApiKeyOfUser(prisma: PrismaClient, userId: number) {
@@ -127,7 +123,6 @@ export async function getApiKeyByValue(prisma: PrismaClient, key: string) {
     return result;
   } catch (error) {
     console.log("Failure: getApiKeyByValue");
-    console.log("error", error);
   }
 }
 
@@ -141,7 +136,6 @@ export async function getBrainSurgeonApiKeys(prisma: PrismaClient) {
     return result;
   } catch (error) {
     console.log("Failure: getBrainSurgeonApiKeys");
-    console.log("error", error);
   }
 }
 
@@ -155,6 +149,5 @@ export async function getAllApiKeys(prisma: PrismaClient) {
     return result;
   } catch (error) {
     console.log("Failure: getAllApiKeys");
-    console.log("error", error);
   }
 }

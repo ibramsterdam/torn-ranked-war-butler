@@ -17,7 +17,6 @@ export async function createFactionOnDiscordServerConnection(
     return result;
   } catch (error) {
     console.log("Failure: createFactionOnDiscordServerConnection");
-    console.log("error", error);
   }
 }
 
@@ -40,7 +39,6 @@ export async function getConnectedFactionsOnDiscordServer(
     return result;
   } catch (error) {
     console.log("Failure: getConnectedFactionsOnDiscordServer");
-    console.log("error", error);
   }
 }
 export async function getConnectionBetweenFactionAndDiscordServer(
@@ -61,7 +59,6 @@ export async function getConnectionBetweenFactionAndDiscordServer(
     return result;
   } catch (error) {
     console.log("Failure: getConnectionBetweenFactionAndDiscordServer");
-    console.log("error", error);
   }
 }
 export async function deleteConnectionBetweenFactionAndDiscordServer(
@@ -82,7 +79,6 @@ export async function deleteConnectionBetweenFactionAndDiscordServer(
     return result;
   } catch (error) {
     console.log("Failure: deleteConnectionBetweenFactionAndDiscordServer");
-    console.log("error", error);
   }
 }
 
@@ -104,6 +100,5 @@ export async function getDiscordChannelFromFactionAndDiscordServer(
     return result;
   } catch (error) {
     console.log("Failure: getDiscordChannelFromFactionAndDiscordServer");
-    console.log("error", error);
   }
 }

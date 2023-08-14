@@ -20,7 +20,6 @@ export async function createDiscordChannel(
     return result;
   } catch (error) {
     console.log("Failure: createDiscordChannel");
-    console.log("error", error);
   }
 }
 export async function deleteChannel(prisma: PrismaClient, channelId: bigint) {
@@ -33,6 +32,5 @@ export async function deleteChannel(prisma: PrismaClient, channelId: bigint) {
     return result;
   } catch (error) {
     console.log("Failure: deleteChannel");
-    console.log("error", error);
   }
 }

@@ -21,7 +21,6 @@ export async function upsertFaction(
     return result;
   } catch (error) {
     console.log("Failure: upsertFaction");
-    console.log("error", error);
   }
 }
 export async function getFaction(prisma: PrismaClient, id: number) {
@@ -34,7 +33,6 @@ export async function getFaction(prisma: PrismaClient, id: number) {
     return result;
   } catch (error) {
     console.log("Failure: getFaction");
-    console.log("error", error);
   }
 }
 export async function getAllFactions(prisma: PrismaClient) {
@@ -43,6 +41,5 @@ export async function getAllFactions(prisma: PrismaClient) {
     return result;
   } catch (error) {
     console.log("Failure: getAllFactions");
-    console.log("error", error);
   }
 }
