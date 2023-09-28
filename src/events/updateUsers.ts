@@ -9,7 +9,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export async function execute(client: Client) {
-  while (process.env.IS_PROD === "true") {
+  while (process.env.IS_PROD === "notnow") {
     const users = await getAllUsersThatAreTrackedOnAServer(prisma);
     const userParts = splitArrayIntoParts(users, 3);
 
@@ -51,7 +51,9 @@ async function updateUsers(users: any, callIndex: number) {
     );
 
     if (latestUserInfo.data.error) {
+      console.log(randomApiKeyObject);
       console.log("Error in updateUsersEvent");
+      console.log(latestUserInfo.data.error);
       await delay(2000);
     } else {
       await updateUserPersonalStats(
