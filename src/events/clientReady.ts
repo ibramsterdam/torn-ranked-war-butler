@@ -1,6 +1,7 @@
 import { ActivityType } from "discord.js";
 import { handleCommands } from "../functions/handlers/commandHandler";
 import { nowQuery } from "../util/spyreport";
+import { execute as updateUsers } from "./updateUsers";
 
 export async function execute(client: any) {
   client.user.setActivity(
@@ -13,6 +14,7 @@ export async function execute(client: any) {
   handleCommands(client).then(() => {
     console.log("\nThe bot has booted up!");
     // nowQuery();
+    updateUsers()
   });
 }
 

@@ -82,3 +82,34 @@ export const getUserFromTornApiById2 = async (
     console.log("error in getUserFromTornApiById2");
   }
 };
+
+export const getUserFromTornApiByIdNew = async (
+  apiKey: string,
+  tornId: number
+) => {
+  try {
+    const response = await axios.get(
+      `https://api.torn.com/user/${tornId}?selections=basic,bazaar,crimes,discord,display,personalstats,profile&key=${apiKey}`
+    );
+
+    // Check if the response status is not successful (e.g., 502 Bad Gateway)
+    if (response.status !== 200) {
+      console.error(`Request failed with status code ${response.status}`);
+      return {
+        data: null,
+        error: `Request failed with status code ${response.status}`,
+      };
+    }
+
+    // If the response is successful, return the data
+    return { data: response.data, error: null };
+  } catch (error) {
+    console.error("An error occurred in getUserFromTornApiById:", error);
+
+    // Return an error object or message
+    return {
+      data: null,
+      error: "An error occurred while fetching data from the API",
+    };
+  }
+};

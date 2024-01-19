@@ -1,16 +1,15 @@
 import { prisma } from "../index";
 import { getAllUsersThatAreTrackedOnAServer } from "../functions/prisma/user";
-import { getRandomItemFromArray } from "../util/randomItemFromArray";
-import { getUserFromTornApiById } from "../util/tornApiUtil";
+import { getUserFromTornApiByIdNew } from "../util/tornApiUtil";
 import { getBrainSurgeonApiKeys } from "../functions/prisma/apiKey";
 import { updateUserPersonalStats } from "../functions/prisma/user";
-import { Client } from "discord.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-export async function execute(client: Client) {
-  while (process.env.IS_PROD === "notnow") {
+export async function execute() {
+  while (process.env.IS_PROD === "true") {
     const users = await getAllUsersThatAreTrackedOnAServer(prisma);
+    
     const userParts = splitArrayIntoParts(users, 3);
 
     console.log("Starting to update", users.length, "users");
@@ -42,26 +41,28 @@ function splitArrayIntoParts(arr: any, numParts: any) {
 
 async function updateUsers(users: any, callIndex: number) {
   const keys = await getBrainSurgeonApiKeys(prisma);
+  if (!keys) return console.log("No keys");
 
   for (const user of users) {
-    const randomApiKeyObject = getRandomItemFromArray(keys);
-    const latestUserInfo: any = await getUserFromTornApiById(
+    const randomIndex = Math.floor(Math.random() * keys.length);
+    const randomApiKeyObject = keys[randomIndex];
+
+    const result = await getUserFromTornApiByIdNew(
       randomApiKeyObject.value,
       user.id
     );
 
-    if (latestUserInfo.data.error) {
-      console.log(randomApiKeyObject);
-      console.log("Error in updateUsersEvent");
-      console.log(latestUserInfo.data.error);
+    if (result.error || result.data.error) {
+      console.log("Error in updateUsersEvent? ", result.data.error);
+
       await delay(2000);
     } else {
       await updateUserPersonalStats(
         prisma,
         user.id,
-        latestUserInfo.data.personalstats,
-        latestUserInfo.data.age,
-        latestUserInfo.data.revivable
+        result.data.personalstats,
+        result.data.age,
+        result.data.revivable
       );
       await delay(1000);
     }

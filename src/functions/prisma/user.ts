@@ -66,6 +66,7 @@ export async function getAllUsersThatAreTrackedOnAServer(prisma: PrismaClient) {
     return filteredArray.flat();
   } catch (error) {
     console.log("Failure: getAllUsersThatAreTrackedOnAServer");
+    throw error;
   }
 }
 
