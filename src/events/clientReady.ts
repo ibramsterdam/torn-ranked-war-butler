@@ -14,7 +14,7 @@ export async function execute(client: any) {
   handleCommands(client).then(() => {
     console.log("\nThe bot has booted up!");
     // nowQuery();
-    updateUsers()
+    // updateUsers()
   });
 }
 

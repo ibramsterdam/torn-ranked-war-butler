@@ -11,7 +11,6 @@ const { User, Message, GuildMember, ThreadMember } = Partials;
 import { handleEvents } from "./functions/handlers/eventHandler";
 import { handleComponent } from "./functions/handlers/componentHandler";
 import * as dotenv from "dotenv";
-import { nowQuery } from "./util/spyreport";
 dotenv.config();
 
 const client = new Client({
