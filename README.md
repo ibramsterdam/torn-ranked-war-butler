@@ -11,8 +11,6 @@ Torn Discord Bot that assists in ranked wars.
 To invite the bot over to your discord server
 click [here](https://discord.com/api/oauth2/authorize?client_id=932550905713270836&permissions=2147510288&scope=bot%20applications.commands).
 
-DEVELOP BOT = [here](https://discord.com/api/oauth2/authorize?client_id=1068813614829539338&permissions=2147510288&scope=bot%20applications.commands).
-
 \
 At this moment the bot needs 5 rights
 \
@@ -23,9 +21,9 @@ At this moment the bot needs 5 rights
 - `Use Application Commands`
 - `Embed Links`
 
-## Database
+### Setup
 
-We use Postgresql
+![Preview](https://imgur.com/a/L36StB1.gif)
 
 ## Environment Variables
 
@@ -34,16 +32,13 @@ To run this project, you will need to add the following environment variables to
 `BOT_TOKEN`
 `DATABASE_URL`
 
-## Commands for war
-
-### Available
+## Commands
 
 **Setup Butler** _Essential!_
 \
 Command: `/setup`
 \
 Description: Creates the RankedWar Butler Category and butler-dashboard
-Note: Using jsonStorage, at later date will be connected to a server
 
 **Create Dashboard** _Essential!_
 \
@@ -54,55 +49,23 @@ information about the (upcomming) war. if no faction ID is given then it searche
 Note: Can only be called every 10 seconds
 
 ## Functionalities
+- Ability to add Api Keys that will be used in monitoring of chosen factions
+- Ability to add and track multiple factions
+- Ability to submit spy stats that are used in the lists
 
-### Done
+**Hospital List**
+An overview of members currently in the hospital, sorted in ascending order by discharge date — those scheduled to leave the hospital soonest appear at the top of the list.
 
-**Track faction chain**
-\
-Command: `/chainfaction`
-\
-Description: Status updates about own chain.
+**Attack list**
+An overview of members currently available to attack. Each individual also has a direct link to its profile, making fast attacks easier. For each member in the list you can also see the available stats.
 
-### Development
+![AttackList](attack_list.png)
 
-**Track faction chain**
-\
-Command: `/chainfaction`
-\
-Description: Status updates about own chain.
+**Retalliation list**
+List of members that can be retalliated on
 
-## Ideas
+**Flight tracker**
+List of members that currently are flying inbound and outbound torn.
+![AttackList](travel_list.png)
 
-**Incomming from flight**
-\
-Command: `/incommingflight`
-\
-Description: List of enemy faction members that are flying
-to Torn.
 
-**Jail timers**
-\
-Command: `/timerjail`
-\
-Description: List of enemy faction members that are in
-jail with timers.
-
-**Players below 30% Health**
-\
-Command: `/enemyhealth`
-\
-Description: List of enemy faction members that have health
-below 30% of their max health.
-
-**Track enemy chain**
-\
-Command: `/chainenemy`
-\
-Description: Status updates about enemy chain.
-
-**Track faction chain**
-\
-Command: `/givemetarget`
-\
-Description: List of targets that can be attacked sorted from easiest -> harders to kill.
-This is based on age, xanax, refills, level.
