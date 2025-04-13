@@ -23,7 +23,8 @@ At this moment the bot needs 5 rights
 
 ### Setup
 
-![Preview](https://imgur.com/a/L36StB1.gif)
+![Preview](setup_dashboard.gif)
+
 
 ## Environment Variables
 
